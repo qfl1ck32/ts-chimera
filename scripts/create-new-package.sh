@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Set the locale to UTF-8
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
+PACKAGE_NAME=$1
+
+if [ -z "$PACKAGE_NAME" ]; then
+  echo "Please provide a package name."
+  exit 1
+fi
+
+PACKAGE_PATH="../packages/$PACKAGE_NAME"
+
+mkdir $PACKAGE_PATH
+
+PACKAGE_TEMPLATE_NAME="my-package-template"
+
+rsync -r --exclude=node_modules ../templates/package/ $PACKAGE_PATH
+
+find "$PACKAGE_PATH" -type f -exec sed -i '' "s/$PACKAGE_TEMPLATE_NAME/$PACKAGE_NAME/g" {} +
+
+npm i
+
+echo "Created new package $PACKAGE_NAME"
