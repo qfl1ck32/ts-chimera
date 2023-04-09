@@ -1,6 +1,8 @@
 import { inject, injectable, Container } from 'inversify';
 import 'reflect-metadata';
 
+export { Container };
+
 export const Injectable = injectable;
 
 export const Inject = inject;

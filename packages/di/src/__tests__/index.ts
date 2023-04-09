@@ -1,5 +1,4 @@
-import { Injectable, InjectToken, setToken, Token } from '@src/';
-import { Container } from 'inversify';
+import { Injectable, InjectToken, setToken, Token, Container } from '@src/';
 
 describe('di', () => {
   test('InjectToken & setToken', () => {
