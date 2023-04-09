@@ -1,4 +1,10 @@
-import { Injectable, InjectToken, setToken, Token, Container } from '@src/';
+import {
+  Injectable,
+  InjectToken,
+  setToken,
+  Token,
+  Container,
+} from '@src/index';
 
 describe('di', () => {
   test('InjectToken & setToken', () => {
@@ -9,7 +15,11 @@ describe('di', () => {
     const token = new Token<string>('name');
     const value = 'di';
 
-    setToken(token, value, container);
+    setToken({
+      token,
+      value,
+      container,
+    });
 
     @Injectable()
     class MyClass {
