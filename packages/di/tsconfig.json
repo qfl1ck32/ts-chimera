@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "strict": true,
+    "skipLibCheck": true,
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/"]
+    }
+  },
+
+  "include": ["src/**/*.ts"]
+}
