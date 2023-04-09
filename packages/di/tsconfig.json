@@ -13,7 +13,9 @@
     "rootDir": "./src",
     "outDir": "./dist",
 
-    "baseUrl": ".",
+    "allowJs": true,
+
+    "baseUrl": "./",
     "paths": {
       "@src/*": ["src/"]
     }

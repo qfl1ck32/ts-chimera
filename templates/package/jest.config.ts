@@ -9,9 +9,8 @@ const config: Config = {
   preset: 'ts-jest',
 
   moduleFileExtensions: ['js', 'json', 'ts'],
-  // rootDir: './',
 
-  testRegex: '.*\\.spec\\.ts$',
+  testRegex: '.*/__tests__/(.*).ts',
 
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
@@ -26,8 +25,6 @@ const config: Config = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>',
   }),
-
-  setupFilesAfterEnv: ['./test/globals.ts'],
 };
 
 export default config;
