@@ -1,5 +1,5 @@
 {
-  "name": "my-package-template",
+  "name": "@ts-chimera/my-package-template",
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
