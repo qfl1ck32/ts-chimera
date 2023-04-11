@@ -1,4 +1,4 @@
-import { Injectable } from '@src/decorators';
+import { Injectable } from './decorators';
 
 @Injectable()
 export class Token<T> {

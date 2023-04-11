@@ -1,8 +1,7 @@
 import { Injectable } from '@ts-chimera/di';
 
-import { Core } from './';
-import { Constructor } from './defs';
-import { Service } from './service';
+import { Core } from './core';
+import { Constructor, Service } from './defs';
 
 @Injectable()
 export abstract class Package<Config = any> {

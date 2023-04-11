@@ -2,6 +2,10 @@ export type Constructor<Return = any, Args = any> = new (
   ...args: Args[]
 ) => Return;
 
+export interface Service {
+  init: () => Promise<void>;
+}
+
 export type Decorator = (
   target: Object,
   key: string | symbol,

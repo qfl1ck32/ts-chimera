@@ -1,9 +1,9 @@
 import {
-  Injectable,
-  InjectToken,
-  setToken,
-  Token,
   Container,
+  InjectToken,
+  Injectable,
+  Token,
+  setToken,
 } from '@src/index';
 
 describe('di', () => {

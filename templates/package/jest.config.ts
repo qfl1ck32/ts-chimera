@@ -22,9 +22,13 @@ const config: Config = {
 
   testEnvironment: 'node',
 
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>',
-  }),
+  moduleNameMapper: {
+    ...pathsToModuleNameMapper(compilerOptions.paths, {
+      prefix: '<rootDir>',
+    }),
+
+    '@ts-chimera/(.*)': '<rootDir>/../$1/src',
+  },
 };
 
 export default config;

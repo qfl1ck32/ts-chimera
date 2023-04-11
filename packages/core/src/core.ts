@@ -1,4 +1,4 @@
-import { Injectable, Token, Container, BindingScopeEnum } from '@ts-chimera/di';
+import { BindingScopeEnum, Container, Injectable, Token } from '@ts-chimera/di';
 
 import { CoreState } from './defs';
 import { Package } from './package';

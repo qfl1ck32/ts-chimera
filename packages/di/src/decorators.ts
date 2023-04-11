@@ -1,4 +1,5 @@
 import { inject, injectable } from 'inversify';
+
 import { Token } from './token';
 
 export const Injectable = injectable;

@@ -24,8 +24,8 @@ Here's a basic example of how to use _@ts-chimera/di_:
 ```ts
 import {
   Container,
-  Injectable,
   InjectToken,
+  Injectable,
   Token,
   setToken,
 } from '@ts-chimera/di';
