@@ -20,6 +20,7 @@ PACKAGE_TEMPLATE_NAME="my-package-template"
 rsync -r --exclude=node_modules ../templates/package/ $PACKAGE_PATH
 
 find "$PACKAGE_PATH" -type f -exec sed -i '' "s/$PACKAGE_TEMPLATE_NAME/$PACKAGE_NAME/g" {} +
+find "$PACKAGE_PATH" -type f -name "*$PACKAGE_TEMPLATE_NAME*" -exec bash -c 'mv "$0" "${0//'"$PACKAGE_TEMPLATE_NAME"'/'"$PACKAGE_NAME"'}";' {} \;
 
 npm i
 

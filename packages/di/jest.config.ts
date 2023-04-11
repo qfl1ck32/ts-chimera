@@ -10,7 +10,7 @@ const config: Config = {
 
   moduleFileExtensions: ['js', 'json', 'ts'],
 
-  testRegex: '.*/__tests__/(.*).ts',
+  testRegex: 'src/__tests__/(.*).spec.ts',
 
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',

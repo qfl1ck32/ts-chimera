@@ -23,9 +23,14 @@ export abstract class Package<Config = any> {
     this.core = core;
   }
 
-  async init() {
+  /**
+   * Called when the package is being initialised. Do not call this method directly.
+   */
+  async initialise() {
     for (const ServiceClass of this.getServices()) {
-      await this.core.container.get(ServiceClass).init();
+      const service: Service = this.core.container.get(ServiceClass);
+
+      await service.initialise();
     }
   }
 }

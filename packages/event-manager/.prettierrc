@@ -4,7 +4,12 @@
   "trailingComma": "all",
   "singleQuote": true,
   "semi": true,
-  "importOrder": ["^@ts-chimera/(.*)$", "^@src/(.*)$", "^[./]"],
+  "importOrder": [
+    "^[a-zA-Z]",
+    "^@ts-chimera/(.*)$",
+    "^@src/(.*)$",
+    "^\\.+/.*$"
+  ],
   "importOrderSeparation": true,
   "importOrderParserPlugins": ["typescript", "decorators-legacy"],
   "importOrderSortSpecifiers": true

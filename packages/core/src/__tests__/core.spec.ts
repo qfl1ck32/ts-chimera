@@ -1,25 +1,26 @@
 import { Injectable } from '@ts-chimera/di';
 
 import { Core } from '@src/core';
-import { Constructor, Service } from '@src/defs';
 import { Package } from '@src/package';
+import { Service } from '@src/defs';
 
 describe('core', () => {
   it('should work', async () => {
     @Injectable()
-    class MyService {
+    class MyService implements Service {
       public initialised: boolean;
 
       constructor() {
         this.initialised = false;
       }
 
-      async init() {
+      async initialise() {
         this.initialised = true;
       }
     }
+
     class MyPackage extends Package {
-      getServices(): Constructor<Service>[] {
+      getServices() {
         return [MyService];
       }
     }
@@ -28,7 +29,7 @@ describe('core', () => {
       packages: [new MyPackage()],
     });
 
-    await core.init();
+    await core.initialise();
 
     const myService = core.container.get(MyService);
 

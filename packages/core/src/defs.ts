@@ -3,7 +3,7 @@ export type Constructor<Return = any, Args = any> = new (
 ) => Return;
 
 export interface Service {
-  init: () => Promise<void>;
+  initialise: () => Promise<void>;
 }
 
 export type Decorator = (

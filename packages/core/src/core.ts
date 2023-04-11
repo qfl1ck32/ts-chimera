@@ -40,13 +40,13 @@ export class Core {
     this.state = CoreState.NEW;
   }
 
-  public async init() {
+  public async initialise() {
     this.state = CoreState.INITIALIZING;
 
     for (const pkg of this.config.packages) {
       pkg.setCore(this);
 
-      await pkg.init();
+      await pkg.initialise();
     }
 
     this.state = CoreState.INITIALIZED;

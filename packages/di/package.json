@@ -8,7 +8,7 @@
     "install-dependencies": "npm i",
     "prettier": "prettier --write .",
     "test": "jest",
-    "test:watch": "jest --verbose --watch src/__tests__/index.ts --detectOpenHandles",
+    "test:watch": "jest --verbose --watch",
     "test:clean": "jest --clearCache",
     "watch": "tsc -w"
   },

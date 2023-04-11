@@ -8,7 +8,7 @@
     "install-dependencies": "npm i",
     "prettier": "prettier --write .",
     "test": "jest",
-    "test:watch": "jest --verbose --watch src/__tests__/index.ts --detectOpenHandles",
+    "test:watch": "jest --verbose --watch",
     "test:clean": "jest --clearCache",
     "watch": "tsc -w"
   },
@@ -22,5 +22,8 @@
     "jest": "^29.5.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@ts-chimera/di": "^0.0.0"
   }
 }

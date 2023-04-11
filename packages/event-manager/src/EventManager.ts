@@ -1,5 +1,4 @@
 import EventEmitter from 'events';
-import { promisify } from 'util';
 
 import { Constructor } from '@ts-chimera/core';
 import { Injectable } from '@ts-chimera/di';
