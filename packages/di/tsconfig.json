@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2019",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "ES2020",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

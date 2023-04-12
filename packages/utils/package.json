@@ -1,5 +1,5 @@
 {
-  "name": "@ts-chimera/event-manager",
+  "name": "@ts-chimera/utils",
   "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,9 +23,5 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.5"
-  },
-  "dependencies": {
-    "@ts-chimera/di": "^0.0.0",
-    "@ts-chimera/utils": "^0.0.0"
   }
 }

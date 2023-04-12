@@ -2,8 +2,8 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import glob from 'glob';
 import { join, resolve } from 'path';
 
-import { mergeDeep } from '@ts-chimera/core';
 import { Injectable } from '@ts-chimera/di';
+import { mergeDeep } from '@ts-chimera/utils';
 
 import { State, UpdateTranslationsArgs } from './defs';
 

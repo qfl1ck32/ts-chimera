@@ -1,7 +1,7 @@
 {
   "name": "@ts-chimera/logger",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "compile": "tsc",
@@ -24,8 +24,7 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
-    "@ts-chimera/di": "^0.0.0",
-    "@ts-chimera/event-manager": "^0.0.0",
+    "@ts-chimera/core": "^0.0.0",
     "chalk": "^4.1.2"
   }
 }

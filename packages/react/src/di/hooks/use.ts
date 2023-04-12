@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Constructor } from '@ts-chimera/core';
+import { Constructor } from '@ts-chimera/utils';
 
 import { useContainer } from './useContainer';
 

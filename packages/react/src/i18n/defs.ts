@@ -3,7 +3,7 @@ import {
   NestedPaths,
   NestedPathsObjectUntilLeaf,
   NestedPathsObjectsJustLeaf,
-} from '@ts-chimera/core';
+} from '@ts-chimera/utils';
 
 export interface Translations {}
 export enum Language {}

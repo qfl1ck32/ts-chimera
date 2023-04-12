@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
-import { Constructor } from '@ts-chimera/core';
 import { Injectable } from '@ts-chimera/di';
+import { Constructor } from '@ts-chimera/utils';
 
 import { Handler, Listener } from './defs';
 import { Event } from './event';

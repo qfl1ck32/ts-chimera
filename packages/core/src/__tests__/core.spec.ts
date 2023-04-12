@@ -1,17 +1,23 @@
-import { Injectable } from '@ts-chimera/di';
+import { Inject, Injectable } from '@ts-chimera/di';
+import { EventManager } from '@ts-chimera/event-manager';
 
-import { Core } from '@src/core';
-import { Package } from '@src/package';
-import { Service } from '@src/defs';
+import { Core, CoreBeforeInitialiseEvent, Package } from '@src/index';
 
 describe('core', () => {
   it('should work', async () => {
     @Injectable()
-    class MyService implements Service {
+    class MyService {
       public initialised: boolean;
 
-      constructor() {
+      constructor(
+        @Inject(EventManager) private readonly eventManager: EventManager,
+      ) {
         this.initialised = false;
+
+        this.eventManager.addListener({
+          event: CoreBeforeInitialiseEvent,
+          handler: this.initialise.bind(this),
+        });
       }
 
       async initialise() {
@@ -20,8 +26,12 @@ describe('core', () => {
     }
 
     class MyPackage extends Package {
-      getServices() {
+      public getServices() {
         return [MyService];
+      }
+
+      public getDefaultConfig() {
+        return {};
       }
     }
 

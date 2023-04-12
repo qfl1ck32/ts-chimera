@@ -1,7 +1,7 @@
 {
   "name": "@ts-chimera/react",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "compile": "tsc",
@@ -28,8 +28,6 @@
   "dependencies": {
     "@hookform/resolvers": "^3.0.1",
     "@ts-chimera/core": "^0.0.0",
-    "@ts-chimera/di": "^0.0.0",
-    "@ts-chimera/event-manager": "^0.0.0",
     "dayjs": "^1.11.7",
     "node-polyglot": "^2.5.0",
     "react": "^18.2.0",

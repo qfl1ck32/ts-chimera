@@ -1,6 +1,7 @@
+import Polyglot from 'node-polyglot';
+
 import { Inject, InjectToken, Injectable } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
-import Polyglot from 'node-polyglot';
 
 import { AllPhrases } from './defs';
 import { LanguageChangedEvent } from './events';

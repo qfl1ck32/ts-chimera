@@ -6,6 +6,10 @@ class DayjsPackage extends Package {
   getServices() {
     return [Dayjs];
   }
+
+  getDefaultConfig() {
+    return {};
+  }
 }
 
 export default DayjsPackage;

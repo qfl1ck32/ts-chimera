@@ -1,4 +1,4 @@
-# @ts-chimera/di
+# @ts-chimera/utils
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/di
+npm i @ts-chimera/utils
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/di_:
+Here's a basic example of how to use _@ts-chimera/utils_:
 
 ```ts
 TODO;

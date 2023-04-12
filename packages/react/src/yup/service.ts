@@ -1,6 +1,5 @@
 import { yup } from '.';
 
-import { Service } from '@ts-chimera/core';
 import { Inject, InjectToken, Injectable } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
 
@@ -12,13 +11,11 @@ import translationsWithPaths from './translations/withPaths';
 import translationsWithoutPaths from './translations/withoutPaths';
 
 @Injectable()
-export class Yup implements Service {
+export class Yup {
   constructor(
     @Inject(EventManager) private eventManager: EventManager,
     @InjectToken(YUP_CONFIG) private config: Config,
-  ) {}
-
-  public async initialise() {
+  ) {
     this.eventManager.addListener({
       event: LanguageChangedEvent,
       handler: this.onLanguageChange,

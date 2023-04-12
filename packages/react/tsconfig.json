@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ES2019",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "ES2020",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+
+    "jsx": "react",
 
     "strict": true,
     "skipLibCheck": true,
@@ -15,13 +17,11 @@
     "outDir": "./dist",
     "declaration": true,
 
-    "jsx": "react",
-
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"]
     }
   },
 
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts"]
 }

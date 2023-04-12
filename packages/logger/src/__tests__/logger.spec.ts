@@ -1,6 +1,7 @@
+import { EventManager, Handler } from '@ts-chimera/event-manager';
+
 import { AfterLogEvent, BeforeLogEvent } from '@src/events';
 import { Logger } from '@src/service';
-import { EventManager, Handler } from '@ts-chimera/event-manager';
 
 describe('logger', () => {
   test('hello', async () => {

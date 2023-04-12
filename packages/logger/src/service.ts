@@ -1,6 +1,8 @@
+import chalk from 'chalk';
+
 import { Inject, Injectable } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
-import chalk from 'chalk';
+
 import { AfterLogEvent, BeforeLogEvent } from './events';
 
 @Injectable()
