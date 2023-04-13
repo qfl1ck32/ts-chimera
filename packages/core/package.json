@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@ts-chimera/di": "^0.0.0",
-    "@ts-chimera/utils": "^0.0.0"
+    "@ts-chimera/event-manager": "^0.0.0",
+    "@ts-chimera/typings": "^0.0.0"
   }
 }

@@ -1,14 +1,16 @@
-import { ContainerContext } from '@src/di';
-import { Core, CoreState } from '@ts-chimera/core';
-import React, { useEffect, useState } from 'react';
+import { ContainerContext } from '@ts-chimera/react-di';
+import { Core } from '@ts-chimera/core';
+import React, { Fragment, useEffect, useState } from 'react';
 
 export const AppProvider: React.FC<{
   children: React.ReactNode;
-  LoadingComponent: React.ReactNode;
+  LoadingComponent?: React.ReactNode;
   core: Core;
   className?: string;
 }> = (props) => {
   const [isInitialised, setIsInitialised] = useState(props.core.isInitialised);
+
+  const LoadingComponent = props.LoadingComponent || <div>Loading...</div>;
 
   useEffect(() => {
     if (props.core.isInitialised) return;
@@ -17,7 +19,7 @@ export const AppProvider: React.FC<{
   }, []);
 
   if (!isInitialised) {
-    return <>{props.LoadingComponent}</>;
+    return <Fragment>{LoadingComponent}</Fragment>;
   }
 
   return (

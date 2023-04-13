@@ -24,7 +24,8 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
-    "@ts-chimera/core": "^0.0.0",
+    "@ts-chimera/di": "^0.0.0",
+    "@ts-chimera/event-manager": "^0.0.0",
     "chalk": "^4.1.2"
   }
 }

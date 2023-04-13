@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form';
 import { ISchema, InferType } from 'yup';
 
-import { use } from '@src/di';
+import { use } from '@ts-chimera/react-di';
 import { I18n } from '@src/i18n';
 
 export function useForm<

@@ -1,5 +1,5 @@
 import { Injectable } from '@ts-chimera/di';
-import { Constructor } from '@ts-chimera/utils';
+import { Constructor } from '@ts-chimera/typings';
 
 import { Core } from './core';
 

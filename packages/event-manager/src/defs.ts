@@ -1,4 +1,4 @@
-import { Constructor, MaybePromise } from '@ts-chimera/utils';
+import { Constructor, MaybePromise } from '@ts-chimera/typings';
 
 import { Event } from './event';
 
