@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Inject, Injectable } from '@ts-chimera/di';
-import { EventManager, Handler } from '@ts-chimera/event-manager';
+import { Inject, Injectable } from '@ts-chimera/react-di';
+import { EventManager } from '@ts-chimera/event-manager';
 
 import { SessionData } from './defs';
 import { SessionStorageUpdatedEvent } from './events';
@@ -64,27 +64,5 @@ export class Session {
     await this.eventManager.emitAsync(
       new SessionStorageUpdatedEvent({ key, value }),
     );
-  }
-
-  public onSet<T extends keyof SessionData>(
-    key: T,
-    handler: Handler<SessionData[T]>,
-  ) {
-    // TODO
-    // this.eventManager.addListener({
-    //   event: SessionStorageUpdatedEvent,
-    //   handler,
-    //   filter: (e) => e.data?.key === key.toString()
-    // });
-  }
-
-  public offSet<T extends keyof SessionData>(
-    key: SessionData,
-    handler: Handler<T>,
-  ) {
-    // this.eventManager.removeListener({
-    //   event: SessionStorageUpdatedEvent as any,
-    //   handler,
-    // });
   }
 }

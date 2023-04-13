@@ -1,9 +1,9 @@
 import { yup } from '.';
 
-import { Inject, InjectToken, Injectable } from '@ts-chimera/di';
+import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { LanguageChangedEvent } from '@src/i18n';
+import { LanguageChangedEvent } from '@ts-chimera/react-i18n';
 
 import { Config } from './defs';
 import { YUP_CONFIG } from './tokens';

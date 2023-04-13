@@ -1,4 +1,4 @@
-import { Token } from '@ts-chimera/di';
+import { Token } from '@ts-chimera/react-di';
 
 import { Config } from './defs';
 

@@ -39,8 +39,6 @@ export class I18n {
     this.activePolyglot = this.polyglots.get(this.defaultLocale) as Polyglot;
   }
 
-  async initialise() {}
-
   public async onLanguageChange(language: string) {
     this.activePolyglot = this.polyglots.get(language) as Polyglot;
 

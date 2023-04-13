@@ -28,10 +28,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.1",
-    "@ts-chimera/core": "^0.0.0",
-    "@ts-chimera/react-di": "^0.0.0",
     "dayjs": "^1.11.7",
-    "node-polyglot": "^2.5.0",
     "react": "^18.2.0",
     "react-hook-form": "^7.43.9",
     "yup": "^1.0.2"

@@ -1,4 +1,4 @@
-import { Injectable } from '@ts-chimera/di';
+import { Injectable } from '@ts-chimera/react-di';
 
 import { SessionData } from './defs';
 

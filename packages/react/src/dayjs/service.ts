@@ -3,7 +3,7 @@ import * as dayjs from 'dayjs';
 import { Inject, Injectable } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { LanguageChangedEvent } from '../i18n';
+import { LanguageChangedEvent } from '@ts-chimera/react-i18n';
 
 @Injectable()
 class Dayjs {

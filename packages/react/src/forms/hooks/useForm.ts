@@ -9,7 +9,7 @@ import {
 import { ISchema, InferType } from 'yup';
 
 import { use } from '@ts-chimera/react-di';
-import { I18n } from '@src/i18n';
+import { I18n } from '@ts-chimera/react-i18n';
 
 export function useForm<
   T extends ISchema<any>,

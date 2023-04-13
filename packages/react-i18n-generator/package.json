@@ -1,5 +1,5 @@
 {
-  "name": "@ts-chimera/react-di",
+  "name": "@ts-chimera/react-i18n-generator",
   "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,11 +24,8 @@
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.5"
   },
-  "peerDependencies": {
-    "react": "^17.0.0"
-  },
   "dependencies": {
     "@ts-chimera/di": "^0.0.0",
-    "@ts-chimera/typings": "^0.0.0"
+    "@ts-chimera/utils": "^0.0.0"
   }
 }
