@@ -31,7 +31,13 @@ describe('react-i18n-generator', () => {
 
     const files = readdirSync(outputPath);
 
-    expect(files.sort()).toEqual(['en.json', 'ro.json', 'defs.ts'].sort());
+    expect(files.sort()).toEqual(
+      [
+        ...languages.map((language) => `${language}.json`),
+        'defs.ts',
+        'index.ts',
+      ].sort(),
+    );
 
     const i18n = require(join(filesPath, 'example', `i18n.json`));
     const onlyKeyInI18n = Object.keys(i18n)[0];

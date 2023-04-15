@@ -202,7 +202,7 @@ export class I18nGenerator {
         (language) => `import * as ${language} from "./${language}.json";
 export { ${language} };`,
       )
-      .join('\n');
+      .join('\n\n');
 
     writeFileSync(join(this.config.outputPath, `index.ts`), index);
   }
