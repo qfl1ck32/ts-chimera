@@ -1,4 +1,3 @@
-import '@src/styles/globals.css';
 import { AppProvider } from '@ts-chimera/react';
 import type { AppProps } from 'next/app';
 

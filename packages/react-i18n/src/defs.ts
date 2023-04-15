@@ -5,51 +5,61 @@ import {
   NestedPathsObjectsJustLeaf,
 } from '@ts-chimera/typings';
 
-export interface Translations {}
-export enum Language {}
+export interface ITranslations extends Record<string, any> {}
+export interface IInterpolationStrings
+  extends Record<'start' | 'end', string> {}
 
 export interface Config {
   defaultLocale: string;
-  translations: Translations;
+  translations: ITranslations;
+  interpolationStrings: IInterpolationStrings;
 }
 
-// TODO: any way to override this?
-export interface InterpolationStrings {
-  start: '{{ ';
-  end: ' }}';
-}
-
-export type Phrases = {
-  [key: string]: string | Phrases;
-};
-
-export type AllPhrases = Join<
+export type AllPhrases<Translations extends ITranslations> = Join<
   NestedPathsObjectsJustLeaf<Translations, []>,
   '.'
 >;
 
-export type AllPhrasesPrefixes = Join<
+export type AllPhrasesPrefixes<Translations extends ITranslations> = Join<
   NestedPathsObjectUntilLeaf<Translations, []>,
   '.'
 >;
-export type ExtractInterpolation<T extends string> =
-  T extends `${infer A}${InterpolationStrings['start']}${infer B}${InterpolationStrings['end']}${infer C}`
-    ? ExtractInterpolation<A> | B | ExtractInterpolation<C>
-    : never;
+
+export type ExtractInterpolation<
+  InterpolationStrings extends IInterpolationStrings,
+  Text extends string,
+> = Text extends `${infer A}${InterpolationStrings['start']}${infer B}${InterpolationStrings['end']}${infer C}`
+  ?
+      | ExtractInterpolation<InterpolationStrings, A>
+      | B
+      | ExtractInterpolation<InterpolationStrings, C>
+  : never;
 
 export type ExtractInterpolationStringsFromTranslation<
-  T extends AllPhrases,
+  Translations extends ITranslations,
+  InterpolationStrings extends IInterpolationStrings,
+  Text extends AllPhrases<Translations>,
   // @ts-ignore
-> = ExtractInterpolation<GetDeep<Translations, T>>;
+> = ExtractInterpolation<InterpolationStrings, GetDeep<Translations, Text>>;
 
 export type InterpolationKeys<
-  Prefix extends AllPhrasesPrefixes | undefined = undefined,
-  P = Phrase<Prefix>,
+  Translations extends ITranslations,
+  InterpolationStrings extends IInterpolationStrings,
+  Prefix extends AllPhrasesPrefixes<Translations> | undefined = undefined,
+  P = Phrase<Translations, Prefix>,
 > = Prefix extends undefined
-  ? // @ts-ignore
-    ExtractInterpolationStringsFromTranslation<P>
-  : // @ts-ignore
-    ExtractInterpolationStringsFromTranslation<Join<[Prefix, P], '.'>>;
+  ? ExtractInterpolationStringsFromTranslation<
+      Translations,
+      InterpolationStrings,
+      // @ts-ignore
+      P
+    >
+  : ExtractInterpolationStringsFromTranslation<
+      Translations,
+      InterpolationStrings,
+      // @ts-ignore
+      Join<[Prefix, P], '.'>
+    >;
 
 export type GetDeep<
   T extends Record<string, any>,
@@ -61,14 +71,18 @@ export type GetDeep<
     GetDeep<T[A], B>
   : any;
 
-export type Phrase<T extends AllPhrasesPrefixes | undefined> =
-  T extends undefined
-    ? AllPhrases
-    : Join<
-        NestedPathsObjectsJustLeaf<
-          // @ts-ignore (ts-2344)
-          T extends AllPhrasesPrefixes ? GetDeep<Translations, T> : any,
-          []
-        >,
-        '.'
-      >;
+export type Phrase<
+  Translations extends ITranslations,
+  T extends AllPhrasesPrefixes<Translations> | undefined,
+> = T extends undefined
+  ? AllPhrases<Translations>
+  : Join<
+      NestedPathsObjectsJustLeaf<
+        T extends AllPhrasesPrefixes<Translations>
+          ? // @ts-ignore
+            GetDeep<Translations, T>
+          : never,
+        []
+      >,
+      '.'
+    >;

@@ -1,5 +1,5 @@
 import { Injectable, Token } from '@ts-chimera/di';
-import { Constructor } from '@ts-chimera/typings';
+import { Constructor, DeepPartial } from '@ts-chimera/typings';
 
 import { Core } from './core';
 import { PackageDependency, PartialConfig } from './defs';
@@ -16,10 +16,23 @@ export class Package<
 
   constructor(
     ...args: RequiredConfig extends null
-      ? [Partial<ConfigType>?]
-      : [RequiredConfig & Partial<ConfigType>]
+      ? [DeepPartial<ConfigType>?]
+      : [RequiredConfig & DeepPartial<ConfigType>]
   ) {
-    this.setConfig(args[0] || (this.getDefaultConfig() as any));
+    const config = {} as ConfigType;
+
+    const sources = [this.getDefaultConfig()];
+
+    if (args[0]) {
+      sources.push(args[0] as any);
+    }
+
+    mergeDeep({
+      target: config as Record<string, any>,
+      sources,
+    });
+
+    this.setConfig(config);
   }
 
   public async initialise() {}
@@ -42,7 +55,7 @@ export class Package<
 
   public setConfig(config: ConfigType) {
     if (this._config == null) {
-      this._config = config;
+      this._config = { ...config };
       return;
     }
 

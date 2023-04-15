@@ -1,24 +1,32 @@
-// import { I18nGenerator } from '@packages/react/i18n/generator';
+import {
+  I18nGenerator,
+  I18nGeneratorPackage,
+} from '@ts-chimera/react-i18n-generator';
 
-// import { Language } from '@src/constants';
-// import env from '@src/env';
+import { Language } from '@src/constants';
+import env from '@src/env';
 
-// import { core } from './core';
+import { Core } from '@ts-chimera/core';
 
-// if (env.NODE_ENV === 'development') {
-//   const generator = core.container.get(I18nGenerator);
+// TODO: not triggered when it should (on refresh)
+const main = async () => {
+  if (env.NODE_ENV !== 'development') {
+    return;
+  }
 
-//   generator.updateTranslations({
-//     i18nFilesRegex: 'src/**/i18n.json',
-//     defaultLanguage: Language.En,
-//     interpolation: {
-//       start: '{{ ',
-//       end: ' }}',
-//     },
-//     missingKey: 'MISSING_KEY',
-//     outputPath: 'src/translations',
-//     languages: Object.values(Language),
-//   });
-// }
+  const core = new Core({
+    packages: [
+      new I18nGeneratorPackage({
+        languages: Object.values(Language),
+      }),
+    ],
+  });
 
-// export {};
+  await core.initialise();
+
+  const generator = core.container.get(I18nGenerator);
+
+  generator.run();
+};
+
+main();

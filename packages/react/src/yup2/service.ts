@@ -1,4 +1,4 @@
-import { yup } from '@src/yup';
+import * as yup from 'yup';
 
 import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
@@ -34,3 +34,5 @@ export class Yup {
     );
   };
 }
+
+export { yup };

@@ -3,7 +3,7 @@ import Polyglot from 'node-polyglot';
 import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { AllPhrases, Config } from './defs';
+import { AllPhrases, Config, ITranslations } from './defs';
 import { LanguageChangedEvent } from './events';
 import { I18N_CONFIG } from './tokens';
 
@@ -51,8 +51,8 @@ export class I18n {
     );
   }
 
-  public t<T extends AllPhrases>(
-    phrase: T,
+  public t<Translations extends ITranslations>(
+    phrase: AllPhrases<Translations>,
     options?: number | Polyglot.InterpolationOptions | undefined,
   ) {
     return this.activePolyglot.t(phrase, options);

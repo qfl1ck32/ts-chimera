@@ -10,6 +10,8 @@ const config: Config = {
 
   moduleFileExtensions: ['js', 'json', 'ts', 'jsx', 'tsx'],
 
+  testPathIgnorePatterns: ['src/__tests__/files/*'],
+
   testRegex: 'src/__tests__/(.*).spec.ts',
 
   transform: {

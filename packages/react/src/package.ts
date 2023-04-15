@@ -4,8 +4,8 @@ import {
   createPackageDependency,
 } from '@ts-chimera/core';
 import { ReactPackageConfig } from './defs';
-import { DayjsPackage } from './dayjs';
-import { YupPackage } from './yup';
+import { DayjsPackage } from './dayjs2';
+import { YupPackage } from './yup2';
 import {
   SessionStorage,
   SessionStoragePackage,

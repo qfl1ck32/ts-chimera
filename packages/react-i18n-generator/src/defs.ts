@@ -1,4 +1,4 @@
-export interface State {
+export interface Config {
   missingKey: string;
 
   defaultLanguage: string;
@@ -9,10 +9,10 @@ export interface State {
   };
 
   i18nFilesRegex: string;
-}
+  srcDir: string;
 
-export interface UpdateTranslationsArgs
-  extends Omit<State, 'interpolationRegex'> {
   outputPath: string;
   languages: string[];
 }
+
+export interface RequiredConfig extends Pick<Config, 'languages'> {}

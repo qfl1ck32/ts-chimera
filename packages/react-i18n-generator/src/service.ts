@@ -1,19 +1,20 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
 import glob from 'glob';
 import { join, resolve } from 'path';
 
-import { Injectable } from '@ts-chimera/di';
+import { InjectToken, Injectable } from '@ts-chimera/di';
 import { mergeDeep } from '@ts-chimera/utils';
 
-import { State, UpdateTranslationsArgs } from './defs';
+import { Config } from './defs';
+import { I18N_GENERATOR_CONFIG } from './tokens';
 
 @Injectable()
 export class I18nGenerator {
-  private state!: State;
+  constructor(@InjectToken(I18N_GENERATOR_CONFIG) private config: Config) {}
 
-  get interpolationRegex() {
+  private get interpolationRegex() {
     return new RegExp(
-      `${this.state.interpolation.start}(.*?)${this.state.interpolation.end}`,
+      `${this.config.interpolation.start}(.*?)${this.config.interpolation.end}`,
       'g',
     );
   }
@@ -47,7 +48,7 @@ export class I18nGenerator {
   ) {
     Object.assign(target, {
       [key]:
-        target[key] && target[key] !== this.state.missingKey
+        target[key] && target[key] !== this.config.missingKey
           ? target[key]
           : source[key],
     });
@@ -61,7 +62,7 @@ export class I18nGenerator {
         continue;
       }
 
-      object[key] = this.state.missingKey;
+      object[key] = this.config.missingKey;
 
       const interpArgs = this.extractInterpolationArgs(value);
 
@@ -88,13 +89,11 @@ export class I18nGenerator {
     }
   }
 
-  public updateTranslations(args: UpdateTranslationsArgs) {
-    this.state = args;
-
+  public run() {
     const translations = {} as Record<string, any>;
 
-    for (const language of args.languages) {
-      const filePath = resolve(args.outputPath, `${language}.json`);
+    for (const language of this.config.languages) {
+      const filePath = resolve(this.config.outputPath, `${language}.json`);
 
       let content = [];
 
@@ -105,7 +104,7 @@ export class I18nGenerator {
       translations[language] = content;
     }
 
-    const filePaths = glob.sync(this.state.i18nFilesRegex);
+    const filePaths = glob.sync(this.config.i18nFilesRegex);
 
     let fullTranslations = {} as Record<string, any>;
 
@@ -114,13 +113,25 @@ export class I18nGenerator {
 
       const path = filePath.split('/');
 
-      const name = path[path.length - 2];
+      const srcIndex = path.findIndex((dir) => dir === this.config.srcDir) + 1;
+
+      let dirNames = path.splice(srcIndex);
+
+      dirNames = dirNames.slice(0, dirNames.length - 1);
 
       const result = {} as Record<string, any>;
 
       let resultPointer = result;
 
-      resultPointer[name] = fileContent;
+      for (const dirName of dirNames.slice(0, dirNames.length - 1)) {
+        resultPointer[dirName] = {} as Record<string, any>;
+
+        resultPointer = resultPointer[dirName];
+      }
+
+      const lastDirName = dirNames[dirNames.length - 1];
+
+      resultPointer[lastDirName] = fileContent;
 
       mergeDeep({
         target: fullTranslations,
@@ -139,8 +150,8 @@ export class I18nGenerator {
 
     const results = {} as Record<string, any>;
 
-    for (const language of args.languages) {
-      const isDefaultLanguage = language === this.state.defaultLanguage;
+    for (const language of this.config.languages) {
+      const isDefaultLanguage = language === this.config.defaultLanguage;
 
       const currentFullTranslations = isDefaultLanguage
         ? fullTranslations
@@ -167,22 +178,32 @@ export class I18nGenerator {
       }
     }
 
-    for (const language of args.languages) {
+    if (!existsSync(this.config.outputPath)) {
+      mkdirSync(this.config.outputPath, { recursive: true });
+    }
+
+    for (const language of this.config.languages) {
       writeFileSync(
-        join(args.outputPath, `${language}.json`),
+        join(this.config.outputPath, `${language}.json`),
         JSON.stringify(results[language], null, 2),
       );
     }
 
     const types = `export type Translations = ${JSON.stringify(
-      results[this.state.defaultLanguage],
+      results[this.config.defaultLanguage],
       null,
       2,
     )}`;
 
-    writeFileSync(
-      join(args.outputPath, `${this.state.defaultLanguage}.ts`),
-      types,
-    );
+    writeFileSync(join(this.config.outputPath, `defs.ts`), types);
+
+    const index = this.config.languages
+      .map(
+        (language) => `import * as ${language} from "./${language}.json";
+export { ${language} };`,
+      )
+      .join('\n');
+
+    writeFileSync(join(this.config.outputPath, `index.ts`), index);
   }
 }

@@ -1,5 +1,5 @@
 describe('my-package-template', () => {
-  test('hello', () => {
+  it('should work', async () => {
     expect(true).toBe(true);
   });
 });

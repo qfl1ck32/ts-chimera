@@ -30,6 +30,8 @@ export const mergeDeep = (args: {
     for (const key in source) {
       if (typeof source[key] === 'function') {
         target[key] = source[key];
+      } else if (Array.isArray(source[key])) {
+        assignFunction(target, source, key);
       } else if (source[key] instanceof Object) {
         if (!target[key]) Object.assign(target, { [key]: {} });
         mergeDeep({

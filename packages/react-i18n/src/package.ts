@@ -19,6 +19,10 @@ export class I18nPackage extends Package<Config> {
     return {
       defaultLocale: 'en',
       translations: {},
+      interpolationStrings: {
+        start: '{{ ',
+        end: ' }}',
+      },
     };
   }
 }

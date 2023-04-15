@@ -1,5 +1,3 @@
-import * as yup from 'yup';
-
 import { Package, PartialConfig } from '@ts-chimera/core';
 
 import { Config } from './defs';
@@ -21,5 +19,3 @@ export class YupPackage extends Package<Config> {
     };
   }
 }
-
-export { yup };

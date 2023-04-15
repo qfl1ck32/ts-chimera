@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "compile": "tsc && tsc-alias",
+    "compile": "tsc && tsc-alias -p tsconfig.json",
     "install-dependencies": "npm i",
     "prettier": "prettier --write .",
     "test": "jest",
