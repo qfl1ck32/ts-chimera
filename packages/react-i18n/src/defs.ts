@@ -8,6 +8,11 @@ import {
 export interface Translations {}
 export enum Language {}
 
+export interface Config {
+  defaultLocale: string;
+  translations: Translations;
+}
+
 // TODO: any way to override this?
 export interface InterpolationStrings {
   start: '{{ ';

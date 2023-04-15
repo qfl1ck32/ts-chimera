@@ -1,19 +1,15 @@
-import { DEFAULT_LOCALE, I18n, TRANSLATIONS } from '@src/index';
+import { I18n } from '@src/index';
 import { I18nPackage } from '@src/package';
 import { Core } from '@ts-chimera/core';
 
-declare module '@src/defs' {
-  interface Translations {
-    hi: string;
-  }
-}
+// declare module '@src/defs' {
+//   interface Translations {
+//     hi: string;
+//   }
+// }
 
 describe('react-i18n', () => {
   it('should return the correct translation', async () => {
-    const core = new Core({
-      packages: [new I18nPackage()],
-    });
-
     const translations = {
       en: {
         hi: 'Hello',
@@ -23,17 +19,24 @@ describe('react-i18n', () => {
       },
     };
 
-    core.setToken(DEFAULT_LOCALE, 'en');
-    core.setToken(TRANSLATIONS, translations);
+    const core = new Core({
+      packages: [
+        new I18nPackage({
+          defaultLocale: 'en',
+          translations,
+        }),
+      ],
+    });
 
     await core.initialise();
 
     const i18n = core.container.get(I18n);
 
-    expect(i18n.t('hi')).toBe(translations.en.hi);
+    // TODO: explain why "as never" (declare module, default config)
+    expect(i18n.t('hi' as never)).toBe(translations.en.hi);
 
     i18n.onLanguageChange('ro');
 
-    expect(i18n.t('hi')).toBe(translations.ro.hi);
+    expect(i18n.t('hi' as never)).toBe(translations.ro.hi);
   });
 });

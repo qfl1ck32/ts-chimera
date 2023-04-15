@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { Package } from '@ts-chimera/core';
+import { Package, PartialConfig } from '@ts-chimera/core';
 
 import { Config } from './defs';
 import { Yup } from './service';
@@ -10,9 +10,9 @@ export class YupPackage extends Package<Config> {
     return [Yup];
   }
 
-  getDefaultConfig(): Config {
+  getDefaultConfig(): PartialConfig<Config, null> {
     return {
-      usePathsInTranslations: false,
+      usePathsInTranslations: true,
     };
   }
 }

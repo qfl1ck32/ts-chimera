@@ -6,7 +6,7 @@ import { EventManager } from '@ts-chimera/event-manager';
 import { LanguageChangedEvent } from '@ts-chimera/react-i18n';
 
 @Injectable()
-class Dayjs {
+export class Dayjs {
   constructor(@Inject(EventManager) private eventManager: EventManager) {
     this.eventManager.addListener({
       event: LanguageChangedEvent,
@@ -20,7 +20,5 @@ class Dayjs {
     dayjs.locale(language);
   };
 }
-
-export default Dayjs;
 
 export { dayjs };

@@ -1,7 +1,16 @@
 import { Inject, Injectable } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { Core, CoreBeforeInitialiseEvent, Package } from '@src/index';
+import {
+  Core,
+  CoreBeforeInitialiseEvent,
+  Package,
+  PackageDependency,
+  PartialConfig,
+} from '@src/index';
+import { CircularDependencyError } from '@src/errors';
+import { createPackageDependency } from '@src/utils';
+import { Constructor } from '@ts-chimera/typings';
 
 describe('core', () => {
   it('should work', async () => {
@@ -26,12 +35,8 @@ describe('core', () => {
     }
 
     class MyPackage extends Package {
-      public getServices() {
+      public getServices(): Constructor[] {
         return [MyService];
-      }
-
-      public getDefaultConfig() {
-        return {};
       }
     }
 
@@ -46,5 +51,124 @@ describe('core', () => {
     expect(myService).toBeInstanceOf(MyService);
 
     expect(myService.initialised).toBe(true);
+  });
+
+  it('should throw when circular dependency', async () => {
+    class MyPackage extends Package {
+      public getServices() {
+        return [];
+      }
+
+      public getDependencies(): PackageDependency[] {
+        return [createPackageDependency(MyOtherPackage)];
+      }
+    }
+
+    class MyOtherPackage extends Package {
+      public getServices(): Constructor[] {
+        return [];
+      }
+
+      public getDependencies(): PackageDependency[] {
+        return [createPackageDependency(MyPackage)];
+      }
+    }
+
+    const core = new Core({
+      packages: [new MyOtherPackage()],
+    });
+
+    await expect(core.initialise()).rejects.toThrowError(
+      CircularDependencyError,
+    );
+  });
+
+  it('should work with multiple packages', async () => {
+    interface PackageConfig {
+      name: string;
+    }
+
+    class MyPackage extends Package<PackageConfig> {
+      public getServices(): Constructor[] {
+        return [];
+      }
+
+      public getDependencies(): PackageDependency[] {
+        return [];
+      }
+    }
+
+    const newName = 'ModifiedByMyOtherPackage';
+
+    class MyOtherPackage extends Package<PackageConfig> {
+      public getServices(): Constructor[] {
+        return [];
+      }
+
+      public getDependencies(): PackageDependency[] {
+        return [
+          createPackageDependency(MyPackage, {
+            name: newName,
+          }),
+        ];
+      }
+    }
+
+    const core = new Core({
+      packages: [new MyOtherPackage()],
+    });
+
+    await core.initialise();
+
+    const myPackage = core.container.get(MyPackage);
+
+    expect(myPackage.config.name).toBe(newName);
+  });
+
+  it('should work with required config', async () => {
+    interface PackageConfig {
+      name: string;
+      requiredStuff: string;
+    }
+
+    interface RequiredPackageConfig
+      extends Pick<PackageConfig, 'requiredStuff'> {}
+
+    const name = 'Hi';
+    const requiredStuff = 'hi';
+    class MyPackage extends Package<PackageConfig, RequiredPackageConfig> {
+      public getDefaultConfig(): PartialConfig<
+        PackageConfig,
+        RequiredPackageConfig
+      > {
+        return {
+          name,
+          requiredStuff: undefined,
+        };
+      }
+    }
+
+    class MyOtherPackage extends Package {
+      public getDependencies(): PackageDependency<any, any>[] {
+        return [
+          createPackageDependency(MyPackage, {
+            requiredStuff,
+          }),
+        ];
+      }
+    }
+
+    const core = new Core({
+      packages: [new MyOtherPackage()],
+    });
+
+    await core.initialise();
+
+    const pkg = core.container.get(MyPackage);
+
+    expect(pkg.config).toStrictEqual({
+      name,
+      requiredStuff,
+    });
   });
 });

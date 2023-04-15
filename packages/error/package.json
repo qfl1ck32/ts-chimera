@@ -1,5 +1,5 @@
 {
-  "name": "@ts-chimera/react-session",
+  "name": "@ts-chimera/error",
   "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,13 +23,5 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.5"
-  },
-  "peerDependencies": {
-    "react": "^17.0.0"
-  },
-  "dependencies": {
-    "@ts-chimera/core": "^0.0.0",
-    "@ts-chimera/event-manager": "^0.0.0",
-    "@ts-chimera/react-di": "^0.0.0"
   }
 }

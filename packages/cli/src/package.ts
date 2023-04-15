@@ -5,8 +5,4 @@ export class CLIPackage extends Package {
   getServices() {
     return [CLI];
   }
-
-  getDefaultConfig() {
-    return {};
-  }
 }

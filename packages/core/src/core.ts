@@ -5,8 +5,8 @@ import { CoreState } from './defs';
 import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
 import { Package } from './package';
 
-@Injectable()
-class Test {}
+import { CircularDependencyError } from './errors';
+import { CONTAINER } from './tokens';
 
 @Injectable()
 export class Core {
@@ -15,7 +15,11 @@ export class Core {
 
   private eventManager: EventManager;
 
-  constructor(private config: { packages: Package[] }) {
+  constructor(
+    private config: {
+      packages: Array<Package | Package<any, null>>;
+    },
+  ) {
     this._state = CoreState.NEW;
 
     this.eventManager = this.container.get(EventManager);
@@ -33,6 +37,8 @@ export class Core {
         this._state = CoreState.INITIALIZED;
       },
     });
+
+    this.setToken(CONTAINER, this.container);
   }
 
   get state() {
@@ -59,14 +65,65 @@ export class Core {
     this.container.bind(token.identifier).toConstantValue(value);
   }
 
+  private buildPackagesDependencyList(packages: Package[]): Package[] {
+    const result: Package[] = [];
+    const visited = new Set<Package>();
+    const visiting = new Set<Package>();
+
+    const visit = (pkg: Package) => {
+      if (visited.has(pkg)) {
+        return;
+      }
+
+      if (visiting.has(pkg)) {
+        throw new CircularDependencyError({
+          dependencies: Array.from(visiting).map((p) => p.constructor.name),
+        });
+      }
+
+      visiting.add(pkg);
+
+      const dependencies = pkg.getDependencies().map((dependency) => {
+        const pkg = this.container.get(
+          dependency.PackageConstructor,
+        ) as Package;
+
+        if (dependency.config[0]) {
+          pkg.setConfig(dependency.config[0]);
+        }
+
+        return pkg;
+      });
+
+      for (const dep of dependencies) {
+        visit(dep);
+      }
+
+      visited.add(pkg);
+      visiting.delete(pkg);
+      result.push(pkg);
+    };
+
+    for (const pkg of packages) {
+      visit(pkg);
+    }
+
+    return result;
+  }
+
   public async initialise() {
-    for (const pkg of this.config.packages) {
+    const allPackages = this.buildPackagesDependencyList(this.config.packages);
+
+    for (const pkg of allPackages) {
       pkg.setCore(this);
     }
 
-    for (const pkg of this.config.packages) {
+    for (const pkg of allPackages) {
+      await pkg.initialise();
+    }
+
+    for (const pkg of allPackages) {
       for (const ServiceClass of pkg.getServices()) {
-        // TODO: should be some kind of "bind"
         this.container.get(ServiceClass);
       }
     }

@@ -1,18 +1,29 @@
 import { useEffect, useState } from 'react';
 
-import { Inject, Injectable } from '@ts-chimera/react-di';
+import {
+  Container,
+  Inject,
+  InjectToken,
+  Injectable,
+} from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { SessionData } from './defs';
+import { Config, ISessionStorage, SessionData } from './defs';
 import { SessionStorageUpdatedEvent } from './events';
-import { SessionStorage } from './storage';
+import { SESSION_CONFIG } from './tokens';
+import { InjectContainer } from '@ts-chimera/core';
 
 @Injectable()
 export class Session {
+  private storage: ISessionStorage;
+
   constructor(
-    @Inject(SessionStorage) private storage: SessionStorage,
+    @InjectContainer() private container: Container,
+    @InjectToken(SESSION_CONFIG) private config: Config,
     @Inject(EventManager) private eventManager: EventManager,
-  ) {}
+  ) {
+    this.storage = this.container.get(this.config.storage);
+  }
 
   get state() {
     return this.storage.state;
@@ -33,7 +44,7 @@ export class Session {
     defaultValue?: SessionData[T],
   ): SessionData[T] | null {
     const [value, setValue] = useState<SessionData[T] | null>(
-      this.storage.getItem(key) || defaultValue,
+      this.storage.getItem(key) || defaultValue || null,
     );
 
     useEffect(() => {

@@ -3,9 +3,9 @@ import Polyglot from 'node-polyglot';
 import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { AllPhrases } from './defs';
+import { AllPhrases, Config } from './defs';
 import { LanguageChangedEvent } from './events';
-import { DEFAULT_LOCALE, TRANSLATIONS } from './tokens';
+import { I18N_CONFIG } from './tokens';
 
 @Injectable()
 export class I18n {
@@ -14,14 +14,14 @@ export class I18n {
   public activePolyglot!: Polyglot;
 
   constructor(
-    @InjectToken(DEFAULT_LOCALE) private defaultLocale: string,
-    @InjectToken(TRANSLATIONS) private translations: Record<string, any>,
+    @InjectToken(I18N_CONFIG) private config: Config,
     @Inject(EventManager) private eventManager: EventManager,
   ) {
     this.polyglots = new Map();
 
-    for (const locale of Object.keys(translations)) {
-      const phrases = this.translations[locale];
+    for (const locale of Object.keys(config.translations)) {
+      const phrases =
+        config.translations[locale as keyof typeof config.translations];
 
       const polyglot = new Polyglot({
         locale,
@@ -36,7 +36,9 @@ export class I18n {
       this.polyglots.set(locale, polyglot);
     }
 
-    this.activePolyglot = this.polyglots.get(this.defaultLocale) as Polyglot;
+    this.activePolyglot = this.polyglots.get(
+      this.config.defaultLocale,
+    ) as Polyglot;
   }
 
   public async onLanguageChange(language: string) {

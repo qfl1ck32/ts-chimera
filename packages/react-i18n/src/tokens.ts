@@ -1,4 +1,4 @@
 import { Token } from '@ts-chimera/react-di';
+import { Config } from '@src/defs';
 
-export const DEFAULT_LOCALE = new Token<string>('DEFAULT_LOCALE');
-export const TRANSLATIONS = new Token<Record<string, any>>('TRANSLATIONS');
+export const I18N_CONFIG = new Token<Config>('I18N_CONFIG');

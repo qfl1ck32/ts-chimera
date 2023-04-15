@@ -5,9 +5,5 @@ export class AppPackage extends Package {
     return [];
   }
 
-  getDefaultConfig() {
-    return {};
-  }
-
   async init() {}
 }
