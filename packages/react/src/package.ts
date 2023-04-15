@@ -1,8 +1,4 @@
-import {
-  Package,
-  PartialConfig,
-  createPackageDependency,
-} from '@ts-chimera/core';
+import { Package, createPackageDependency } from '@ts-chimera/core';
 import { ReactPackageConfig } from './defs';
 import { DayjsPackage } from './dayjs2';
 import { YupPackage } from './yup2';
@@ -37,22 +33,5 @@ export class ReactPackage extends Package<ReactPackageConfig> {
       }),
       createPackageDependency(I18nPackage, this.config.i18n),
     ];
-  }
-
-  getDefaultConfig(): PartialConfig<ReactPackageConfig, null> {
-    return {
-      yup: {
-        usePathsInTranslations: true,
-      },
-
-      sessionStorage: {
-        localStorageKey: 'session-storage',
-      },
-
-      i18n: {
-        defaultLocale: 'en',
-        translations: {},
-      },
-    };
   }
 }
