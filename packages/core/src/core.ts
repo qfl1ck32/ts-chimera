@@ -45,8 +45,16 @@ export class Core {
     return this._state;
   }
 
+  get isNew() {
+    return this.state === CoreState.NEW;
+  }
+
   get isInitialised() {
     return this.state === CoreState.INITIALIZED;
+  }
+
+  get isInitialising() {
+    return this.state === CoreState.INITIALIZING;
   }
 
   get container() {
@@ -112,6 +120,12 @@ export class Core {
   }
 
   public async initialise() {
+    if (!this.isNew) {
+      return;
+    }
+
+    await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
+
     const allPackages = this.buildPackagesDependencyList(this.config.packages);
 
     for (const pkg of allPackages) {
@@ -128,7 +142,6 @@ export class Core {
       }
     }
 
-    await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
     await this.eventManager.emitAsync(new CoreAfterInitialiseEvent());
   }
 }

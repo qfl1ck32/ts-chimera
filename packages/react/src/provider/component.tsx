@@ -13,8 +13,6 @@ export const AppProvider: React.FC<{
   const LoadingComponent = props.LoadingComponent || <div>Loading...</div>;
 
   useEffect(() => {
-    if (props.core.isInitialised) return;
-
     props.core.initialise().then(() => setIsInitialised(true));
   }, []);
 

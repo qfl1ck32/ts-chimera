@@ -48,7 +48,7 @@ export class Package<
 
     mergeDeep({
       target: this._config as any,
-      sources: [this._config as any, config],
+      sources: [config, this._config as any],
     });
   }
 

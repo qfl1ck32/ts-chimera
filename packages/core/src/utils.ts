@@ -1,6 +1,5 @@
 import { Constructor } from '@ts-chimera/typings';
 import { Package } from './package';
-import { PackageDependency } from './defs';
 
 export const createPackageDependency = <
   ConfigType extends Record<string, any> | null = any,

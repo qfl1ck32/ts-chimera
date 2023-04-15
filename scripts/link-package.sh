@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: ./link-local-packages.sh source_package
+# Usage: ./link-package.sh source_package
 
 SOURCE_PACKAGE=$1
 PACKAGES_PATH=/Users/qfl1ck32/Desktop/me/ts-chimera/packages

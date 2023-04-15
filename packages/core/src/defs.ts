@@ -2,9 +2,9 @@ import { Constructor } from '@ts-chimera/typings';
 import { Package } from './package';
 
 export enum CoreState {
-  NEW,
-  INITIALIZING,
-  INITIALIZED,
+  NEW = 'NEW',
+  INITIALIZING = 'INITIALIZING',
+  INITIALIZED = 'INITIALIZED',
 }
 
 export interface PackageDependency<

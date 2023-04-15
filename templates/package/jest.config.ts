@@ -1,14 +1,14 @@
 import type { Config } from 'jest';
 import { pathsToModuleNameMapper } from 'ts-jest';
 
-const { compilerOptions } = require('./tsconfig.json');
+import { compilerOptions } from './tsconfig.json';
 
 const config: Config = {
   verbose: true,
 
   preset: 'ts-jest',
 
-  moduleFileExtensions: ['js', 'json', 'ts'],
+  moduleFileExtensions: ['js', 'json', 'ts', 'jsx', 'tsx'],
 
   testRegex: 'src/__tests__/(.*).spec.ts',
 

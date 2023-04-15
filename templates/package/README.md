@@ -14,6 +14,12 @@ Install the package using npm or yarn:
 npm i @ts-chimera/my-package-template
 ```
 
+or
+
+```
+yarn @ts-chimera/my-package-template
+```
+
 ## Usage
 
 Here's a basic example of how to use _@ts-chimera/my-package-template_:

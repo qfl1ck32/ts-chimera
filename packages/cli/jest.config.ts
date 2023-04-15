@@ -8,7 +8,7 @@ const config: Config = {
 
   preset: 'ts-jest',
 
-  moduleFileExtensions: ['js', 'json', 'ts'],
+  moduleFileExtensions: ['js', 'json', 'ts', 'jsx', 'tsx'],
 
   testRegex: 'src/__tests__/(.*).spec.ts',
 

@@ -1,6 +1,6 @@
 import * as dayjs from 'dayjs';
 
-import { Inject, Injectable } from '@ts-chimera/di';
+import { Inject, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
 import { LanguageChangedEvent } from '@ts-chimera/react-i18n';

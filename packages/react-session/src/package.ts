@@ -3,7 +3,6 @@ import { Package, PartialConfig } from '@ts-chimera/core';
 import { Session } from './service';
 import { Config, RequiredConfig } from './defs';
 import { SESSION_CONFIG } from './tokens';
-import { PartialBy } from '@ts-chimera/typings';
 
 @Injectable()
 export class SessionPackage extends Package<Config, RequiredConfig> {
