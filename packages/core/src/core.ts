@@ -140,11 +140,11 @@ export class Core {
       return;
     }
 
-    await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
-
     const allPackages = this.buildPackagesDependencyList(this.config.packages);
 
     await this.initialisePackages(allPackages);
+
+    await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
 
     await this.eventManager.emitAsync(new CoreAfterInitialiseEvent());
   }
