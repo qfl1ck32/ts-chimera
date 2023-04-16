@@ -1,7 +1,9 @@
-import LanguageSwitcher, { ILocale } from '@src/components/LanguageSwitcher';
 import { use } from '@ts-phoenix/react-di';
 import { I18n } from '@ts-phoenix/react-i18n';
 import { useRouter } from 'next/router';
+
+import LanguageSwitcher, { ILocale } from '@src/components/LanguageSwitcher';
+
 import { locales } from './constants';
 
 const LanguageSwitcherContainer: React.FC = () => {
