@@ -5,12 +5,17 @@ import { Inject, Injectable } from '@ts-chimera/di';
 import { Logger } from '@ts-chimera/logger';
 
 import { MicroserviceType } from './defs';
+import { MicroserviceWriter } from './writers';
 
 inquirer.registerPrompt('autocomplete', inquirer_autocomplete);
 
 @Injectable()
 export class CLI {
-  constructor(@Inject(Logger) private readonly logger: Logger) {}
+  constructor(
+    @Inject(Logger) private readonly logger: Logger,
+    @Inject(MicroserviceWriter)
+    private readonly microserviceWriter: MicroserviceWriter,
+  ) {}
 
   async run() {
     // this.logger.info("Let's go!");
@@ -69,6 +74,13 @@ export class CLI {
     ]);
 
     const name = await this.promptForName(`Enter the ${component} name:`);
+
+    switch (component) {
+      case MicroserviceType.FRONT_END:
+        await this.microserviceWriter.createFrontend({ name });
+        break;
+    }
+
     this.logger.info(
       `You have created a ${component} microservice with the name "${name}".`,
     );

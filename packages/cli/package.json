@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "compile": "tsc",
+    "compile": "tsc && tsc-alias",
     "install-dependencies": "npm i",
     "main": "dist/index.js",
     "prettier": "prettier --write .",
@@ -23,7 +23,8 @@
     "@types/inquirer-autocomplete-prompt": "^3.0.0",
     "@types/jest": "^29.5.0",
     "jest": "^29.5.0",
-    "ts-jest": "^29.1.0"
+    "ts-jest": "^29.1.0",
+    "tsc-alias": "^1.8.5"
   },
   "dependencies": {
     "@ts-chimera/core": "^0.0.0",
