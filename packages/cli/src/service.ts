@@ -1,7 +1,7 @@
-import inquirer from 'inquirer';
-import inquirer_autocomplete from 'inquirer-autocomplete-prompt';
 import { Inject, Injectable } from '@ts-phoenix/di';
 import { Logger } from '@ts-phoenix/logger';
+import inquirer from 'inquirer';
+import inquirer_autocomplete from 'inquirer-autocomplete-prompt';
 
 import { MicroserviceType } from './defs';
 import { MicroserviceWriter } from './writers';

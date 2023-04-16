@@ -1,4 +1,3 @@
-import * as yup from 'yup';
 import { EventManager } from '@ts-phoenix/event-manager';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/react-di';
 import {
@@ -6,6 +5,7 @@ import {
   Config as I18nConfig,
   LocaleChangedEvent,
 } from '@ts-phoenix/react-i18n';
+import * as yup from 'yup';
 
 import { Config } from './defs';
 import { YUP_CONFIG } from './tokens';

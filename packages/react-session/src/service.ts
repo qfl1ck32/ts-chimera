@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { InjectContainer } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
 import {
@@ -7,6 +6,7 @@ import {
   InjectToken,
   Injectable,
 } from '@ts-phoenix/react-di';
+import { useEffect, useState } from 'react';
 
 import { Config, ISessionStorage, SessionData } from './defs';
 import { SessionStorageUpdatedEvent } from './events';

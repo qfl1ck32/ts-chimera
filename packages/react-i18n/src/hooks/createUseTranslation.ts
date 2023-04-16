@@ -1,5 +1,5 @@
-import Polyglot from 'node-polyglot';
 import { use } from '@ts-phoenix/react-di';
+import Polyglot from 'node-polyglot';
 
 import {
   AllPhrases,

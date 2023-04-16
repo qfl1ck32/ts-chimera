@@ -1,6 +1,6 @@
-import chalk from 'chalk';
 import { Inject, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
+import chalk from 'chalk';
 
 import { AfterLogEvent, BeforeLogEvent } from './events';
 

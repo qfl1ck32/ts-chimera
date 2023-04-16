@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
 import { Constructor } from '@ts-phoenix/typings';
+import { useMemo } from 'react';
 
 import { useContainer } from './useContainer';
 

@@ -1,4 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { use } from '@ts-phoenix/react-di';
+import { I18n } from '@ts-phoenix/react-i18n';
 import { useEffect } from 'react';
 import {
   FieldValues,
@@ -7,8 +9,6 @@ import {
 } from 'react-hook-form';
 // eslint-disable-next-line import/named
 import { ISchema, InferType } from 'yup';
-import { use } from '@ts-phoenix/react-di';
-import { I18n } from '@ts-phoenix/react-i18n';
 
 export function useForm<
   T extends ISchema<any>,

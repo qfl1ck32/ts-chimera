@@ -1,6 +1,6 @@
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
 
 export const findPackageRoot = (currentDir: string): string => {
   if (fs.existsSync(path.join(currentDir, 'package.json'))) {
