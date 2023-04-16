@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Select,
   Flex,
@@ -10,7 +11,6 @@ import {
   MenuList,
   VStack,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 export interface ILocale {
   value: string;
   label: string;

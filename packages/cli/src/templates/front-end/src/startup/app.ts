@@ -4,6 +4,4 @@ export class AppPackage extends Package {
   getServices() {
     return [];
   }
-
-  async initialise() {}
 }

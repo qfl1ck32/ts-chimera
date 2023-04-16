@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
-import glob from 'glob';
 import { InjectToken, Injectable } from '@ts-phoenix/di';
 import { mergeDeep } from '@ts-phoenix/utils';
+import glob from 'glob';
 
 import { Config } from './defs';
 import { I18N_GENERATOR_CONFIG } from './tokens';
@@ -198,11 +198,9 @@ export class I18nGenerator {
     writeFileSync(join(this.config.outputPath, `defs.ts`), types);
 
     const index = this.config.locales
-      .map(
-        (language) => `import * as ${language} from "./${language}.json";
-export { ${language} };`,
-      )
-      .join('\n\n');
+      .map((language) => `import * as ${language} from "./${language}.json";`)
+      .join('\n')
+      .concat(`\n\nexport { ${this.config.locales.join(', ')} };`);
 
     writeFileSync(join(this.config.outputPath, `index.ts`), index);
   }

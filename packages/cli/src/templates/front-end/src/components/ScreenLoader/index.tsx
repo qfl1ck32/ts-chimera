@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+
 import Loader from '@src/components/Loader';
 
 const ScreenLoader: React.FC = () => {
