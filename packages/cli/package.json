@@ -1,5 +1,6 @@
 {
   "name": "@ts-phoenix/cli",
+  "description": "",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",
@@ -20,8 +21,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "GPL-3.0",
   "devDependencies": {
     "@types/inquirer": "^9.0.3",
     "@types/inquirer-autocomplete-prompt": "^3.0.0",

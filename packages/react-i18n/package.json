@@ -1,5 +1,6 @@
 {
   "name": "@ts-phoenix/react-i18n",
+  "description": "",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",
@@ -20,8 +21,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "GPL-3.0",
   "devDependencies": {
     "@ts-phoenix/typings": "^1.0.0-alpha.0",
     "@types/jest": "^29.5.0",
