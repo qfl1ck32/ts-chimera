@@ -63,8 +63,11 @@ const errorData: CustomErrorData = {
 const error = new CustomError(errorData);
 
 console.error(error);
+
 console.log(error.getCode());
+
 console.log(error.getContext());
+
 console.log(error.getMessage());
 ```
 
@@ -82,8 +85,11 @@ CustomError: Error Something went wrong has occurred.
   code: 'CUSTOM_ERROR',
   data: { id: 123, message: 'Something went wrong' }
 }
+
 CUSTOM_ERROR
+
 { id: 123 }
+
 Custom error: Something went wrong
 ```
 

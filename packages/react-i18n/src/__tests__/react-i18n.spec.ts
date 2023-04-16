@@ -2,11 +2,11 @@ import { I18n } from '@src/index';
 import { I18nPackage } from '@src/package';
 import { Core } from '@ts-chimera/core';
 
-// declare module '@src/defs' {
-//   interface Translations {
-//     hi: string;
-//   }
-// }
+declare module '@src/defs' {
+  interface Translations {
+    hi: string;
+  }
+}
 
 describe('react-i18n', () => {
   it('should return the correct translation', async () => {
@@ -32,11 +32,10 @@ describe('react-i18n', () => {
 
     const i18n = core.container.get(I18n);
 
-    // TODO: explain why "as never" (declare module, default config)
-    expect(i18n.t('hi' as never)).toBe(translations.en.hi);
+    expect(i18n.t('hi')).toBe(translations.en.hi);
 
     i18n.onLanguageChange('ro');
 
-    expect(i18n.t('hi' as never)).toBe(translations.ro.hi);
+    expect(i18n.t('hi')).toBe(translations.ro.hi);
   });
 });

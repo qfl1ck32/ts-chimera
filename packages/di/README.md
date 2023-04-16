@@ -1,6 +1,6 @@
 # @ts-chimera/di
 
-@ts-chimera/di is a dependency injection package for TypeScript projects, built on top of Inversify. It provides a simple and clean API to manage dependencies using tokens, making it easier to organize and maintain your code.
+`@ts-chimera/di` is a dependency injection package for TypeScript projects, built on top of Inversify. It provides a simple and clean API to manage dependencies using tokens, making it easier to organize and maintain your code.
 
 ## Features
 

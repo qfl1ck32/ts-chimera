@@ -4,7 +4,6 @@ import { Session } from '@src/service';
 import { Injectable } from '@ts-chimera/react-di';
 import { ISessionStorage, SessionData } from '@src/defs';
 
-// TODO: probably need to remove this
 declare module '@src/defs' {
   interface SessionData {
     test: string;
