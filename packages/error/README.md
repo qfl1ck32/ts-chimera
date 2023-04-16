@@ -13,16 +13,10 @@ The main features of this package include:
 
 ## Installation
 
-You can install the `@ts-phoenix/error` package using npm or yarn. Run one of the following commands in your terminal:
+Install the package using npm or yarn:
 
 ```
 npm install @ts-phoenix/error
-```
-
-or
-
-```
-yarn add @ts-phoenix/error
 ```
 
 ## Usage
