@@ -1,5 +1,6 @@
 import { Constructor } from '@ts-phoenix/typings';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SessionData {}
 
 export interface ISessionStorage {
@@ -12,4 +13,4 @@ export interface Config {
   storage: Constructor<ISessionStorage>;
 }
 
-export interface RequiredConfig extends Pick<Config, 'storage'> {}
+export type RequiredConfig = Pick<Config, 'storage'>;

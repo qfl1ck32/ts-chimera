@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 
 import { Token } from './token';
 
+
 export const setToken = <T>(args: {
   token: Token<T>;
   value: T;

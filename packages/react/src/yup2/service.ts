@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-
 import { EventManager } from '@ts-phoenix/event-manager';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/react-di';
 import {
@@ -10,8 +9,10 @@ import {
 
 import { Config } from './defs';
 import { YUP_CONFIG } from './tokens';
-import translationsWithPaths from './translations/withPaths';
-import translationsWithoutPaths from './translations/withoutPaths';
+import {
+  translationsWithPaths,
+  translationsWithoutPaths,
+} from './translations';
 
 @Injectable()
 export class Yup {

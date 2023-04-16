@@ -3,14 +3,5 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "singleQuote": true,
-  "semi": true,
-  "importOrder": [
-    "^[a-zA-Z]",
-    "^@ts-phoenix/(.*)$",
-    "^@src/(.*)$",
-    "^\\.+/.*$"
-  ],
-  "importOrderSeparation": true,
-  "importOrderParserPlugins": ["typescript", "decorators-legacy"],
-  "importOrderSortSpecifiers": true
+  "semi": true
 }

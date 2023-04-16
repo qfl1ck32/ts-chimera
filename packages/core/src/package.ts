@@ -35,6 +35,7 @@ export class Package<
     this.setConfig(config);
   }
 
+  /* eslint-disable */
   public async initialise() {}
 
   public getDependencies(): PackageDependency[] {

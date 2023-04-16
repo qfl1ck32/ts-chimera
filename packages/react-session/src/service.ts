@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import { InjectContainer } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
 import {

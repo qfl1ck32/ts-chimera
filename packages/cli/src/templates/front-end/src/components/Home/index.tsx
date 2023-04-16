@@ -1,6 +1,6 @@
 import { Center, Container, Heading } from '@chakra-ui/react';
-import LanguageSwitcherContainer from '@src/containers/LanguageSwitcher';
 
+import LanguageSwitcherContainer from '@src/containers/LanguageSwitcher';
 import { useTranslation } from '@src/hooks';
 
 const Home: React.FC = () => {

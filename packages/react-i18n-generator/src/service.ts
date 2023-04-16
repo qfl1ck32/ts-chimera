@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
-import glob from 'glob';
 import { join, resolve } from 'path';
 
+import glob from 'glob';
 import { InjectToken, Injectable } from '@ts-phoenix/di';
 import { mergeDeep } from '@ts-phoenix/utils';
 
@@ -106,7 +106,7 @@ export class I18nGenerator {
 
     const filePaths = glob.sync(this.config.i18nFilesRegex);
 
-    let fullTranslations = {} as Record<string, any>;
+    const fullTranslations = {} as Record<string, any>;
 
     for (const filePath of filePaths) {
       const fileContent = JSON.parse(readFileSync(filePath, 'utf-8'));

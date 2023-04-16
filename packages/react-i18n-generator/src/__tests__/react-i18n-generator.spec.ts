@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import { readdirSync } from 'fs';
 import { join } from 'path';
 

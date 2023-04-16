@@ -14,7 +14,7 @@ const objectAssign: ObjectAssignFunctionType = (target, source, key) => {
 export const mergeDeep = (args: {
   target: Record<string, any>;
 
-  assignFunction?: Function;
+  assignFunction?: ObjectAssignFunctionType;
 
   sources: Record<string, any>[];
 }): any => {

@@ -1,9 +1,11 @@
-import { Injectable } from '@ts-phoenix/di';
-import { Writer } from './writer';
-import { TEMPLATES_DIRECTORY } from '@src/constants';
-
 import { join } from 'path';
+
+import { Injectable } from '@ts-phoenix/di';
+
+import { TEMPLATES_DIRECTORY } from '@src/constants';
 import { findPackageRoot, runCommand } from '@src/utils';
+
+import { Writer } from './writer';
 
 export interface CreateFrontendMicroserviceArgs {
   name: string;

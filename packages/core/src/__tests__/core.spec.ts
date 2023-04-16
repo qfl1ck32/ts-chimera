@@ -131,8 +131,8 @@ describe('core', () => {
       requiredStuff: string;
     }
 
-    interface RequiredPackageConfig
-      extends Pick<PackageConfig, 'requiredStuff'> {}
+    type RequiredPackageConfig
+      = Pick<PackageConfig, 'requiredStuff'>
 
     const name = 'Hi';
     const requiredStuff = 'hi';

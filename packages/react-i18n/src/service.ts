@@ -1,5 +1,4 @@
 import Polyglot from 'node-polyglot';
-
 import { EventManager } from '@ts-phoenix/event-manager';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/react-di';
 

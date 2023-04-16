@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 
-export * from './token';
 export * from './decorators';
+export * from './token';
 export * from './utils';
-
-export { Container, BindingScopeEnum } from 'inversify';
+export { BindingScopeEnum, Container } from 'inversify';

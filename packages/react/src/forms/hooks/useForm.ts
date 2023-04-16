@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import { useEffect } from 'react';
 import {
   FieldValues,
   UseFormProps,
   useForm as baseUseForm,
 } from 'react-hook-form';
+// eslint-disable-next-line import/named
 import { ISchema, InferType } from 'yup';
-
 import { use } from '@ts-phoenix/react-di';
 import { I18n } from '@ts-phoenix/react-i18n';
 

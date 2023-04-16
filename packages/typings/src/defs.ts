@@ -3,7 +3,7 @@ export type Constructor<Return = any, Args = any> = new (
 ) => Return;
 
 export type Decorator = (
-  target: Object,
+  target: Record<string, any>,
   key: string | symbol,
   descriptor: PropertyDescriptor,
 ) => PropertyDescriptor | void;

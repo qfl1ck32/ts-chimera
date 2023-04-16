@@ -1,1 +1,1 @@
-export interface ErrorContext extends Record<string, any> {}
+export type ErrorContext = Record<string, any>

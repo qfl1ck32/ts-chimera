@@ -15,4 +15,4 @@ export interface Config {
   outputPath: string;
 }
 
-export interface RequiredConfig extends Pick<Config, 'locales'> {}
+export type RequiredConfig = Pick<Config, 'locales'>

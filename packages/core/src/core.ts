@@ -1,7 +1,7 @@
 import { BindingScopeEnum, Container, Injectable, Token } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 
-import { CoreState } from './defs';
+import { CoreState } from "./defs"
 import { CircularDependencyError } from './errors';
 import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
 import { Package } from './package';

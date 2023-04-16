@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import {
   Join,
   NestedPaths,
@@ -5,9 +7,8 @@ import {
   NestedPathsObjectsJustLeaf,
 } from '@ts-phoenix/typings';
 
-export interface ITranslations extends Record<string, any> {}
-export interface IInterpolationStrings
-  extends Record<'start' | 'end', string> {}
+export type ITranslations = Record<string, any>;
+export type IInterpolationStrings = Record<'start' | 'end', string>;
 
 export interface Config {
   defaultLocale: string;
