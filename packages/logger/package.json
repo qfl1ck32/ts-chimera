@@ -1,6 +1,6 @@
 {
   "name": "@ts-phoenix/logger",
-  "description": "",
+  "description": "A powerful and customizable logging library for TypeScript projects that makes logging messages a breeze.",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",

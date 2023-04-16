@@ -32,7 +32,7 @@ describe('logger', () => {
       handler: handlerAfter,
     });
 
-    await logger.log(message);
+    await logger.info(message);
 
     expect(calledBefore).toBe(true);
     expect(calledAfter).toBe(true);

@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 import chalk from 'chalk';
 
+import { LogArgs, LogLevel } from './defs';
 import { AfterLogEvent, BeforeLogEvent } from './events';
 
 @Injectable()
@@ -9,30 +10,44 @@ export class Logger {
   constructor(@Inject(EventManager) private eventManager: EventManager) {}
 
   public async info(message: string) {
-    return this._log(`[INFO] ${message}`, chalk.green);
+    return this._log({
+      message,
+      color: chalk.green,
+      level: LogLevel.INFO,
+    });
   }
 
   public async error(message: string) {
-    return this._log(`[ERROR] ${message}`, chalk.red);
+    return this._log({
+      message,
+      color: chalk.red,
+      level: LogLevel.ERROR,
+    });
   }
 
   public async warn(message: string) {
-    return this._log(`[WARN] ${message}`, chalk.yellow);
+    return this._log({
+      message,
+      color: chalk.yellow,
+      level: LogLevel.WARN,
+    });
   }
 
   public async debug(message: string) {
-    return this._log(`[DEBUG] ${message}`, chalk.blue);
+    return this._log({
+      message,
+      color: chalk.blue,
+      level: LogLevel.DEBUG,
+    });
   }
 
-  public async log(message: string) {
-    return this._log(message, chalk.white);
-  }
+  private async _log(args: LogArgs) {
+    const { message, level, color } = args;
 
-  private async _log(message: string, color: chalk.Chalk) {
-    await this.eventManager.emitAsync(new BeforeLogEvent({ message }));
+    await this.eventManager.emitAsync(new BeforeLogEvent({ message, level }));
 
-    console.log(color(message));
+    console.log(color(`[${level} ${message}`));
 
-    await this.eventManager.emitAsync(new AfterLogEvent({ message }));
+    await this.eventManager.emitAsync(new AfterLogEvent({ message, level }));
   }
 }
