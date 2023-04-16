@@ -1,7 +1,7 @@
 import Home from '@src/components/Home';
 
 const HomeContainer: React.FC = () => {
-  return <Home name="programmer" />;
+  return <Home />;
 };
 
 export default HomeContainer;

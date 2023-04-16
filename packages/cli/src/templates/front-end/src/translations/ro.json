@@ -1,7 +1,7 @@
 {
   "components": {
     "Home": {
-      "welcome": "Bun venit, {{ name }}!"
+      "welcome": "Bun venit!"
     }
   }
 }

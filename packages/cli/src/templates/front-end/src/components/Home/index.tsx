@@ -3,11 +3,7 @@ import LanguageSwitcherContainer from '@src/containers/LanguageSwitcher';
 
 import { useTranslation } from '@src/hooks';
 
-export interface Props {
-  name: string;
-}
-
-const Home: React.FC<Props> = (props) => {
+const Home: React.FC = () => {
   const t = useTranslation('components.Home');
 
   return (
@@ -19,9 +15,7 @@ const Home: React.FC<Props> = (props) => {
     >
       <Container maxW="container.md" textAlign="center" borderRadius="lg" p="6">
         <Heading size="2xl" color="white">
-          {t('welcome', {
-            name: props.name,
-          })}
+          {t('welcome')}
         </Heading>
       </Container>
 
