@@ -1,6 +1,6 @@
 {
   "name": "@ts-phoenix/typings",
-  "description": "",
+  "description": "A set of TypeScript utility types designed to improve type-safety and enhance code readability.",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",
