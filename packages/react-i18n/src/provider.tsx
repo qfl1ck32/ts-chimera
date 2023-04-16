@@ -5,14 +5,14 @@ import { Loading } from '@ts-chimera/react-components';
 
 export interface Props {
   children: React.ReactNode;
-  LoadingComponent?: React.ReactNode;
+  loadingComponent?: React.ReactNode;
   initialLocale: string;
 }
 
 export const I18nProvider: React.FC<Props> = (props) => {
   const i18n = use(I18n);
 
-  const LoadingComponent = props.LoadingComponent || <Loading />;
+  const LoadingComponent = props.loadingComponent || <Loading />;
 
   const [loading, setLoading] = useState(true);
 

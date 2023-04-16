@@ -5,5 +5,5 @@ export class AppPackage extends Package {
     return [];
   }
 
-  async init() {}
+  async initialise() {}
 }

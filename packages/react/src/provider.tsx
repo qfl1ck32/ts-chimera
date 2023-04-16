@@ -5,12 +5,12 @@ import { Loading } from '@ts-chimera/react-components';
 
 export const AppProvider: React.FC<{
   children: React.ReactNode;
-  LoadingComponent?: React.ReactNode;
+  loadingComponent?: React.ReactNode;
   core: Core;
 }> = (props) => {
   const [isInitialised, setIsInitialised] = useState(props.core.isInitialised);
 
-  const LoadingComponent = props.LoadingComponent || <Loading />;
+  const LoadingComponent = props.loadingComponent || <Loading />;
 
   useEffect(() => {
     props.core.initialise().then(() => setIsInitialised(true));
