@@ -3,12 +3,12 @@ import {
   I18nGeneratorPackage,
 } from '@ts-chimera/react-i18n-generator';
 
-import { Language } from '@src/constants';
 import env from '@src/env';
 
 import { Core } from '@ts-chimera/core';
+import { Locales } from '@src/defs';
+import { defaultLocale } from '@src/constants';
 
-// TODO: not triggered when it should (on refresh)
 const main = async () => {
   if (env.NODE_ENV !== 'development') {
     return;
@@ -17,7 +17,8 @@ const main = async () => {
   const core = new Core({
     packages: [
       new I18nGeneratorPackage({
-        languages: Object.values(Language),
+        locales: Object.values(Locales),
+        defaultLocale,
       }),
     ],
   });

@@ -33,6 +33,7 @@
     "@hookform/resolvers": "^3.0.1",
     "@ts-chimera/core": "^0.0.0",
     "@ts-chimera/event-manager": "^0.0.0",
+    "@ts-chimera/react-components": "^0.0.0",
     "@ts-chimera/react-di": "^0.0.0",
     "@ts-chimera/react-i18n": "^0.0.0",
     "@ts-chimera/react-session": "^0.0.0",

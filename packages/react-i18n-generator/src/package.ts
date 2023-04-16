@@ -16,7 +16,7 @@ export class I18nGeneratorPackage extends Package<Config, RequiredConfig> {
 
   getDefaultConfig(): PartialConfig<Config, RequiredConfig> {
     return {
-      defaultLanguage: 'en',
+      defaultLocale: 'en',
       srcDir: 'src',
       i18nFilesRegex: '**/i18n.json',
       interpolation: {
@@ -26,7 +26,7 @@ export class I18nGeneratorPackage extends Package<Config, RequiredConfig> {
       missingKey: 'MISSING_KEY',
       outputPath: 'src/translations',
 
-      languages: undefined,
+      locales: undefined,
     };
   }
 }

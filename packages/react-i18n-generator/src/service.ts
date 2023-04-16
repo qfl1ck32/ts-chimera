@@ -92,7 +92,7 @@ export class I18nGenerator {
   public run() {
     const translations = {} as Record<string, any>;
 
-    for (const language of this.config.languages) {
+    for (const language of this.config.locales) {
       const filePath = resolve(this.config.outputPath, `${language}.json`);
 
       let content = [];
@@ -150,8 +150,8 @@ export class I18nGenerator {
 
     const results = {} as Record<string, any>;
 
-    for (const language of this.config.languages) {
-      const isDefaultLanguage = language === this.config.defaultLanguage;
+    for (const language of this.config.locales) {
+      const isDefaultLanguage = language === this.config.defaultLocale;
 
       const currentFullTranslations = isDefaultLanguage
         ? fullTranslations
@@ -182,7 +182,7 @@ export class I18nGenerator {
       mkdirSync(this.config.outputPath, { recursive: true });
     }
 
-    for (const language of this.config.languages) {
+    for (const language of this.config.locales) {
       writeFileSync(
         join(this.config.outputPath, `${language}.json`),
         JSON.stringify(results[language], null, 2),
@@ -190,14 +190,14 @@ export class I18nGenerator {
     }
 
     const types = `export type Translations = ${JSON.stringify(
-      results[this.config.defaultLanguage],
+      results[this.config.defaultLocale],
       null,
       2,
     )}`;
 
     writeFileSync(join(this.config.outputPath, `defs.ts`), types);
 
-    const index = this.config.languages
+    const index = this.config.locales
       .map(
         (language) => `import * as ${language} from "./${language}.json";
 export { ${language} };`,

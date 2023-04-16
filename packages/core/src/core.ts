@@ -119,7 +119,13 @@ export class Core {
     return result;
   }
 
-  private async initialisePackages(packages: Package[]) {
+  public async initialise() {
+    if (!this.isNew) {
+      return;
+    }
+
+    const packages = this.buildPackagesDependencyList(this.config.packages);
+
     for (const pkg of packages) {
       pkg.setCore(this);
     }
@@ -133,16 +139,6 @@ export class Core {
         this.container.get(ServiceClass);
       }
     }
-  }
-
-  public async initialise() {
-    if (!this.isNew) {
-      return;
-    }
-
-    const allPackages = this.buildPackagesDependencyList(this.config.packages);
-
-    await this.initialisePackages(allPackages);
 
     await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
 

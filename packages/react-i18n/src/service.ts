@@ -4,7 +4,7 @@ import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
 import { AllPhrases, Config, ITranslations } from './defs';
-import { LanguageChangedEvent } from './events';
+import { LocaleChangedEvent } from './events';
 import { I18N_CONFIG } from './tokens';
 
 @Injectable()
@@ -41,12 +41,12 @@ export class I18n {
     ) as Polyglot;
   }
 
-  public async onLanguageChange(language: string) {
-    this.activePolyglot = this.polyglots.get(language) as Polyglot;
+  public async onLocaleChange(locale: string) {
+    this.activePolyglot = this.polyglots.get(locale) as Polyglot;
 
     await this.eventManager.emitAsync(
-      new LanguageChangedEvent({
-        language,
+      new LocaleChangedEvent({
+        locale,
       }),
     );
   }

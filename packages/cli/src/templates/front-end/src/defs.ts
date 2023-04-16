@@ -3,6 +3,11 @@ export type InterpolationStrings = {
   end: ' }}';
 };
 
+export enum Locales {
+  En = 'en',
+  Ro = 'ro',
+}
+
 export const interpolationStrings: InterpolationStrings = {
   start: '{{ ',
   end: ' }}',

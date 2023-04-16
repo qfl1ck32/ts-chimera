@@ -3,21 +3,21 @@ import * as dayjs from 'dayjs';
 import { Inject, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { LanguageChangedEvent } from '@ts-chimera/react-i18n';
+import { LocaleChangedEvent } from '@ts-chimera/react-i18n';
 
 @Injectable()
 export class Dayjs {
   constructor(@Inject(EventManager) private eventManager: EventManager) {
     this.eventManager.addListener({
-      event: LanguageChangedEvent,
-      handler: this.onLanguageChange,
+      event: LocaleChangedEvent,
+      handler: this.onLocaleChange,
     });
   }
 
-  private onLanguageChange = (event: LanguageChangedEvent) => {
-    const language = event.data?.language;
+  private onLocaleChange = (event: LocaleChangedEvent) => {
+    const locale = event.data?.locale;
 
-    dayjs.locale(language);
+    dayjs.locale(locale);
   };
 }
 

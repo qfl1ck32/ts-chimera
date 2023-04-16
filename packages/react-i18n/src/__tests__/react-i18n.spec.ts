@@ -34,7 +34,7 @@ describe('react-i18n', () => {
 
     expect(i18n.t('hi')).toBe(translations.en.hi);
 
-    i18n.onLanguageChange('ro');
+    i18n.onLocaleChange('ro');
 
     expect(i18n.t('hi')).toBe(translations.ro.hi);
   });

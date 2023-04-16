@@ -1,7 +1,8 @@
 export interface Config {
   missingKey: string;
 
-  defaultLanguage: string;
+  defaultLocale: string;
+  locales: string[];
 
   interpolation: {
     start: string;
@@ -12,7 +13,6 @@ export interface Config {
   srcDir: string;
 
   outputPath: string;
-  languages: string[];
 }
 
-export interface RequiredConfig extends Pick<Config, 'languages'> {}
+export interface RequiredConfig extends Pick<Config, 'locales'> {}

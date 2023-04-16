@@ -1,3 +1,3 @@
 {
-  "hello": "Hello, {{ name }}!"
+  "welcome": "Welcome, {{ name }}!"
 }

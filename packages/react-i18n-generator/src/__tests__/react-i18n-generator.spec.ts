@@ -6,7 +6,7 @@ import { join } from 'path';
 
 describe('react-i18n-generator', () => {
   it('should work', async () => {
-    const languages = ['en', 'ro'];
+    const locales = ['en', 'ro'];
     const missingKey = 'MISSING_KEY';
 
     const filesPath = join(__dirname, 'files');
@@ -17,7 +17,7 @@ describe('react-i18n-generator', () => {
         new I18nGeneratorPackage({
           outputPath: 'src/__tests__/files/translations',
           srcDir: 'files',
-          languages,
+          locales,
           missingKey,
         }),
       ],
@@ -33,7 +33,7 @@ describe('react-i18n-generator', () => {
 
     expect(files.sort()).toEqual(
       [
-        ...languages.map((language) => `${language}.json`),
+        ...locales.map((language) => `${language}.json`),
         'defs.ts',
         'index.ts',
       ].sort(),

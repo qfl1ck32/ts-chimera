@@ -7,7 +7,6 @@ import { AppProvider, ReactPackage } from '@src/index';
 
 import { render, act, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { EventManager } from '@ts-chimera/event-manager';
 
 import '@testing-library/jest-dom/extend-expect';
 

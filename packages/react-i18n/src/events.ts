@@ -1,3 +1,3 @@
 import { Event } from '@ts-chimera/event-manager';
 
-export class LanguageChangedEvent extends Event<{ language: string }> {}
+export class LocaleChangedEvent extends Event<{ locale: string }> {}

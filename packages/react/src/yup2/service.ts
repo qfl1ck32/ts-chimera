@@ -3,7 +3,11 @@ import * as yup from 'yup';
 import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
 
-import { LanguageChangedEvent } from '@ts-chimera/react-i18n';
+import {
+  I18N_CONFIG,
+  LocaleChangedEvent,
+  Config as I18nConfig,
+} from '@ts-chimera/react-i18n';
 
 import { Config } from './defs';
 import { YUP_CONFIG } from './tokens';
@@ -15,22 +19,25 @@ export class Yup {
   constructor(
     @Inject(EventManager) private eventManager: EventManager,
     @InjectToken(YUP_CONFIG) private config: Config,
+    @InjectToken(I18N_CONFIG) private i18nConfig: I18nConfig,
   ) {
     this.eventManager.addListener({
-      event: LanguageChangedEvent,
-      handler: this.onLanguageChange,
+      event: LocaleChangedEvent,
+      handler: this.onLocaleChange,
     });
 
-    yup.setLocale(translationsWithoutPaths['en']);
+    yup.setLocale(
+      translationsWithoutPaths[this.i18nConfig.defaultLocale as never],
+    );
   }
 
-  private onLanguageChange = (event: LanguageChangedEvent) => {
-    const language = event.data?.language as string;
+  private onLocaleChange = (event: LocaleChangedEvent) => {
+    const locale = event.data!.locale;
 
     yup.setLocale(
       (this.config.usePathsInTranslations
         ? translationsWithPaths
-        : translationsWithoutPaths)[language as never],
+        : translationsWithoutPaths)[locale as never],
     );
   };
 }

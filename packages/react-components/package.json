@@ -1,11 +1,12 @@
 {
-  "name": "@ts-chimera/react-i18n",
+  "name": "@ts-chimera/react-components",
   "version": "0.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "compile": "tsc && tsc-alias",
     "install-dependencies": "npm i",
+    "lint": "eslint . --ext .ts",
     "prettier": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --verbose --watch",
@@ -18,19 +19,18 @@
   "description": "",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/eslint": "^8.37.0",
     "@types/jest": "^29.5.0",
-    "@types/node-polyglot": "^2.4.2",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-import": "^2.27.5",
     "jest": "^29.5.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.5"
   },
-  "dependencies": {
-    "@ts-chimera/core": "^0.0.0",
-    "@ts-chimera/event-manager": "^0.0.0",
-    "@ts-chimera/react-components": "^0.0.0",
-    "@ts-chimera/react-di": "^0.0.0",
-    "@ts-chimera/typings": "^0.0.0",
-    "node-polyglot": "^2.5.0"
+  "peerDependencies": {
+    "react": "^17.0.0"
   }
 }
