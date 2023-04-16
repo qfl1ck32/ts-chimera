@@ -1,7 +1,6 @@
 {
   "name": "@ts-phoenix/react-session-storage",
   "version": "1.0.0-alpha.0",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",

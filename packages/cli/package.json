@@ -1,7 +1,6 @@
 {
   "name": "@ts-phoenix/cli",
   "version": "1.0.0-alpha.0",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
@@ -11,7 +10,6 @@
     "compile": "tsc && tsc-alias",
     "install-dependencies": "npm i",
     "lint": "eslint . --ext .ts --fix",
-    "main": "dist/index.js",
     "prettier": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --verbose --watch",
