@@ -1,10 +1,10 @@
 import { Injectable, Token } from '@ts-chimera/di';
 import { Constructor, DeepPartial } from '@ts-chimera/typings';
+import { mergeDeep } from '@ts-chimera/utils';
 
 import { Core } from './core';
 import { PackageDependency, PartialConfig } from './defs';
 
-import { mergeDeep } from '@ts-chimera/utils';
 @Injectable()
 export class Package<
   ConfigType extends Record<string, any> | null = null,

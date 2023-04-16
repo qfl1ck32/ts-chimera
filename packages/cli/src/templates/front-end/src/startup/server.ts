@@ -1,13 +1,12 @@
+import { Core } from '@ts-chimera/core';
 import {
   I18nGenerator,
   I18nGeneratorPackage,
 } from '@ts-chimera/react-i18n-generator';
 
-import env from '@src/env';
-
-import { Core } from '@ts-chimera/core';
-import { Locales } from '@src/defs';
 import { defaultLocale } from '@src/constants';
+import { Locales } from '@src/defs';
+import env from '@src/env';
 
 const main = async () => {
   if (env.NODE_ENV !== 'development') {

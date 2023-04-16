@@ -1,8 +1,9 @@
 import { Package, PartialConfig } from '@ts-chimera/core';
 import { Injectable } from '@ts-chimera/di';
+
+import { Config, RequiredConfig } from './defs';
 import { I18nGenerator } from './service';
 import { I18N_GENERATOR_CONFIG } from './tokens';
-import { Config, RequiredConfig } from './defs';
 
 @Injectable()
 export class I18nGeneratorPackage extends Package<Config, RequiredConfig> {

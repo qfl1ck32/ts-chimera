@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
+import { InjectContainer } from '@ts-chimera/core';
+import { EventManager } from '@ts-chimera/event-manager';
 import {
   Container,
   Inject,
   InjectToken,
   Injectable,
 } from '@ts-chimera/react-di';
-import { EventManager } from '@ts-chimera/event-manager';
 
 import { Config, ISessionStorage, SessionData } from './defs';
 import { SessionStorageUpdatedEvent } from './events';
 import { SESSION_CONFIG } from './tokens';
-import { InjectContainer } from '@ts-chimera/core';
 
 @Injectable()
 export class Session {

@@ -1,7 +1,7 @@
 import { Core } from '@ts-chimera/core';
 
-import { CLI } from './service';
 import { CLIPackage } from './package';
+import { CLI } from './service';
 
 const main = async () => {
   const core = new Core({

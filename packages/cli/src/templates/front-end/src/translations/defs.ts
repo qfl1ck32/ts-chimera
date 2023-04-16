@@ -1,7 +1,7 @@
 export type Translations = {
-  "components": {
-    "Home": {
-      "welcome": "Welcome, {{ name }}!"
-    }
-  }
-}
+  components: {
+    Home: {
+      welcome: 'Welcome, {{ name }}!';
+    };
+  };
+};

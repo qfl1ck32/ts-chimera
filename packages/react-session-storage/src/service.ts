@@ -1,7 +1,8 @@
 import { InjectToken, Injectable } from '@ts-chimera/react-di';
 import { ISessionStorage, SessionData } from '@ts-chimera/react-session';
-import { SESSION_STORAGE_CONFIG } from './tokens';
+
 import { Config } from './defs';
+import { SESSION_STORAGE_CONFIG } from './tokens';
 
 @Injectable()
 export class SessionStorage implements ISessionStorage {

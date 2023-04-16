@@ -1,6 +1,7 @@
+import { Core } from '@ts-chimera/core';
+
 import { I18n } from '@src/index';
 import { I18nPackage } from '@src/package';
-import { Core } from '@ts-chimera/core';
 
 declare module '@src/defs' {
   interface Translations {

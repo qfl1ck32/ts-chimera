@@ -1,9 +1,10 @@
 import { Package, PartialConfig } from '@ts-chimera/core';
-import { I18n } from './service';
-import { Config } from './defs';
-import { Constructor } from '@ts-chimera/typings';
-import { I18N_CONFIG } from './tokens';
 import { Injectable } from '@ts-chimera/react-di';
+import { Constructor } from '@ts-chimera/typings';
+
+import { Config } from './defs';
+import { I18n } from './service';
+import { I18N_CONFIG } from './tokens';
 
 @Injectable()
 export class I18nPackage extends Package<Config> {

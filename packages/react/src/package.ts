@@ -1,14 +1,15 @@
 import { Package, createPackageDependency } from '@ts-chimera/core';
-import { ReactPackageConfig } from './defs';
-import { DayjsPackage } from './dayjs2';
-import { YupPackage } from './yup2';
+import { Injectable } from '@ts-chimera/react-di';
+import { I18nPackage } from '@ts-chimera/react-i18n';
+import { SessionPackage } from '@ts-chimera/react-session';
 import {
   SessionStorage,
   SessionStoragePackage,
 } from '@ts-chimera/react-session-storage';
-import { SessionPackage } from '@ts-chimera/react-session';
-import { I18nPackage } from '@ts-chimera/react-i18n';
-import { Injectable } from '@ts-chimera/react-di';
+
+import { DayjsPackage } from './dayjs2';
+import { ReactPackageConfig } from './defs';
+import { YupPackage } from './yup2';
 
 @Injectable()
 export class ReactPackage extends Package<ReactPackageConfig> {

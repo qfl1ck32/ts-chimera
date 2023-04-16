@@ -1,5 +1,6 @@
-import GlobalError = globalThis.Error;
 import { ErrorContext } from './defs';
+
+import GlobalError = globalThis.Error;
 
 export class Error<T = null> extends GlobalError {
   private _data?: T;

@@ -1,8 +1,7 @@
 import * as dayjs from 'dayjs';
 
-import { Inject, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
-
+import { Inject, Injectable } from '@ts-chimera/react-di';
 import { LocaleChangedEvent } from '@ts-chimera/react-i18n';
 
 @Injectable()

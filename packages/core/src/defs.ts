@@ -1,4 +1,5 @@
 import { Constructor } from '@ts-chimera/typings';
+
 import { Package } from './package';
 
 export enum CoreState {

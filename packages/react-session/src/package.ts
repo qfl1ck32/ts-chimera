@@ -1,7 +1,8 @@
-import { Injectable } from '@ts-chimera/react-di';
 import { Package, PartialConfig } from '@ts-chimera/core';
-import { Session } from './service';
+import { Injectable } from '@ts-chimera/react-di';
+
 import { Config, RequiredConfig } from './defs';
+import { Session } from './service';
 import { SESSION_CONFIG } from './tokens';
 
 @Injectable()

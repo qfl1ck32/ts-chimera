@@ -1,12 +1,11 @@
 import * as yup from 'yup';
 
-import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import { EventManager } from '@ts-chimera/event-manager';
-
+import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
 import {
   I18N_CONFIG,
-  LocaleChangedEvent,
   Config as I18nConfig,
+  LocaleChangedEvent,
 } from '@ts-chimera/react-i18n';
 
 import { Config } from './defs';

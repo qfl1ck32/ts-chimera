@@ -1,8 +1,9 @@
 import { Package, PartialConfig } from '@ts-chimera/core';
 import { Injectable } from '@ts-chimera/react-di';
+
+import { Config } from './defs';
 import { SessionStorage } from './service';
 import { SESSION_STORAGE_CONFIG } from './tokens';
-import { Config } from './defs';
 
 @Injectable()
 export class SessionStoragePackage extends Package<Config> {

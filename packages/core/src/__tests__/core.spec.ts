@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
+import { Constructor } from '@ts-chimera/typings';
 
+import { CircularDependencyError } from '@src/errors';
 import {
   Core,
   CoreBeforeInitialiseEvent,
@@ -8,9 +10,7 @@ import {
   PackageDependency,
   PartialConfig,
 } from '@src/index';
-import { CircularDependencyError } from '@src/errors';
 import { createPackageDependency } from '@src/utils';
-import { Constructor } from '@ts-chimera/typings';
 
 describe('core', () => {
   it('should work', async () => {

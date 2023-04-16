@@ -2,10 +2,9 @@ import { BindingScopeEnum, Container, Injectable, Token } from '@ts-chimera/di';
 import { EventManager } from '@ts-chimera/event-manager';
 
 import { CoreState } from './defs';
+import { CircularDependencyError } from './errors';
 import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
 import { Package } from './package';
-
-import { CircularDependencyError } from './errors';
 import { CONTAINER } from './tokens';
 
 @Injectable()
