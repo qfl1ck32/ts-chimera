@@ -1,35 +1,55 @@
-import { Select, Flex, Text } from '@chakra-ui/react';
-
+import {
+  Select,
+  Flex,
+  Text,
+  Box,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  VStack,
+} from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
+export interface ILocale {
+  value: string;
+  label: string;
+}
 export interface Props {
-  locales: string[];
-  currentLocale: string;
+  locales: ILocale[];
+  currentLocale: ILocale;
   onLocaleChange: (language: string) => void;
 }
 
 const LanguageSwitcher: React.FC<Props> = (props) => {
   return (
-    <Flex alignItems="center" justifyContent="flex-end">
-      <Text mr="2">Language:</Text>
-      <Select
-        value={props.currentLocale}
-        onChange={(e) => props.onLocaleChange(e.target.value)}
-        size="sm"
-        variant="unstyled"
-        color="white"
-        bgColor="purple.700"
-        borderRadius="md"
-        border="none"
-        boxShadow="md"
-        _hover={{ bgColor: 'purple.800' }}
-        _focus={{ outline: 'none' }}
-      >
-        {props.locales.map((language) => (
-          <option key={language} value={language}>
-            {language}
-          </option>
-        ))}
-      </Select>
-    </Flex>
+    <VStack spacing={4} alignItems="center">
+      <Menu>
+        <MenuButton
+          as={Button}
+          rightIcon={<ChevronDownIcon />}
+          colorScheme="blue"
+          fontWeight="bold"
+          fontSize="lg"
+        >
+          {props.currentLocale.label}
+        </MenuButton>
+        <MenuList borderColor="gray.300">
+          {props.locales.map((locale) => (
+            <MenuItem
+              key={locale.value}
+              value={locale.value}
+              onClick={() => props.onLocaleChange(locale.value)}
+              fontWeight={
+                locale.value === props.currentLocale.value ? 'bold' : 'normal'
+              }
+            >
+              {locale.label}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    </VStack>
   );
 };
 

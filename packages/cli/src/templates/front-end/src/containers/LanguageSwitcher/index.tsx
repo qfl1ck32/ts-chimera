@@ -1,10 +1,8 @@
-import LanguageSwitcher from '@src/components/LanguageSwitcher';
+import LanguageSwitcher, { ILocale } from '@src/components/LanguageSwitcher';
 import { Locales } from '@src/defs';
 import { use } from '@ts-chimera/react-di';
 import { I18n } from '@ts-chimera/react-i18n';
-import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 const LanguageSwitcherContainer: React.FC = () => {
   const i18n = use(I18n);
@@ -19,12 +17,27 @@ const LanguageSwitcherContainer: React.FC = () => {
     });
   };
 
+  const locales: ILocale[] = [
+    {
+      label: '🇬🇧 English',
+      value: Locales.En,
+    },
+    {
+      label: '🇷🇴 Romanian',
+      value: Locales.Ro,
+    },
+  ];
+
+  const currentLocale = locales.find(
+    (locale) => locale.value === router.locale,
+  ) as ILocale;
+
   return (
     <LanguageSwitcher
       {...{
         onLocaleChange,
-        locales: Object.values(Locales),
-        currentLocale: router.locale as string,
+        locales,
+        currentLocale,
       }}
     />
   );

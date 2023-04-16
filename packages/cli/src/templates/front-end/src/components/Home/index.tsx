@@ -11,16 +11,21 @@ const Home: React.FC<Props> = (props) => {
   const t = useTranslation('components.Home');
 
   return (
-    <Center h="100vh" bgColor="purple.600">
+    <Center
+      display="flex"
+      flexDirection="column"
+      h="100vh"
+      bgColor="purple.600"
+    >
       <Container maxW="container.md" textAlign="center" borderRadius="lg" p="6">
         <Heading size="2xl" color="white">
           {t('welcome', {
             name: props.name,
           })}
         </Heading>
-
-        <LanguageSwitcherContainer />
       </Container>
+
+      <LanguageSwitcherContainer />
     </Center>
   );
 };
