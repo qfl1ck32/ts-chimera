@@ -1,6 +1,6 @@
 {
   "name": "@ts-phoenix/di",
-  "description": "",
+  "description": "Dependency injection package for TypeScript projects, built on top of Inversify.",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",
