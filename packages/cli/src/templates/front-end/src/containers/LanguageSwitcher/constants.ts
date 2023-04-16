@@ -1,5 +1,5 @@
-import { Locales } from '@src/defs';
 import { ILocale } from '@src/components/LanguageSwitcher';
+import { Locales } from '@src/defs';
 
 export const locales: ILocale[] = [
   {

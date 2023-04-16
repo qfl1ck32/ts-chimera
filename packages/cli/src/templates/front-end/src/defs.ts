@@ -14,5 +14,5 @@ export const interpolationStrings: InterpolationStrings = {
 };
 
 declare module '@ts-phoenix/react-session' {
-  export interface SessionData {}
+  // export interface SessionData { }
 }

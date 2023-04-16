@@ -1,10 +1,10 @@
-import { AppProvider } from '@ts-phoenix/react';
-import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
+import { AppProvider } from '@ts-phoenix/react';
 import { I18nProvider } from '@ts-phoenix/react-i18n';
+import type { AppProps } from 'next/app';
 
-import { core } from '@src/startup/core';
 import ScreenLoader from '@src/components/ScreenLoader';
+import { core } from '@src/startup/core';
 
 export default function App({ Component, router, pageProps }: AppProps) {
   const loader = <ScreenLoader />;
