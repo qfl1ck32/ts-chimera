@@ -1,6 +1,6 @@
 {
   "name": "@ts-phoenix/core",
-  "description": "",
+  "description": "The heart of the @ts-phoenix ecosystem, providing a robust foundation for building scalable and maintainable web applications in TypeScript.",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",
