@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Constructor } from '@ts-chimera/typings';
+import { Constructor } from '@ts-phoenix/typings';
 
 import { useContainer } from './useContainer';
 

@@ -2,8 +2,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import glob from 'glob';
 import { join, resolve } from 'path';
 
-import { InjectToken, Injectable } from '@ts-chimera/di';
-import { mergeDeep } from '@ts-chimera/utils';
+import { InjectToken, Injectable } from '@ts-phoenix/di';
+import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Config } from './defs';
 import { I18N_GENERATOR_CONFIG } from './tokens';

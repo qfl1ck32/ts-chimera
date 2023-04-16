@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
-import { Inject, Injectable } from '@ts-chimera/di';
-import { EventManager } from '@ts-chimera/event-manager';
+import { Inject, Injectable } from '@ts-phoenix/di';
+import { EventManager } from '@ts-phoenix/event-manager';
 
 import { AfterLogEvent, BeforeLogEvent } from './events';
 

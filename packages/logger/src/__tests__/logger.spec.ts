@@ -1,4 +1,4 @@
-import { EventManager, Handler } from '@ts-chimera/event-manager';
+import { EventManager, Handler } from '@ts-phoenix/event-manager';
 
 import { AfterLogEvent, BeforeLogEvent } from '@src/events';
 import { Logger } from '@src/service';

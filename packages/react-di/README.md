@@ -1,4 +1,4 @@
-# @ts-chimera/react-di
+# @ts-phoenix/react-di
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/react-di
+npm i @ts-phoenix/react-di
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/react-di_:
+Here's a basic example of how to use _@ts-phoenix/react-di_:
 
 ```ts
 TODO;

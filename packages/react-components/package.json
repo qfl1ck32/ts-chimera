@@ -1,6 +1,6 @@
 {
-  "name": "@ts-chimera/react-components",
-  "version": "0.0.0",
+  "name": "@ts-phoenix/react-components",
+  "version": "1.0.0-alpha.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

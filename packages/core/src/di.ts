@@ -1,4 +1,4 @@
-import { InjectToken } from '@ts-chimera/di';
+import { InjectToken } from '@ts-phoenix/di';
 
 import { CONTAINER } from './tokens';
 

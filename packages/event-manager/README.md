@@ -1,4 +1,4 @@
-# @ts-chimera/event-manager
+# @ts-phoenix/event-manager
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/event-manager
+npm i @ts-phoenix/event-manager
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/event-manager_:
+Here's a basic example of how to use _@ts-phoenix/event-manager_:
 
 ```ts
 TODO;

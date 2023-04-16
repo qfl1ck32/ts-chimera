@@ -1,5 +1,5 @@
-import { BindingScopeEnum, Container, Injectable, Token } from '@ts-chimera/di';
-import { EventManager } from '@ts-chimera/event-manager';
+import { BindingScopeEnum, Container, Injectable, Token } from '@ts-phoenix/di';
+import { EventManager } from '@ts-phoenix/event-manager';
 
 import { CoreState } from './defs';
 import { CircularDependencyError } from './errors';

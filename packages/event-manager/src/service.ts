@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
-import { Injectable } from '@ts-chimera/di';
-import { Constructor } from '@ts-chimera/typings';
+import { Injectable } from '@ts-phoenix/di';
+import { Constructor } from '@ts-phoenix/typings';
 
 import { Handler, Listener } from './defs';
 import { Event } from './event';

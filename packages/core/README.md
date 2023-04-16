@@ -1,4 +1,4 @@
-# @ts-chimera/core
+# @ts-phoenix/core
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/core
+npm i @ts-phoenix/core
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/core_:
+Here's a basic example of how to use _@ts-phoenix/core_:
 
 ```ts
 TODO;

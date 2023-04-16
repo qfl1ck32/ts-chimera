@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { Core } from '@ts-chimera/core';
+import { Core } from '@ts-phoenix/core';
 import { AppProvider, ReactPackage } from '@src/index';
 
 import { render, act, screen, waitFor } from '@testing-library/react';

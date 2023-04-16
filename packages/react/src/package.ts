@@ -1,11 +1,11 @@
-import { Package, createPackageDependency } from '@ts-chimera/core';
-import { Injectable } from '@ts-chimera/react-di';
-import { I18nPackage } from '@ts-chimera/react-i18n';
-import { SessionPackage } from '@ts-chimera/react-session';
+import { Package, createPackageDependency } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/react-di';
+import { I18nPackage } from '@ts-phoenix/react-i18n';
+import { SessionPackage } from '@ts-phoenix/react-session';
 import {
   SessionStorage,
   SessionStoragePackage,
-} from '@ts-chimera/react-session-storage';
+} from '@ts-phoenix/react-session-storage';
 
 import { DayjsPackage } from './dayjs2';
 import { ReactPackageConfig } from './defs';

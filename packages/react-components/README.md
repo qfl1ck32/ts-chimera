@@ -1,4 +1,4 @@
-# @ts-chimera/react-components
+# @ts-phoenix/react-components
 
 TODO
 
@@ -11,18 +11,18 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/react-components
+npm i @ts-phoenix/react-components
 ```
 
 or
 
 ```
-yarn @ts-chimera/react-components
+yarn @ts-phoenix/react-components
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/react-components_:
+Here's a basic example of how to use _@ts-phoenix/react-components_:
 
 ```ts
 TODO;

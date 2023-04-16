@@ -1,4 +1,4 @@
-import { Package, PartialConfig } from '@ts-chimera/core';
+import { Package, PartialConfig } from '@ts-phoenix/core';
 
 import { Config } from './defs';
 import { Yup } from './service';

@@ -1,4 +1,4 @@
-import { Injectable } from '@ts-chimera/di';
+import { Injectable } from '@ts-phoenix/di';
 import { Writer } from './writer';
 import { TEMPLATES_DIRECTORY } from '@src/constants';
 

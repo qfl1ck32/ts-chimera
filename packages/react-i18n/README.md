@@ -1,4 +1,4 @@
-# @ts-chimera/react-i18n
+# @ts-phoenix/react-i18n
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/react-i18n
+npm i @ts-phoenix/react-i18n
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/react-i18n_:
+Here's a basic example of how to use _@ts-phoenix/react-i18n_:
 
 ```ts
 TODO;

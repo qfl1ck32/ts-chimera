@@ -1,4 +1,4 @@
-# @ts-chimera/react-session-storage
+# @ts-phoenix/react-session-storage
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/react-session-storage
+npm i @ts-phoenix/react-session-storage
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/react-session-storage_:
+Here's a basic example of how to use _@ts-phoenix/react-session-storage_:
 
 ```ts
 TODO;

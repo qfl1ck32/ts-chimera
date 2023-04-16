@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { InjectContainer } from '@ts-chimera/core';
-import { EventManager } from '@ts-chimera/event-manager';
+import { InjectContainer } from '@ts-phoenix/core';
+import { EventManager } from '@ts-phoenix/event-manager';
 import {
   Container,
   Inject,
   InjectToken,
   Injectable,
-} from '@ts-chimera/react-di';
+} from '@ts-phoenix/react-di';
 
 import { Config, ISessionStorage, SessionData } from './defs';
 import { SessionStorageUpdatedEvent } from './events';

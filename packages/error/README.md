@@ -1,6 +1,6 @@
-# @ts-chimera/error
+# @ts-phoenix/error
 
-The `@ts-chimera/error` package is a TypeScript library for creating custom error objects that extend the built-in `Error` class. This package provides an `Error` class that can be used to define custom errors with additional data and context.
+The `@ts-phoenix/error` package is a TypeScript library for creating custom error objects that extend the built-in `Error` class. This package provides an `Error` class that can be used to define custom errors with additional data and context.
 
 ## Features
 
@@ -13,26 +13,26 @@ The main features of this package include:
 
 ## Installation
 
-You can install the `@ts-chimera/error` package using npm or yarn. Run one of the following commands in your terminal:
+You can install the `@ts-phoenix/error` package using npm or yarn. Run one of the following commands in your terminal:
 
 ```
-npm install @ts-chimera/error
+npm install @ts-phoenix/error
 ```
 
 or
 
 ```
-yarn add @ts-chimera/error
+yarn add @ts-phoenix/error
 ```
 
 ## Usage
 
-To use the `@ts-chimera/error` package, you first need to import the `Error` class from the package. Then, you can create a new custom error by extending the `Error` class and defining any additional properties or methods that you need.
+To use the `@ts-phoenix/error` package, you first need to import the `Error` class from the package. Then, you can create a new custom error by extending the `Error` class and defining any additional properties or methods that you need.
 
-Here's an example of how to create and use a custom error with the `@ts-chimera/error` package:
+Here's an example of how to create and use a custom error with the `@ts-phoenix/error` package:
 
 ```ts
-import { Error } from '@ts-chimera/error';
+import { Error } from '@ts-phoenix/error';
 
 interface CustomErrorData {
   id: number;
@@ -95,8 +95,8 @@ Custom error: Something went wrong
 
 ## Contributing
 
-If you want to contribute to the `@ts-chimera/error` package, please open an issue to discuss any proposed changes before submitting a pull request. Make sure to update tests as appropriate.
+If you want to contribute to the `@ts-phoenix/error` package, please open an issue to discuss any proposed changes before submitting a pull request. Make sure to update tests as appropriate.
 
 ## License
 
-The `@ts-chimera/error` package is licensed under the [GPL 3.0](https://choosealicense.com/licenses/gpl-3.0/) license.
+The `@ts-phoenix/error` package is licensed under the [GPL 3.0](https://choosealicense.com/licenses/gpl-3.0/) license.

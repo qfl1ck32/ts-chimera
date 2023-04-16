@@ -1,4 +1,4 @@
-# @ts-chimera/logger
+# @ts-phoenix/logger
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/logger
+npm i @ts-phoenix/logger
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/logger_:
+Here's a basic example of how to use _@ts-phoenix/logger_:
 
 ```ts
 TODO;

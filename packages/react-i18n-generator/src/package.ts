@@ -1,5 +1,5 @@
-import { Package, PartialConfig } from '@ts-chimera/core';
-import { Injectable } from '@ts-chimera/di';
+import { Package, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 import { Config, RequiredConfig } from './defs';
 import { I18nGenerator } from './service';

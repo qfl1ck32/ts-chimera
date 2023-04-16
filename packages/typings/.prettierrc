@@ -6,7 +6,7 @@
   "semi": true,
   "importOrder": [
     "^[a-zA-Z]",
-    "^@ts-chimera/(.*)$",
+    "^@ts-phoenix/(.*)$",
     "^@src/(.*)$",
     "^\\.+/.*$"
   ],

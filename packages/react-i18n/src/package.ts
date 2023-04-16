@@ -1,6 +1,6 @@
-import { Package, PartialConfig } from '@ts-chimera/core';
-import { Injectable } from '@ts-chimera/react-di';
-import { Constructor } from '@ts-chimera/typings';
+import { Package, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/react-di';
+import { Constructor } from '@ts-phoenix/typings';
 
 import { Config } from './defs';
 import { I18n } from './service';

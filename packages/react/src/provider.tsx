@@ -1,7 +1,7 @@
-import { ContainerContext } from '@ts-chimera/react-di';
-import { Core } from '@ts-chimera/core';
+import { ContainerContext } from '@ts-phoenix/react-di';
+import { Core } from '@ts-phoenix/core';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Loading } from '@ts-chimera/react-components';
+import { Loading } from '@ts-phoenix/react-components';
 
 export const AppProvider: React.FC<{
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import { Core } from '@ts-chimera/core';
+import { Core } from '@ts-phoenix/core';
 
 import { CLIPackage } from './package';
 import { CLI } from './service';

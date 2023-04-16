@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ts-chimera/core": "^0.0.0",
-    "@ts-chimera/react": "^0.0.0",
-    "@ts-chimera/react-i18n-generator": "^0.0.0",
+    "@ts-phoenix/core": "^1.0.0-alpha.0",
+    "@ts-phoenix/react": "^1.0.0-alpha.0",
+    "@ts-phoenix/react-i18n-generator": "^1.0.0-alpha.0",
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",

@@ -3,7 +3,7 @@ import {
   NestedPaths,
   NestedPathsObjectUntilLeaf,
   NestedPathsObjectsJustLeaf,
-} from '@ts-chimera/typings';
+} from '@ts-phoenix/typings';
 
 export interface ITranslations extends Record<string, any> {}
 export interface IInterpolationStrings

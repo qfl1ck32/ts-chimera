@@ -1,4 +1,4 @@
-# @ts-chimera/react-i18n-generator
+# @ts-phoenix/react-i18n-generator
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/react-i18n-generator
+npm i @ts-phoenix/react-i18n-generator
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/react-i18n-generator_:
+Here's a basic example of how to use _@ts-phoenix/react-i18n-generator_:
 
 ```ts
 TODO;

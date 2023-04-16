@@ -1,5 +1,5 @@
-import { InjectToken, Injectable } from '@ts-chimera/react-di';
-import { ISessionStorage, SessionData } from '@ts-chimera/react-session';
+import { InjectToken, Injectable } from '@ts-phoenix/react-di';
+import { ISessionStorage, SessionData } from '@ts-phoenix/react-session';
 
 import { Config } from './defs';
 import { SESSION_STORAGE_CONFIG } from './tokens';

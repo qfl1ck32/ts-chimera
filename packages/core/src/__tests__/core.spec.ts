@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@ts-chimera/di';
-import { EventManager } from '@ts-chimera/event-manager';
-import { Constructor } from '@ts-chimera/typings';
+import { Inject, Injectable } from '@ts-phoenix/di';
+import { EventManager } from '@ts-phoenix/event-manager';
+import { Constructor } from '@ts-phoenix/typings';
 
 import { CircularDependencyError } from '@src/errors';
 import {

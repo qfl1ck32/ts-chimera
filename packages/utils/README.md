@@ -1,4 +1,4 @@
-# @ts-chimera/utils
+# @ts-phoenix/utils
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/utils
+npm i @ts-phoenix/utils
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/utils_:
+Here's a basic example of how to use _@ts-phoenix/utils_:
 
 ```ts
 TODO;

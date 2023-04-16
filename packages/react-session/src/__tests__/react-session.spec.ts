@@ -1,5 +1,5 @@
-import { Core } from '@ts-chimera/core';
-import { Injectable } from '@ts-chimera/react-di';
+import { Core } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/react-di';
 
 import { ISessionStorage, SessionData } from '@src/defs';
 import { SessionPackage } from '@src/package';

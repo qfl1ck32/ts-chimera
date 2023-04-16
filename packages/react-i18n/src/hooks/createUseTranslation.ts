@@ -1,6 +1,6 @@
 import Polyglot from 'node-polyglot';
 
-import { use } from '@ts-chimera/react-di';
+import { use } from '@ts-phoenix/react-di';
 
 import {
   AllPhrases,

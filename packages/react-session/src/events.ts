@@ -1,4 +1,4 @@
-import { Event } from '@ts-chimera/event-manager';
+import { Event } from '@ts-phoenix/event-manager';
 
 import { SessionData } from './defs';
 

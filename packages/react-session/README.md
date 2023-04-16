@@ -1,4 +1,4 @@
-# @ts-chimera/react-session
+# @ts-phoenix/react-session
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/react-session
+npm i @ts-phoenix/react-session
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/react-session_:
+Here's a basic example of how to use _@ts-phoenix/react-session_:
 
 ```ts
 TODO;

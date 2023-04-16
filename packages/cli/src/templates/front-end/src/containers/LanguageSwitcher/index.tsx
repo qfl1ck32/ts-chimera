@@ -1,6 +1,6 @@
 import LanguageSwitcher, { ILocale } from '@src/components/LanguageSwitcher';
-import { use } from '@ts-chimera/react-di';
-import { I18n } from '@ts-chimera/react-i18n';
+import { use } from '@ts-phoenix/react-di';
+import { I18n } from '@ts-phoenix/react-i18n';
 import { useRouter } from 'next/router';
 import { locales } from './constants';
 

@@ -1,4 +1,4 @@
-import { Error } from '@ts-chimera/error';
+import { Error } from '@ts-phoenix/error';
 
 export class CircularDependencyError extends Error<{
   dependencies: string[];

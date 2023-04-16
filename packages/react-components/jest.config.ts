@@ -27,7 +27,7 @@ const config: Config = {
       prefix: '<rootDir>',
     }),
 
-    '@ts-chimera/(.*)': '<rootDir>/../$1/src',
+    '@ts-phoenix/(.*)': '<rootDir>/../$1/src',
   },
 };
 

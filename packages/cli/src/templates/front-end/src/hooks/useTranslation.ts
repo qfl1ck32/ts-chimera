@@ -1,4 +1,4 @@
-import { createUseTranslation } from '@ts-chimera/react-i18n';
+import { createUseTranslation } from '@ts-phoenix/react-i18n';
 
 import { interpolationStrings } from '@src/defs';
 import { Translations } from '@src/translations/defs';

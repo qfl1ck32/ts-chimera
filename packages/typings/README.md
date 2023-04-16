@@ -1,4 +1,4 @@
-# @ts-chimera/typings
+# @ts-phoenix/typings
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/typings
+npm i @ts-phoenix/typings
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/typings_:
+Here's a basic example of how to use _@ts-phoenix/typings_:
 
 ```ts
 TODO;

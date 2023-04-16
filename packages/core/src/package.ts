@@ -1,6 +1,6 @@
-import { Injectable, Token } from '@ts-chimera/di';
-import { Constructor, DeepPartial } from '@ts-chimera/typings';
-import { mergeDeep } from '@ts-chimera/utils';
+import { Injectable, Token } from '@ts-phoenix/di';
+import { Constructor, DeepPartial } from '@ts-phoenix/typings';
+import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
 import { PackageDependency, PartialConfig } from './defs';

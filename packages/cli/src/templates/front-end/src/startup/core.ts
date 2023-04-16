@@ -1,5 +1,5 @@
-import { Core } from '@ts-chimera/core';
-import { ReactPackage } from '@ts-chimera/react';
+import { Core } from '@ts-phoenix/core';
+import { ReactPackage } from '@ts-phoenix/react';
 
 import { interpolationStrings } from '@src/defs';
 import * as translations from '@src/translations';

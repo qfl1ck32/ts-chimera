@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
-import { Core } from '@ts-chimera/core';
+import { Core } from '@ts-phoenix/core';
 
 import { I18nGeneratorPackage } from '@src/package';
 import { I18nGenerator } from '@src/service';

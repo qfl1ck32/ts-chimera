@@ -1,4 +1,4 @@
-import { Core } from '@ts-chimera/core';
+import { Core } from '@ts-phoenix/core';
 
 import { I18n } from '@src/index';
 import { I18nPackage } from '@src/package';

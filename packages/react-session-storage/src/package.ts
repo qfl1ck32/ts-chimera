@@ -1,5 +1,5 @@
-import { Package, PartialConfig } from '@ts-chimera/core';
-import { Injectable } from '@ts-chimera/react-di';
+import { Package, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/react-di';
 
 import { Config } from './defs';
 import { SessionStorage } from './service';

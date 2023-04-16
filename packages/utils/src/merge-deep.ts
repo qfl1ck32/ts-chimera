@@ -1,4 +1,4 @@
-import { ObjectAssignFunctionType } from '@ts-chimera/typings';
+import { ObjectAssignFunctionType } from '@ts-phoenix/typings';
 
 const objectAssign: ObjectAssignFunctionType = (target, source, key) => {
   Object.assign(target, {

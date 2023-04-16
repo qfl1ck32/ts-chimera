@@ -1,4 +1,4 @@
-import { Package } from '@ts-chimera/core';
+import { Package } from '@ts-phoenix/core';
 
 export class AppPackage extends Package {
   getServices() {

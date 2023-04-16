@@ -1,4 +1,4 @@
-# @ts-chimera/cli
+# @ts-phoenix/cli
 
 TODO
 
@@ -11,12 +11,12 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/cli
+npm i @ts-phoenix/cli
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/cli_:
+Here's a basic example of how to use _@ts-phoenix/cli_:
 
 ```ts
 TODO;

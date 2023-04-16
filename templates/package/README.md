@@ -1,4 +1,4 @@
-# @ts-chimera/my-package-template
+# @ts-phoenix/my-package-template
 
 TODO
 
@@ -11,18 +11,18 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/my-package-template
+npm i @ts-phoenix/my-package-template
 ```
 
 or
 
 ```
-yarn @ts-chimera/my-package-template
+yarn @ts-phoenix/my-package-template
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/my-package-template_:
+Here's a basic example of how to use _@ts-phoenix/my-package-template_:
 
 ```ts
 TODO;

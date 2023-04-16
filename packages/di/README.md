@@ -1,6 +1,6 @@
-# @ts-chimera/di
+# @ts-phoenix/di
 
-`@ts-chimera/di` is a dependency injection package for TypeScript projects, built on top of Inversify. It provides a simple and clean API to manage dependencies using tokens, making it easier to organize and maintain your code.
+`@ts-phoenix/di` is a dependency injection package for TypeScript projects, built on top of Inversify. It provides a simple and clean API to manage dependencies using tokens, making it easier to organize and maintain your code.
 
 ## Features
 
@@ -14,12 +14,12 @@
 Install the package using npm or yarn:
 
 ```
-npm i @ts-chimera/di
+npm i @ts-phoenix/di
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-chimera/di_:
+Here's a basic example of how to use _@ts-phoenix/di_:
 
 ```ts
 import {
@@ -28,7 +28,7 @@ import {
   Injectable,
   Token,
   setToken,
-} from '@ts-chimera/di';
+} from '@ts-phoenix/di';
 
 // Define tokens for configuration data
 const ApiBaseUrlToken = new Token<string>('ApiBaseUrl');

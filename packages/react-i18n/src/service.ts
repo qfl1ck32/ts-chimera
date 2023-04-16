@@ -1,7 +1,7 @@
 import Polyglot from 'node-polyglot';
 
-import { EventManager } from '@ts-chimera/event-manager';
-import { Inject, InjectToken, Injectable } from '@ts-chimera/react-di';
+import { EventManager } from '@ts-phoenix/event-manager';
+import { Inject, InjectToken, Injectable } from '@ts-phoenix/react-di';
 
 import { AllPhrases, Config, ITranslations } from './defs';
 import { LocaleChangedEvent } from './events';

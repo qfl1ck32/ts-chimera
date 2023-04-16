@@ -1,7 +1,7 @@
-import { use } from '@ts-chimera/react-di';
+import { use } from '@ts-phoenix/react-di';
 import { I18n } from './service';
 import React, { useState, useEffect, Fragment } from 'react';
-import { Loading } from '@ts-chimera/react-components';
+import { Loading } from '@ts-phoenix/react-components';
 
 export interface Props {
   children: React.ReactNode;

@@ -1,8 +1,8 @@
-import { Core } from '@ts-chimera/core';
+import { Core } from '@ts-phoenix/core';
 import {
   I18nGenerator,
   I18nGeneratorPackage,
-} from '@ts-chimera/react-i18n-generator';
+} from '@ts-phoenix/react-i18n-generator';
 
 import { defaultLocale } from '@src/constants';
 import { Locales } from '@src/defs';
