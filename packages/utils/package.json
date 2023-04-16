@@ -1,6 +1,6 @@
 {
   "name": "@ts-phoenix/utils",
-  "description": "",
+  "description": "A package of utility functions for TypeScript projects.",
   "private": false,
   "version": "1.0.0-alpha.0",
   "types": "dist/index.d.ts",
