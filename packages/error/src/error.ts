@@ -9,6 +9,8 @@ export class Error<T = null> extends GlobalError {
     super();
 
     this._data = data;
+
+    this.message = this.getMessage();
   }
 
   getCode(): string {
@@ -24,6 +26,7 @@ export class Error<T = null> extends GlobalError {
 
   public getMessage(): string {
     const nameOfError = this.getNameOfError();
+    console.log({ nameOfError });
     return `Error ${nameOfError} has occurred.`;
   }
 
@@ -32,7 +35,7 @@ export class Error<T = null> extends GlobalError {
   }
 
   private getNameOfError(): string {
-    const className = this.name;
+    const className = this.constructor.name;
     return className.replace(/Error$/, '');
   }
 }
