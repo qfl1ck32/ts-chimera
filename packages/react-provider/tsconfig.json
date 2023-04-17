@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "resolveJsonModule": true,
+    "jsx": "react",
+
+    "strict": true,
+    "skipLibCheck": true,
+
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["src/*"]
+    }
+  },
+
+  "include": ["src/**/*.ts", "src/__tests__/react-provider.spec.tsx"]
+}
