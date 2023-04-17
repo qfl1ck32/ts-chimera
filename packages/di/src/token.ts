@@ -2,9 +2,9 @@ import { Injectable } from './decorators';
 
 @Injectable()
 export class Token<T> {
-  public identifier: string;
+  public identifier: symbol;
 
-  constructor(public readonly name?: string) {
-    this.identifier = Symbol.for(name || this.constructor.name).toString();
+  constructor() {
+    this.identifier = Symbol();
   }
 }

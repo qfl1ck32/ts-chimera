@@ -12,7 +12,8 @@ describe('di', () => {
       autoBindInjectable: true,
     });
 
-    const token = new Token<string>('name');
+    const token = new Token<string>();
+
     const value = 'di';
 
     setToken({

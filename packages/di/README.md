@@ -31,8 +31,8 @@ import {
 } from '@ts-phoenix/di';
 
 // Define tokens for configuration data
-const ApiBaseUrlToken = new Token<string>('ApiBaseUrl');
-const ApiKeyToken = new Token<string>('ApiKey');
+const ApiBaseUrlToken = new Token<string>();
+const ApiKeyToken = new Token<string>();
 
 @Injectable()
 class ApiService {
