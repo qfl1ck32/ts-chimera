@@ -1,7 +1,8 @@
-import { use } from '@ts-phoenix/react-di';
-import { I18n } from './service';
-import React, { useState, useEffect, Fragment } from 'react';
 import { Loading } from '@ts-phoenix/react-components';
+import { use } from '@ts-phoenix/react-di';
+import React, { useState, useEffect, Fragment } from 'react';
+
+import { I18n } from './service';
 
 export interface Props {
   children: React.ReactNode;
