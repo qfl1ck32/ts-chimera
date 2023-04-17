@@ -5,7 +5,6 @@ import { compilerOptions } from './tsconfig.json';
 
 const config: Config = {
   verbose: true,
-
   preset: 'ts-jest',
 
   moduleFileExtensions: ['js', 'json', 'ts', 'jsx', 'tsx'],
