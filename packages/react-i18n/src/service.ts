@@ -54,6 +54,11 @@ export class I18n {
     phrase: AllPhrases<Translations>,
     options?: number | Polyglot.InterpolationOptions | undefined,
   ) {
+    // TODO: better handling
+    if (!this.activePolyglot) {
+      return phrase;
+    }
+
     return this.activePolyglot.t(phrase, options);
   }
 }
