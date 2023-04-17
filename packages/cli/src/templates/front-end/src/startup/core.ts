@@ -1,5 +1,5 @@
 import { Core } from '@ts-phoenix/core';
-import { ReactPackage } from '@ts-phoenix/react';
+import { I18nPackage } from '@ts-phoenix/react-i18n';
 
 import { defaultLocale } from '@src/constants';
 import { interpolationStrings } from '@src/defs';
@@ -9,12 +9,10 @@ import { AppPackage } from './app';
 
 export const core = new Core({
   packages: [
-    new ReactPackage({
-      i18n: {
-        defaultLocale,
-        translations,
-        interpolationStrings,
-      },
+    new I18nPackage({
+      translations,
+      defaultLocale,
+      interpolationStrings,
     }),
     new AppPackage(),
   ],

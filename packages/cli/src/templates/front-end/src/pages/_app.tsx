@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { AppProvider } from '@ts-phoenix/react';
 import { I18nProvider } from '@ts-phoenix/react-i18n';
+import { AppProvider } from '@ts-phoenix/react-provider';
 import type { AppProps } from 'next/app';
 
 import ScreenLoader from '@src/components/ScreenLoader';

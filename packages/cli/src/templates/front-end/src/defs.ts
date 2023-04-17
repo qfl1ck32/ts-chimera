@@ -13,6 +13,6 @@ export const interpolationStrings: InterpolationStrings = {
   end: ' }}',
 };
 
-declare module '@ts-phoenix/react-session' {
-  // export interface SessionData { }
-}
+// declare module '@ts-phoenix/react-session' {
+// export interface SessionData { }
+// }
