@@ -46,7 +46,7 @@ export class Logger {
 
     await this.eventManager.emitAsync(new BeforeLogEvent({ message, level }));
 
-    console.log(color(`[${level} ${message}`));
+    console.log(color(`[${level}] ${message}`));
 
     await this.eventManager.emitAsync(new AfterLogEvent({ message, level }));
   }
