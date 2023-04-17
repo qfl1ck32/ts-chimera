@@ -23,7 +23,6 @@
   "author": "",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@ts-phoenix/typings": "^1.0.0-alpha.0",
     "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
@@ -38,6 +37,7 @@
     "tsc-alias": "^1.8.5"
   },
   "dependencies": {
+    "@ts-phoenix/error": "^1.0.0-alpha.0",
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13"
   }
