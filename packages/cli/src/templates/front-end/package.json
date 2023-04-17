@@ -9,11 +9,12 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@ts-phoenix/react-i18n": "^1.0.0-alpha.0",
     "@ts-phoenix/core": "^1.0.0-alpha.0",
     "@ts-phoenix/react": "^1.0.0-alpha.0",
-    "@ts-phoenix/react-i18n": "^1.0.0-alpha.0",
     "@ts-phoenix/react-di": "^1.0.0-alpha.0",
     "@ts-phoenix/react-i18n-generator": "^1.0.0-alpha.0",
+    "@ts-phoenix/event-manager": "^1.0.0-alpha.0",
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
@@ -29,7 +30,5 @@
     "react-dom": "18.2.0",
     "typescript": "5.0.4"
   },
-  "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.21.0"
-  }
+  "devDependencies": {}
 }

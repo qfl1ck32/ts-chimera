@@ -1,3 +1,15 @@
-import { Package } from '@ts-phoenix/core';
+import { Injectable, Package } from '@ts-phoenix/core';
 
-export class AppPackage extends Package {}
+// eslint-disable-next-line import/namespace
+// import * as Services from '@src/services';
+
+@Injectable()
+export class AppPackage extends Package {
+  getConfigToken() {
+    return null;
+  }
+
+  // initialiseServices() {
+  //   return Object.values(Services);
+  // }
+}
