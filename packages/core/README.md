@@ -41,26 +41,20 @@ export type RequiredConfig = Pick<Config, 'requiredField'>;
 ```
 
 ```ts
-// tokens.ts
-import { Config } from './defs.ts';
-
-export const CONFIG_TOKEN = new Token<Config>('CONFIG_TOKEN');
-```
-
-```ts
 // service.ts
 import {
   CoreBeforeInitialiseEvent,
   CoreAfterInitialiseEvent,
 } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
+import { Service } from '@ts-phoenix/di';
 import { EventManger } from '@ts-phoenix/event-manager';
+import { MyPackage } from './package.ts';
 
-@Injectable()
+@Service()
 export class MyService {
   constructor(
     @Inject(EventManager) private readonly eventManager: EventManager,
-    @Inject(CONFIG_TOKEN) private readonly config: Config,
+    @Inject(MyPackage) private readonly pkg: MyPackage,
   ) {
     this.eventManager.addEventListener({
       event: CoreBeforeInitialiseEvent,
@@ -74,7 +68,7 @@ export class MyService {
   }
 
   public showConfig() {
-    console.log(this.config);
+    console.log(this.pkg.config);
   }
 }
 ```
@@ -86,11 +80,6 @@ import { MyService } from './service';
 
 @Injectable()
 class MyPackage extends Package<Config, RequiredConfig> {
-  public getServices() {
-    // We need to provide the services here, so they are constructed when the package is initialised, in order to be able to hook into core's lifecycle events
-    return [MyService];
-  }
-
   public getDependencies() {
     return [
       createPackageDependency(SomeOtherPackage, {

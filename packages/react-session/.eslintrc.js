@@ -10,6 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
+    'import/no-extraneous-dependencies': 'error',
     'import/order': [
       'error',
       {

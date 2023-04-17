@@ -1,27 +1,21 @@
-import { InjectContainer } from '@ts-phoenix/core';
+import { InjectContainer, Container, Inject, Service } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
-import {
-  Container,
-  Inject,
-  InjectToken,
-  Injectable,
-} from '@ts-phoenix/react-di';
 import { useEffect, useState } from 'react';
 
-import { Config, ISessionStorage, SessionData } from './defs';
+import { ISessionStorage, SessionData } from './defs';
 import { SessionStorageUpdatedEvent } from './events';
-import { SESSION_CONFIG } from './tokens';
+import { SessionPackage } from './package';
 
-@Injectable()
+@Service()
 export class Session {
   private storage: ISessionStorage;
 
   constructor(
     @InjectContainer() private container: Container,
-    @InjectToken(SESSION_CONFIG) private config: Config,
+    @Inject(SessionPackage) private pkg: SessionPackage,
     @Inject(EventManager) private eventManager: EventManager,
   ) {
-    this.storage = this.container.get(this.config.storage);
+    this.storage = this.container.get(this.pkg.config.storage);
   }
 
   get state() {

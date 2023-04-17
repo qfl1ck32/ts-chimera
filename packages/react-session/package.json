@@ -23,6 +23,7 @@
   "author": "",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@ts-phoenix/typings": "^1.0.0-alpha.0",
     "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",

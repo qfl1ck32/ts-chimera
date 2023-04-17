@@ -1,5 +1,4 @@
-import { Core } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/react-di';
+import { Core, Injectable } from '@ts-phoenix/core';
 
 import { ISessionStorage, SessionData } from '@src/defs';
 import { SessionPackage } from '@src/package';

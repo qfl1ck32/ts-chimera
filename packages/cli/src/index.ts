@@ -1,11 +1,10 @@
 import { Core } from '@ts-phoenix/core';
 
-import { CLIPackage } from './package';
 import { CLI } from './service';
 
 const main = async () => {
   const core = new Core({
-    packages: [new CLIPackage()],
+    packages: [],
   });
 
   await core.initialise();

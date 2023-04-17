@@ -2,11 +2,11 @@
  * @jest-environment jsdom
  */
 
-import { Core } from '@ts-phoenix/core';
-import { AppProvider, ReactPackage } from '@src/index';
-
 import { render, act, screen, waitFor } from '@testing-library/react';
+import { Core } from '@ts-phoenix/core';
 import React from 'react';
+
+import { AppProvider, ReactPackage } from '@src/index';
 
 import '@testing-library/jest-dom/extend-expect';
 

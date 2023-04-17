@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Inject, Injectable } from '@ts-phoenix/di';
+import { Inject, Injectable } from '@ts-phoenix/core';
 import { Logger } from '@ts-phoenix/logger';
 
 interface Replacement {

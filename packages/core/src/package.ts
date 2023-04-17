@@ -1,5 +1,5 @@
-import { Injectable, Token } from '@ts-phoenix/di';
-import { Constructor, DeepPartial } from '@ts-phoenix/typings';
+import { Injectable } from '@ts-phoenix/di';
+import { DeepPartial } from '@ts-phoenix/typings';
 import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
@@ -7,19 +7,19 @@ import { PackageDependency, PartialConfig } from './defs';
 
 @Injectable()
 export class Package<
-  ConfigType extends Record<string, any> | null = null,
-  RequiredConfig extends Partial<ConfigType> | null = null,
+  Config extends Record<string, any> | null = null,
+  RequiredConfig extends Partial<Config> | null = null,
 > {
   protected core!: Core;
 
-  private _config!: ConfigType;
+  private _config!: Config;
 
   constructor(
     ...args: RequiredConfig extends null
-      ? [DeepPartial<ConfigType>?]
-      : [RequiredConfig & DeepPartial<ConfigType>]
+      ? [DeepPartial<Config>?]
+      : [RequiredConfig & DeepPartial<Config>]
   ) {
-    const config = {} as ConfigType;
+    const config = {} as Config;
 
     const sources = [this.getDefaultConfig()];
 
@@ -35,18 +35,11 @@ export class Package<
     this.setConfig(config);
   }
 
-  /* eslint-disable */
-  public async initialise() {}
-
   public getDependencies(): PackageDependency[] {
     return [];
   }
 
-  public getServices(): Constructor[] {
-    return [];
-  }
-
-  public getDefaultConfig(): PartialConfig<ConfigType, RequiredConfig> {
+  public getDefaultConfig(): PartialConfig<Config, RequiredConfig> {
     return {} as any;
   }
 
@@ -54,7 +47,7 @@ export class Package<
     return this._config;
   }
 
-  public setConfig(config: ConfigType) {
+  public setConfig(config: Config) {
     if (this._config == null) {
       this._config = { ...config };
       return;
@@ -64,10 +57,6 @@ export class Package<
       target: this._config as any,
       sources: [config, this._config as any],
     });
-  }
-
-  public setConfigToken<T>(token: Token<T>) {
-    this.core.setToken(token, this.config as unknown as T);
   }
 
   public setCore(core: Core) {

@@ -5,6 +5,7 @@
     "emitDecoratorMetadata": true,
     "module": "CommonJS",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 

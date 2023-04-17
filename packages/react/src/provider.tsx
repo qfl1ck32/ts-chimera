@@ -1,7 +1,7 @@
-import { ContainerContext } from '@ts-phoenix/react-di';
 import { Core } from '@ts-phoenix/core';
-import React, { Fragment, useEffect, useState } from 'react';
 import { Loading } from '@ts-phoenix/react-components';
+import { ContainerContext } from '@ts-phoenix/react-di';
+import React, { Fragment, useEffect, useState } from 'react';
 
 export const AppProvider: React.FC<{
   children: React.ReactNode;

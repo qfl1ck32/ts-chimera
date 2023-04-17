@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { Constructor } from '@ts-phoenix/typings';
 
 import { CircularDependencyError } from '@src/errors';
 import {
@@ -9,12 +8,16 @@ import {
   Package,
   PackageDependency,
   PartialConfig,
+  Service,
 } from '@src/index';
 import { createPackageDependency } from '@src/utils';
 
 describe('core', () => {
   it('should work', async () => {
     @Injectable()
+    class MyPackage extends Package {}
+
+    @Service()
     class MyService {
       public initialised: boolean;
 
@@ -34,12 +37,6 @@ describe('core', () => {
       }
     }
 
-    class MyPackage extends Package {
-      public getServices(): Constructor[] {
-        return [MyService];
-      }
-    }
-
     const core = new Core({
       packages: [new MyPackage()],
     });
@@ -55,20 +52,12 @@ describe('core', () => {
 
   it('should throw when circular dependency', async () => {
     class MyPackage extends Package {
-      public getServices() {
-        return [];
-      }
-
       public getDependencies(): PackageDependency[] {
         return [createPackageDependency(MyOtherPackage)];
       }
     }
 
     class MyOtherPackage extends Package {
-      public getServices(): Constructor[] {
-        return [];
-      }
-
       public getDependencies(): PackageDependency[] {
         return [createPackageDependency(MyPackage)];
       }
@@ -89,10 +78,6 @@ describe('core', () => {
     }
 
     class MyPackage extends Package<PackageConfig> {
-      public getServices(): Constructor[] {
-        return [];
-      }
-
       public getDependencies(): PackageDependency[] {
         return [];
       }
@@ -101,10 +86,6 @@ describe('core', () => {
     const newName = 'ModifiedByMyOtherPackage';
 
     class MyOtherPackage extends Package<PackageConfig> {
-      public getServices(): Constructor[] {
-        return [];
-      }
-
       public getDependencies(): PackageDependency[] {
         return [
           createPackageDependency(MyPackage, {
@@ -131,8 +112,7 @@ describe('core', () => {
       requiredStuff: string;
     }
 
-    type RequiredPackageConfig
-      = Pick<PackageConfig, 'requiredStuff'>
+    type RequiredPackageConfig = Pick<PackageConfig, 'requiredStuff'>;
 
     const name = 'Hi';
     const requiredStuff = 'hi';

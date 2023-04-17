@@ -1,26 +1,26 @@
+import { Inject, Service } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/react-di';
 import Polyglot from 'node-polyglot';
 
-import { AllPhrases, Config, ITranslations } from './defs';
+import { AllPhrases, ITranslations } from './defs';
 import { LocaleChangedEvent } from './events';
-import { I18N_CONFIG } from './tokens';
+import { I18nPackage } from './package';
 
-@Injectable()
+@Service()
 export class I18n {
   private polyglots!: Map<string, Polyglot>;
 
   public activePolyglot!: Polyglot;
 
   constructor(
-    @InjectToken(I18N_CONFIG) private config: Config,
+    @Inject(I18nPackage) private pkg: I18nPackage,
     @Inject(EventManager) private eventManager: EventManager,
   ) {
     this.polyglots = new Map();
 
-    for (const locale of Object.keys(config.translations)) {
+    for (const locale of Object.keys(pkg.config.translations)) {
       const phrases =
-        config.translations[locale as keyof typeof config.translations];
+        pkg.config.translations[locale as keyof typeof pkg.config.translations];
 
       const polyglot = new Polyglot({
         locale,
@@ -36,7 +36,7 @@ export class I18n {
     }
 
     this.activePolyglot = this.polyglots.get(
-      this.config.defaultLocale,
+      this.pkg.config.defaultLocale,
     ) as Polyglot;
   }
 
