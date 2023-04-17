@@ -1,3 +1,3 @@
-export interface Config {
+export interface PackageConfigType {
   localStorageKey: string;
 }

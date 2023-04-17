@@ -1,20 +1,27 @@
-import { Inject, Service } from '@ts-phoenix/core';
+import { Inject, InjectToken, Injectable } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { I18nPackage, LocaleChangedEvent } from '@ts-phoenix/react-i18n';
+import {
+  I18nPackage,
+  LocaleChangedEvent,
+  PACKAGE_CONFIG_TOKEN as I18N_PACKAGE_CONFIG_TOKEN,
+  PackageConfigType as I18nPackageConfigType,
+} from '@ts-phoenix/react-i18n';
 import * as yup from 'yup';
 
-import { YupPackage } from './package';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType } from './defs';
 import {
   translationsWithPaths,
   translationsWithoutPaths,
 } from './translations';
 
-@Service()
+@Injectable()
 export class Yup {
   constructor(
     @Inject(EventManager) private eventManager: EventManager,
-    @Inject(YupPackage) private yupPackage: YupPackage,
-    @Inject(I18nPackage) private i18nPackage: I18nPackage,
+    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+    @InjectToken(I18N_PACKAGE_CONFIG_TOKEN)
+    private i18nConfig: I18nPackageConfigType,
   ) {
     this.eventManager.addListener({
       event: LocaleChangedEvent,
@@ -22,7 +29,7 @@ export class Yup {
     });
 
     yup.setLocale(
-      translationsWithoutPaths[this.i18nPackage.config.defaultLocale as never],
+      translationsWithoutPaths[this.i18nConfig.defaultLocale as never],
     );
   }
 
@@ -30,7 +37,7 @@ export class Yup {
     const locale = event.data!.locale;
 
     yup.setLocale(
-      (this.yupPackage.config.usePathsInTranslations
+      (this.config.usePathsInTranslations
         ? translationsWithPaths
         : translationsWithoutPaths)[locale as never],
     );

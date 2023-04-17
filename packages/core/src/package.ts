@@ -1,55 +1,56 @@
-import { Injectable } from '@ts-phoenix/di';
-import { DeepPartial } from '@ts-phoenix/typings';
+import { Injectable, Token } from '@ts-phoenix/di';
+import { Constructor, DeepPartial } from '@ts-phoenix/typings';
 import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
 import { PackageDependency, PartialConfig } from './defs';
 
 @Injectable()
-export class Package<
-  Config extends Record<string, any> | null = null,
-  RequiredConfig extends Partial<Config> | null = null,
+export abstract class Package<
+  ConfigType extends Record<string, any> | null = null,
+  RequiredConfigType extends Partial<ConfigType> | null = null,
 > {
   protected core!: Core;
 
-  private _config!: Config;
+  protected _config: ConfigType;
 
   constructor(
-    ...args: RequiredConfig extends null
-      ? [DeepPartial<Config>?]
-      : [RequiredConfig & DeepPartial<Config>]
+    ...args: RequiredConfigType extends null
+      ? [DeepPartial<ConfigType>?]
+      : [RequiredConfigType & DeepPartial<ConfigType>]
   ) {
-    const config = {} as Config;
-
-    const sources = [this.getDefaultConfig()];
+    this._config = (this.getDefaultConfig() || {}) as ConfigType;
 
     if (args[0]) {
-      sources.push(args[0] as any);
+      this.__mergeConfig(args[0]);
     }
-
-    mergeDeep({
-      target: config as Record<string, any>,
-      sources,
-    });
-
-    this.setConfig(config);
   }
+
+  abstract getConfigToken(): ConfigType extends null ? null : Token<ConfigType>;
 
   public getDependencies(): PackageDependency[] {
     return [];
   }
 
-  public getDefaultConfig(): PartialConfig<Config, RequiredConfig> {
-    return {} as any;
+  public getDefaultConfig(): PartialConfig<ConfigType, RequiredConfigType> {
+    return null as any;
+  }
+
+  public initialiseServices(): Constructor[] {
+    return [];
   }
 
   get config() {
     return this._config;
   }
 
-  public setConfig(config: Config) {
-    if (this._config == null) {
-      this._config = { ...config };
+  protected __setCore(core: Core) {
+    this.core = core;
+  }
+
+  protected __mergeConfig(config: Partial<ConfigType>) {
+    if (this.config == null) {
+      this._config = { ...config } as ConfigType;
       return;
     }
 
@@ -59,7 +60,13 @@ export class Package<
     });
   }
 
-  public setCore(core: Core) {
-    this.core = core;
+  protected __setConfigToken() {
+    const token = this.getConfigToken();
+
+    if (!token) {
+      return;
+    }
+
+    this.core.setToken(token, this.config!);
   }
 }

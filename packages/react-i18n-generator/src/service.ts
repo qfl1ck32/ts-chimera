@@ -1,21 +1,22 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { Inject, Service } from '@ts-phoenix/core';
+import { Inject, InjectToken, Injectable } from '@ts-phoenix/core';
 import { mergeDeep } from '@ts-phoenix/utils';
 import { sync } from 'glob';
 
-import { I18nGeneratorPackage } from './package';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType } from './defs';
 
-@Service()
+@Injectable()
 export class I18nGenerator {
   constructor(
-    @Inject(I18nGeneratorPackage) private pkg: I18nGeneratorPackage,
+    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
   ) {}
 
   private get interpolationRegex() {
     return new RegExp(
-      `${this.pkg.config.interpolation.start}(.*?)${this.pkg.config.interpolation.end}`,
+      `${this.config.interpolation.start}(.*?)${this.config.interpolation.end}`,
       'g',
     );
   }
@@ -49,7 +50,7 @@ export class I18nGenerator {
   ) {
     Object.assign(target, {
       [key]:
-        target[key] && target[key] !== this.pkg.config.missingKey
+        target[key] && target[key] !== this.config.missingKey
           ? target[key]
           : source[key],
     });
@@ -63,7 +64,7 @@ export class I18nGenerator {
         continue;
       }
 
-      object[key] = this.pkg.config.missingKey;
+      object[key] = this.config.missingKey;
 
       const interpArgs = this.extractInterpolationArgs(value);
 
@@ -93,8 +94,8 @@ export class I18nGenerator {
   public run() {
     const translations = {} as Record<string, any>;
 
-    for (const language of this.pkg.config.locales) {
-      const filePath = resolve(this.pkg.config.outputPath, `${language}.json`);
+    for (const language of this.config.locales) {
+      const filePath = resolve(this.config.outputPath, `${language}.json`);
 
       let content = [];
 
@@ -105,7 +106,7 @@ export class I18nGenerator {
       translations[language] = content;
     }
 
-    const filePaths = sync(this.pkg.config.i18nFilesRegex);
+    const filePaths = sync(this.config.i18nFilesRegex);
 
     const fullTranslations = {} as Record<string, any>;
 
@@ -114,8 +115,7 @@ export class I18nGenerator {
 
       const path = filePath.split('/');
 
-      const srcIndex =
-        path.findIndex((dir) => dir === this.pkg.config.srcDir) + 1;
+      const srcIndex = path.findIndex((dir) => dir === this.config.srcDir) + 1;
 
       let dirNames = path.splice(srcIndex);
 
@@ -152,8 +152,8 @@ export class I18nGenerator {
 
     const results = {} as Record<string, any>;
 
-    for (const language of this.pkg.config.locales) {
-      const isDefaultLanguage = language === this.pkg.config.defaultLocale;
+    for (const language of this.config.locales) {
+      const isDefaultLanguage = language === this.config.defaultLocale;
 
       const currentFullTranslations = isDefaultLanguage
         ? fullTranslations
@@ -180,30 +180,30 @@ export class I18nGenerator {
       }
     }
 
-    if (!existsSync(this.pkg.config.outputPath)) {
-      mkdirSync(this.pkg.config.outputPath, { recursive: true });
+    if (!existsSync(this.config.outputPath)) {
+      mkdirSync(this.config.outputPath, { recursive: true });
     }
 
-    for (const language of this.pkg.config.locales) {
+    for (const language of this.config.locales) {
       writeFileSync(
-        join(this.pkg.config.outputPath, `${language}.json`),
+        join(this.config.outputPath, `${language}.json`),
         JSON.stringify(results[language], null, 2),
       );
     }
 
     const types = `export type Translations = ${JSON.stringify(
-      results[this.pkg.config.defaultLocale],
+      results[this.config.defaultLocale],
       null,
       2,
     )}`;
 
-    writeFileSync(join(this.pkg.config.outputPath, `defs.ts`), types);
+    writeFileSync(join(this.config.outputPath, `defs.ts`), types);
 
-    const index = this.pkg.config.locales
+    const index = this.config.locales
       .map((language) => `import * as ${language} from "./${language}.json";`)
       .join('\n')
-      .concat(`\n\nexport { ${this.pkg.config.locales.join(', ')} };`);
+      .concat(`\n\nexport { ${this.config.locales.join(', ')} };`);
 
-    writeFileSync(join(this.pkg.config.outputPath, `index.ts`), index);
+    writeFileSync(join(this.config.outputPath, `index.ts`), index);
   }
 }

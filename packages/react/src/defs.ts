@@ -1,10 +1,10 @@
-import { Config as I18nConfig } from '@ts-phoenix/react-i18n';
-import { Config as SessionStorageConfig } from '@ts-phoenix/react-session-storage';
+import { PackageConfigType as I18nPackageConfigType } from '@ts-phoenix/react-i18n';
+import { PackageConfigType as SessionStoragePackageConfigType } from '@ts-phoenix/react-session-storage';
 
-import { Config as YupConfig } from './yup2';
+import { PackageConfigType as YupPackageConfigType } from './yup2';
 
-export interface ReactPackageConfig {
-  yup: YupConfig;
-  sessionStorage: SessionStorageConfig;
-  i18n: I18nConfig;
+export interface PackageConfigType {
+  yup: YupPackageConfigType;
+  sessionStorage: SessionStoragePackageConfigType;
+  i18n: I18nPackageConfigType;
 }

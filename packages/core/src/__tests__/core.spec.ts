@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@ts-phoenix/di';
+import { Inject, Injectable, Token } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 
 import { CircularDependencyError } from '@src/errors';
@@ -8,16 +8,12 @@ import {
   Package,
   PackageDependency,
   PartialConfig,
-  Service,
 } from '@src/index';
 import { createPackageDependency } from '@src/utils';
 
 describe('core', () => {
   it('should work', async () => {
     @Injectable()
-    class MyPackage extends Package {}
-
-    @Service()
     class MyService {
       public initialised: boolean;
 
@@ -32,8 +28,19 @@ describe('core', () => {
         });
       }
 
-      async initialise() {
+      public initialise() {
         this.initialised = true;
+      }
+    }
+
+    @Injectable()
+    class MyPackage extends Package {
+      getConfigToken() {
+        return null;
+      }
+
+      public initialiseServices() {
+        return [MyService];
       }
     }
 
@@ -52,12 +59,21 @@ describe('core', () => {
 
   it('should throw when circular dependency', async () => {
     class MyPackage extends Package {
+      getConfigToken() {
+        return null;
+      }
+
       public getDependencies(): PackageDependency[] {
         return [createPackageDependency(MyOtherPackage)];
       }
     }
 
+    @Injectable()
     class MyOtherPackage extends Package {
+      getConfigToken() {
+        return null;
+      }
+
       public getDependencies(): PackageDependency[] {
         return [createPackageDependency(MyPackage)];
       }
@@ -77,21 +93,32 @@ describe('core', () => {
       name: string;
     }
 
+    const MY_PACKAGE_CONFIG = new Token<PackageConfig>();
+
+    @Injectable()
     class MyPackage extends Package<PackageConfig> {
       public getDependencies(): PackageDependency[] {
         return [];
+      }
+
+      public getConfigToken() {
+        return MY_PACKAGE_CONFIG;
       }
     }
 
     const newName = 'ModifiedByMyOtherPackage';
 
-    class MyOtherPackage extends Package<PackageConfig> {
+    class MyOtherPackage extends Package {
       public getDependencies(): PackageDependency[] {
         return [
           createPackageDependency(MyPackage, {
             name: newName,
           }),
         ];
+      }
+
+      getConfigToken() {
+        return null;
       }
     }
 
@@ -101,9 +128,9 @@ describe('core', () => {
 
     await core.initialise();
 
-    const myPackage = core.container.get(MyPackage);
+    const config = core.container.getToken(MY_PACKAGE_CONFIG);
 
-    expect(myPackage.config.name).toBe(newName);
+    expect(config.name).toBe(newName);
   });
 
   it('should work with required config', async () => {
@@ -116,7 +143,15 @@ describe('core', () => {
 
     const name = 'Hi';
     const requiredStuff = 'hi';
+
+    const MY_PACKAGE_CONFIG = new Token<PackageConfig>();
+
+    @Injectable()
     class MyPackage extends Package<PackageConfig, RequiredPackageConfig> {
+      getConfigToken() {
+        return MY_PACKAGE_CONFIG;
+      }
+
       public getDefaultConfig(): PartialConfig<
         PackageConfig,
         RequiredPackageConfig
@@ -128,8 +163,13 @@ describe('core', () => {
       }
     }
 
+    @Injectable()
     class MyOtherPackage extends Package {
-      public getDependencies(): PackageDependency<any, any>[] {
+      getConfigToken() {
+        return null;
+      }
+
+      public getDependencies(): PackageDependency[] {
         return [
           createPackageDependency(MyPackage, {
             requiredStuff,
@@ -144,9 +184,9 @@ describe('core', () => {
 
     await core.initialise();
 
-    const pkg = core.container.get(MyPackage);
+    const config = core.container.getToken(MY_PACKAGE_CONFIG);
 
-    expect(pkg.config).toStrictEqual({
+    expect(config).toStrictEqual({
       name,
       requiredStuff,
     });

@@ -1,4 +1,4 @@
-export interface Config {
+export interface PackageConfigType {
   missingKey: string;
 
   defaultLocale: string;
@@ -15,4 +15,4 @@ export interface Config {
   outputPath: string;
 }
 
-export type RequiredConfig = Pick<Config, 'locales'>
+export type RequiredConfig = Pick<PackageConfigType, 'locales'>;

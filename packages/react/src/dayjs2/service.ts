@@ -1,9 +1,9 @@
-import { Inject, Service } from '@ts-phoenix/core';
+import { Inject, Injectable } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
 import { LocaleChangedEvent } from '@ts-phoenix/react-i18n';
 import * as dayjs from 'dayjs';
 
-@Service()
+@Injectable()
 export class Dayjs {
   constructor(@Inject(EventManager) private eventManager: EventManager) {
     this.eventManager.addListener({

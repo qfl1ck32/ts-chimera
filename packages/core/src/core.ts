@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BindingScopeEnum, Container, Injectable, Token } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 
 import { CoreState } from './defs';
-import { RegisteredServices } from './di';
 import { CircularDependencyError } from './errors';
 import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
 import { Package } from './package';
@@ -12,13 +12,7 @@ import { CONTAINER } from './tokens';
 export class Core {
   private _state: CoreState;
 
-  static _container: Container = new Container({
-    autoBindInjectable: true,
-    skipBaseClassChecks: true,
-    defaultScope: BindingScopeEnum.Singleton,
-  });
-
-  static _registeredServices: RegisteredServices = new RegisteredServices();
+  private _container!: Container;
 
   private eventManager: EventManager;
 
@@ -46,6 +40,7 @@ export class Core {
     });
 
     this.setToken(CONTAINER, this.container);
+    this.container.bind(Core).toConstantValue(this);
   }
 
   get state() {
@@ -65,11 +60,15 @@ export class Core {
   }
 
   get container() {
-    return Core._container;
-  }
+    if (this._container == null) {
+      this._container = new Container({
+        autoBindInjectable: true,
+        skipBaseClassChecks: true,
+        defaultScope: BindingScopeEnum.Singleton,
+      });
+    }
 
-  get registeredServices() {
-    return Core._registeredServices;
+    return this._container;
   }
 
   public setToken<T>(token: Token<T>, value: T) {
@@ -99,8 +98,9 @@ export class Core {
           dependency.PackageConstructor,
         ) as Package;
 
-        if (dependency.config[0]) {
-          pkg.setConfig(dependency.config[0]);
+        if (dependency.config?.[0]) {
+          // @ts-ignore
+          pkg.__mergeConfig(dependency.config[0]);
         }
 
         return pkg;
@@ -130,20 +130,26 @@ export class Core {
     const packages = this.buildPackagesDependencyList(this.config.packages);
 
     for (const pkg of packages) {
-      pkg.setCore(this);
+      // @ts-ignore
+      pkg.__setCore(this);
+
+      // @ts-ignore
+      pkg.__setConfigToken();
 
       if (!this.container.isBound(pkg.constructor)) {
         this.container.bind(pkg.constructor).toConstantValue(pkg);
       }
     }
 
-    const allServices = this.registeredServices.get();
+    for (const pkg of packages) {
+      const services = pkg.initialiseServices();
 
-    for (const ServiceClass of allServices) {
-      try {
-        this.container.get(ServiceClass);
-      } catch (e) {
-        // already bound to the container
+      for (const ServiceClass of services) {
+        try {
+          this.container.get(ServiceClass);
+        } catch (e) {
+          // already bound to the container
+        }
       }
     }
 

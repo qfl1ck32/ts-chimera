@@ -1,11 +1,24 @@
 import { Package, PartialConfig } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
+import { Injectable, Token } from '@ts-phoenix/di';
 
-import { Config, RequiredConfig } from './defs';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType, RequiredConfig } from './defs';
+import { I18nGenerator } from './service';
 
 @Injectable()
-export class I18nGeneratorPackage extends Package<Config, RequiredConfig> {
-  getDefaultConfig(): PartialConfig<Config, RequiredConfig> {
+export class I18nGeneratorPackage extends Package<
+  PackageConfigType,
+  RequiredConfig
+> {
+  getConfigToken(): Token<PackageConfigType> {
+    return PACKAGE_CONFIG_TOKEN;
+  }
+
+  initialiseServices() {
+    return [I18nGenerator];
+  }
+
+  getDefaultConfig(): PartialConfig<PackageConfigType, RequiredConfig> {
     return {
       defaultLocale: 'en',
       srcDir: 'src',

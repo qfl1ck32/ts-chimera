@@ -10,7 +10,7 @@ import {
 export type ITranslations = Record<string, any>;
 export type IInterpolationStrings = Record<'start' | 'end', string>;
 
-export interface Config {
+export interface PackageConfigType {
   defaultLocale: string;
   translations: ITranslations;
   interpolationStrings: IInterpolationStrings;

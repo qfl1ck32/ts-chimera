@@ -1,18 +1,19 @@
-import { Inject, Service } from '@ts-phoenix/core';
+import { InjectToken, Injectable } from '@ts-phoenix/core';
 import { ISessionStorage, SessionData } from '@ts-phoenix/react-session';
 
-import { SessionStoragePackage } from './package';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType } from './defs';
 
-@Service()
+@Injectable()
 export class SessionStorage implements ISessionStorage {
   public state: SessionData;
 
   constructor(
-    @Inject(SessionStoragePackage) private pkg: SessionStoragePackage,
+    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
   ) {
     if (typeof window !== 'undefined') {
       this.state = JSON.parse(
-        localStorage.getItem(this.pkg.config.localStorageKey) || '{}',
+        localStorage.getItem(this.config.localStorageKey) || '{}',
       );
     } else {
       this.state = {} as SessionData;
@@ -27,7 +28,7 @@ export class SessionStorage implements ISessionStorage {
     this.state[key] = value;
 
     localStorage.setItem(
-      this.pkg.config.localStorageKey,
+      this.config.localStorageKey,
       JSON.stringify(this.state),
     );
   }

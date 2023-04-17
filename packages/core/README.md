@@ -32,12 +32,23 @@ Here's an example of how to use @ts-phoenix/core, including all the features:
 
 ```ts
 // defs.ts
-export interface Config {
+export interface PackageConfigType {
   message: string;
   requiredField: string;
 }
 
-export type RequiredConfig = Pick<Config, 'requiredField'>;
+export type PackageRequiredConfigType = Pick<
+  PackageConfigType,
+  'requiredField'
+>;
+```
+
+```ts
+// config.ts
+import { Token } from '@ts-phoenix/core';
+import { PackageConfigType } from './defs';
+
+export const PACKAGE_CONFIG_TOKEN = new Token<PackageConfigType>();
 ```
 
 ```ts
@@ -45,16 +56,19 @@ export type RequiredConfig = Pick<Config, 'requiredField'>;
 import {
   CoreBeforeInitialiseEvent,
   CoreAfterInitialiseEvent,
+  Injectable,
+  InjectToken,
 } from '@ts-phoenix/core';
-import { Service } from '@ts-phoenix/di';
 import { EventManger } from '@ts-phoenix/event-manager';
-import { MyPackage } from './package.ts';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType } from './defs';
 
-@Service()
+@Injectable()
 export class MyService {
   constructor(
     @Inject(EventManager) private readonly eventManager: EventManager,
-    @Inject(MyPackage) private readonly pkg: MyPackage,
+    @InjectToken(PACKAGE_CONFIG_TOKEN)
+    private readonly config: PackageConfigType,
   ) {
     this.eventManager.addEventListener({
       event: CoreBeforeInitialiseEvent,
@@ -68,7 +82,7 @@ export class MyService {
   }
 
   public showConfig() {
-    console.log(this.pkg.config);
+    console.log(this.config);
   }
 }
 ```
@@ -77,9 +91,15 @@ export class MyService {
 // package.ts
 import { Package, Injectable, createPackageDependency } from '@ts-phoenix/core';
 import { MyService } from './service';
+import { PackageConfigType, PackageRequiredConfigType } from './defs';
+import { CONFIG_TOKEN } from './config';
 
 @Injectable()
 class MyPackage extends Package<Config, RequiredConfig> {
+  public getConfigToken() {
+    return CONFIG_TOKEN;
+  }
+
   public getDependencies() {
     return [
       createPackageDependency(SomeOtherPackage, {
@@ -88,14 +108,14 @@ class MyPackage extends Package<Config, RequiredConfig> {
     ];
   }
 
+  public initialiseServices() {
+    return [MyService]; // This will ensure that MyService is constructed before emitting Core lifecycle events
+  }
+
   public getDefaultConfig() {
     return {
       message: 'Hi', // you don't need to provide requiredField in the default config
     };
-  }
-
-  public async initialise() {
-    this.setConfigToken(CONFIG_TOKEN);
   }
 }
 ```

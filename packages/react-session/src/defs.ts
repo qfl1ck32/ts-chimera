@@ -9,8 +9,8 @@ export interface ISessionStorage {
   getItem<T extends keyof SessionData>(key: T): SessionData[T] | null;
   setItem<T extends keyof SessionData>(key: T, value: SessionData[T]): void;
 }
-export interface Config {
+export interface PackageConfigType {
   storage: Constructor<ISessionStorage>;
 }
 
-export type RequiredConfig = Pick<Config, 'storage'>;
+export type PackageRequiredConfig = Pick<PackageConfigType, 'storage'>;
