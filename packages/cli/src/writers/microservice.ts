@@ -36,7 +36,11 @@ export class MicroserviceWriter extends Writer {
       ],
     );
 
-    this.logger.info('Installing dependencies...');
-    runCommand('npm i', destDir);
+    this.logger.info('Done.');
+    this.logger.info(`Run the following commands:
+cd ${args.name}
+npm i
+npm run dev`);
+    // runCommand('npm i', destDir);
   }
 }

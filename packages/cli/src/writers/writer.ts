@@ -19,7 +19,6 @@ export class Writer {
     ignoreList: string[] = [],
     replacements: Replacement[] = [],
   ) {
-    console.log({ srcDir });
     if (!fs.existsSync(srcDir)) {
       console.error(`Source directory "${srcDir}" does not exist.`);
       return;

@@ -17,8 +17,6 @@ export class CLI {
   ) {}
 
   async run() {
-    this.logger.info("Let's go!");
-
     const { create } = await inquirer.prompt([
       {
         type: 'list',
