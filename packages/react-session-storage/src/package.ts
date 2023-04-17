@@ -1,4 +1,5 @@
-import { Injectable, Package, PartialConfig, Token } from '@ts-phoenix/core';
+import { Package, PackageConfigToken, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
 import { PackageConfigType } from './defs';
@@ -6,7 +7,7 @@ import { SessionStorage } from './service';
 
 @Injectable()
 export class SessionStoragePackage extends Package<PackageConfigType> {
-  getConfigToken(): Token<PackageConfigType> {
+  getConfigToken(): PackageConfigToken<PackageConfigType> {
     return PACKAGE_CONFIG_TOKEN;
   }
 

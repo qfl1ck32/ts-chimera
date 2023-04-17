@@ -1,5 +1,7 @@
-import { Token } from '@ts-phoenix/core';
+import { PackageConfigToken } from '@ts-phoenix/core';
 
 import { PackageConfigType } from './defs';
 
-export const PACKAGE_CONFIG_TOKEN = new Token<PackageConfigType>();
+export const PACKAGE_CONFIG_TOKEN = new PackageConfigToken<PackageConfigType>(
+  'REACT_SESSION_STORAGE',
+);

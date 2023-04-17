@@ -8,6 +8,7 @@ import { core } from '@src/startup/core';
 
 export default function App({ Component, router, pageProps }: AppProps) {
   const loader = <ScreenLoader />;
+
   return (
     <ChakraProvider>
       <AppProvider loadingComponent={loader} core={core}>

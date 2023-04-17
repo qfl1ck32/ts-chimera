@@ -1,9 +1,10 @@
-import { Injectable, Token } from '@ts-phoenix/di';
+import { Injectable } from '@ts-phoenix/di';
 import { Constructor, DeepPartial } from '@ts-phoenix/typings';
 import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
 import { PackageDependency, PartialConfig } from './defs';
+import { PackageConfigToken } from './tokens';
 
 @Injectable()
 export abstract class Package<
@@ -26,7 +27,9 @@ export abstract class Package<
     }
   }
 
-  abstract getConfigToken(): ConfigType extends null ? null : Token<ConfigType>;
+  abstract getConfigToken(): ConfigType extends null
+    ? null
+    : PackageConfigToken<ConfigType>;
 
   public getDependencies(): PackageDependency[] {
     return [];

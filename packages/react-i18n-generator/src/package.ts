@@ -1,5 +1,5 @@
-import { Package, PartialConfig } from '@ts-phoenix/core';
-import { Injectable, Token } from '@ts-phoenix/di';
+import { Package, PackageConfigToken, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
 import { PackageConfigType, RequiredConfig } from './defs';
@@ -10,7 +10,7 @@ export class I18nGeneratorPackage extends Package<
   PackageConfigType,
   RequiredConfig
 > {
-  getConfigToken(): Token<PackageConfigType> {
+  getConfigToken(): PackageConfigToken<PackageConfigType> {
     return PACKAGE_CONFIG_TOKEN;
   }
 

@@ -5,3 +5,4 @@ export * from './events';
 export * from './utils';
 export * from './tokens';
 export * from './di';
+export * from './container';

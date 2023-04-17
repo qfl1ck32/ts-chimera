@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@ts-phoenix/core';
+import { Inject, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 import { LocaleChangedEvent } from '@ts-phoenix/react-i18n';
 import * as dayjs from 'dayjs';

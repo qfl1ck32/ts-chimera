@@ -1,4 +1,4 @@
-import { InjectToken, Injectable } from '@ts-phoenix/core';
+import { Injectable, InjectToken } from '@ts-phoenix/di';
 import { ISessionStorage, SessionData } from '@ts-phoenix/react-session';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';

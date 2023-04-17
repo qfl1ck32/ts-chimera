@@ -1,4 +1,5 @@
-import { Package, PartialConfig, Injectable, Token } from '@ts-phoenix/core';
+import { Package, PackageConfigToken, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
 import { PackageConfigType, PackageRequiredConfig } from './defs';
@@ -9,7 +10,7 @@ export class SessionPackage extends Package<
   PackageConfigType,
   PackageRequiredConfig
 > {
-  getConfigToken(): Token<PackageConfigType> {
+  getConfigToken(): PackageConfigToken<PackageConfigType> {
     return PACKAGE_CONFIG_TOKEN;
   }
 

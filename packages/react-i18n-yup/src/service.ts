@@ -1,4 +1,4 @@
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/core';
+import { Injectable, Inject, InjectToken } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 import {
   LocaleChangedEvent,

@@ -1,7 +1,7 @@
-import { Injectable, Package } from '@ts-phoenix/core';
+import { Package } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
-// eslint-disable-next-line import/namespace
-// import * as Services from '@src/services';
+import * as Services from '@src/services';
 
 @Injectable()
 export class AppPackage extends Package {
@@ -9,7 +9,7 @@ export class AppPackage extends Package {
     return null;
   }
 
-  // initialiseServices() {
-  //   return Object.values(Services);
-  // }
+  initialiseServices() {
+    return Object.values(Services);
+  }
 }

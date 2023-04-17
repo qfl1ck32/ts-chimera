@@ -3,6 +3,7 @@ import { EventManager } from '@ts-phoenix/event-manager';
 
 import { CircularDependencyError } from '@src/errors';
 import {
+  PackageConfigToken,
   Core,
   CoreBeforeInitialiseEvent,
   Package,
@@ -93,7 +94,9 @@ describe('core', () => {
       name: string;
     }
 
-    const MY_PACKAGE_CONFIG = new Token<PackageConfig>();
+    const MY_PACKAGE_CONFIG = new PackageConfigToken<PackageConfig>(
+      'MY_PACKAGE',
+    );
 
     @Injectable()
     class MyPackage extends Package<PackageConfig> {
@@ -128,7 +131,7 @@ describe('core', () => {
 
     await core.initialise();
 
-    const config = core.container.getToken(MY_PACKAGE_CONFIG);
+    const config = core.container.getPackageConfigToken(MY_PACKAGE_CONFIG);
 
     expect(config.name).toBe(newName);
   });
@@ -144,7 +147,9 @@ describe('core', () => {
     const name = 'Hi';
     const requiredStuff = 'hi';
 
-    const MY_PACKAGE_CONFIG = new Token<PackageConfig>();
+    const MY_PACKAGE_CONFIG = new PackageConfigToken<PackageConfig>(
+      'MY_PACKAGE',
+    );
 
     @Injectable()
     class MyPackage extends Package<PackageConfig, RequiredPackageConfig> {

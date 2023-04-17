@@ -45,10 +45,11 @@ export type PackageRequiredConfigType = Pick<
 
 ```ts
 // config.ts
-import { Token } from '@ts-phoenix/core';
+import { PackageConfigToken } from '@ts-phoenix/core';
 import { PackageConfigType } from './defs';
 
-export const PACKAGE_CONFIG_TOKEN = new Token<PackageConfigType>();
+export const MY_PACKAGE_CONFIG_TOKEN =
+  new PackageConfigToken<PackageConfigType>('MY_PACKAGE');
 ```
 
 ```ts

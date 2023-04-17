@@ -1,4 +1,5 @@
-import { Injectable, Package } from '@ts-phoenix/core';
+import { Package } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 import { Dayjs } from './service';
 

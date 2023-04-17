@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@ts-phoenix/core';
+import { Injectable, Inject } from '@ts-phoenix/di';
 import { Logger } from '@ts-phoenix/logger';
 import inquirer from 'inquirer';
 import inquirer_autocomplete from 'inquirer-autocomplete-prompt';

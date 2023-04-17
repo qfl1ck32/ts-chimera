@@ -1,4 +1,4 @@
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/core';
+import { Injectable, Inject, InjectToken } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 import Polyglot from 'node-polyglot';
 
@@ -13,7 +13,8 @@ export class I18n {
   public activePolyglot!: Polyglot;
 
   constructor(
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+    @InjectToken(PACKAGE_CONFIG_TOKEN)
+    private config: PackageConfigType,
     @Inject(EventManager) private eventManager: EventManager,
   ) {
     this.polyglots = new Map();

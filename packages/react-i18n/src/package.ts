@@ -1,4 +1,5 @@
-import { Package, PartialConfig, Injectable, Token } from '@ts-phoenix/core';
+import { Package, PackageConfigToken, PartialConfig } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 import { Constructor } from '@ts-phoenix/typings';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
@@ -7,7 +8,7 @@ import { I18n } from './service';
 
 @Injectable()
 export class I18nPackage extends Package<PackageConfigType> {
-  getConfigToken(): Token<PackageConfigType> {
+  getConfigToken(): PackageConfigToken<PackageConfigType> {
     return PACKAGE_CONFIG_TOKEN;
   }
 

@@ -1,10 +1,5 @@
-import {
-  InjectContainer,
-  Container,
-  Inject,
-  Injectable,
-  InjectToken,
-} from '@ts-phoenix/core';
+import { InjectContainer, Container } from '@ts-phoenix/core';
+import { Injectable, InjectToken, Inject } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 import { useEffect, useState } from 'react';
 
@@ -26,16 +21,6 @@ export class Session {
 
   get state() {
     return this.storage.state;
-  }
-
-  public setDefaultValues(state: SessionData) {
-    for (const key in state) {
-      const value = state[key as keyof SessionData];
-
-      if (this.storage.state[key as keyof SessionData] == null) {
-        this.storage.setItem(key as keyof SessionData, value);
-      }
-    }
   }
 
   public get<T extends keyof SessionData>(

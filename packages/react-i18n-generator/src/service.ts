@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/core';
+import { InjectToken, Injectable } from '@ts-phoenix/di';
 import { mergeDeep } from '@ts-phoenix/utils';
 import { sync } from 'glob';
 
@@ -11,7 +11,8 @@ import { PackageConfigType } from './defs';
 @Injectable()
 export class I18nGenerator {
   constructor(
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+    @InjectToken(PACKAGE_CONFIG_TOKEN)
+    private config: PackageConfigType,
   ) {}
 
   private get interpolationRegex() {

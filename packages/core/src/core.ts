@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { BindingScopeEnum, Container, Injectable, Token } from '@ts-phoenix/di';
+import { BindingScopeEnum, Injectable, Token } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 
+import { CONFIG_TOKEN_IDENTIFIER } from './constants';
+import { Container } from './container';
 import { CoreState } from './defs';
 import { CircularDependencyError } from './errors';
 import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
@@ -147,7 +149,29 @@ export class Core {
       for (const ServiceClass of services) {
         try {
           this.container.get(ServiceClass);
-        } catch (e) {
+        } catch (e: any) {
+          const message = e.message as string;
+
+          if (message.includes('No matching bindings found')) {
+            if (message.includes(CONFIG_TOKEN_IDENTIFIER)) {
+              const packageName = message // Symbol(CONFIG_TOKEN_IDENTIFIER "PACKAGE_NAME")
+                .split(CONFIG_TOKEN_IDENTIFIER)[1]
+                .slice(0, -1) // remove ")"
+                .trim() // remove the space
+                .split('_')
+                .map(
+                  (word) => word[0].toUpperCase() + word.slice(1).toLowerCase(),
+                )
+                .join(' ');
+
+              throw new Error(
+                `Missing config for package "${packageName}". Perhaps you forgot to add it to the core?`,
+              );
+            }
+
+            throw e;
+          }
+
           // already bound to the container
         }
       }

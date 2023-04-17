@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { Injectable } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 import { TEMPLATES_DIRECTORY } from '@src/constants';
 import { findPackageRoot, runCommand } from '@src/utils';

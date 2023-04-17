@@ -1,4 +1,5 @@
 import { Core } from '@ts-phoenix/core';
+import { Logger } from '@ts-phoenix/logger';
 import {
   I18nGenerator,
   I18nGeneratorPackage,
@@ -24,9 +25,13 @@ const main = async () => {
 
   await core.initialise();
 
+  const logger = core.container.get(Logger);
+
   const generator = core.container.get(I18nGenerator);
 
+  logger.info('Generating i18n files...');
   generator.run();
+  logger.info('Done generating i18n files.');
 };
 
 main();
