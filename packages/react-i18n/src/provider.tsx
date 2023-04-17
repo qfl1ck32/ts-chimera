@@ -1,4 +1,3 @@
-import { Loading } from '@ts-phoenix/react-components';
 import { use } from '@ts-phoenix/react-di';
 import React, { useState, useEffect, Fragment } from 'react';
 
@@ -6,14 +5,12 @@ import { I18n } from './service';
 
 export interface Props {
   children: React.ReactNode;
-  loadingComponent?: React.ReactNode;
+  loadingComponent: React.ReactNode;
   initialLocale: string;
 }
 
 export const I18nProvider: React.FC<Props> = (props) => {
   const i18n = use(I18n);
-
-  const LoadingComponent = props.loadingComponent || <Loading />;
 
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +24,7 @@ export const I18nProvider: React.FC<Props> = (props) => {
   }, []);
 
   if (loading) {
-    return <Fragment>{LoadingComponent}</Fragment>;
+    return <Fragment>{props.loadingComponent}</Fragment>;
   }
 
   return <Fragment>{props.children}</Fragment>;

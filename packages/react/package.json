@@ -44,7 +44,6 @@
     "@hookform/resolvers": "^3.0.1",
     "@ts-phoenix/core": "^1.0.0-alpha.0",
     "@ts-phoenix/event-manager": "^1.0.0-alpha.0",
-    "@ts-phoenix/react-components": "^1.0.0-alpha.0",
     "@ts-phoenix/react-di": "^1.0.0-alpha.0",
     "@ts-phoenix/react-i18n": "^1.0.0-alpha.0",
     "@ts-phoenix/react-session": "^1.0.0-alpha.0",

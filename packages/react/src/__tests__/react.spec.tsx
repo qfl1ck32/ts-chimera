@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { render, act, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Core } from '@ts-phoenix/core';
 import React from 'react';
 
@@ -18,18 +18,23 @@ describe('react', () => {
 
     expect(core.isInitialised).toBe(false);
 
-    const Component = render(
-      <AppProvider core={core}>
-        <div>MyComponent</div>
-      </AppProvider>,
+    const loadingText = 'Loading...';
+    const myComponentText = 'MyComponent';
+
+    const loadingComponent = <div>{loadingText}</div>;
+
+    const myComponent = <div>{myComponentText}</div>;
+
+    render(
+      <AppProvider {...{ core, loadingComponent }}>{myComponent}</AppProvider>,
     );
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getByText(loadingText)).toBeInTheDocument();
 
-    expect(() => screen.getByText('MyComponent')).toThrow(); // not in the document
+    expect(() => screen.getByText(myComponentText)).toThrow(); // not in the document
 
     await waitFor(() => {
-      expect(screen.getByText('MyComponent')).toBeInTheDocument();
+      expect(screen.getByText(myComponentText)).toBeInTheDocument();
 
       expect(core.isInitialised).toBe(true);
     });
