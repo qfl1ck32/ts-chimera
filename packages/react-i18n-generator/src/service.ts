@@ -3,7 +3,7 @@ import { join, resolve } from 'path';
 
 import { Inject, Service } from '@ts-phoenix/core';
 import { mergeDeep } from '@ts-phoenix/utils';
-import * as glob from 'glob';
+import { sync } from 'glob';
 
 import { I18nGeneratorPackage } from './package';
 
@@ -105,7 +105,7 @@ export class I18nGenerator {
       translations[language] = content;
     }
 
-    const filePaths = glob.sync(this.pkg.config.i18nFilesRegex);
+    const filePaths = sync(this.pkg.config.i18nFilesRegex);
 
     const fullTranslations = {} as Record<string, any>;
 
