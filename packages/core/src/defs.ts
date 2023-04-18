@@ -2,6 +2,10 @@ import { Constructor } from '@ts-phoenix/typings';
 
 import { Package } from './package';
 
+export interface CoreConfig {
+  packages: Array<Package | Package<any, null>>;
+}
+
 export enum CoreState {
   NEW = 'NEW',
   INITIALIZING = 'INITIALIZING',

@@ -4,7 +4,7 @@ import { EventManager } from '@ts-phoenix/event-manager';
 
 import { CONFIG_TOKEN_IDENTIFIER } from './constants';
 import { Container } from './container';
-import { CoreState } from './defs';
+import { CoreConfig, CoreState } from './defs';
 import { CircularDependencyError } from './errors';
 import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
 import { Package } from './package';
@@ -18,11 +18,7 @@ export class Core {
 
   private eventManager: EventManager;
 
-  constructor(
-    private config: {
-      packages: Array<Package | Package<any, null>>;
-    },
-  ) {
+  constructor(private config: CoreConfig) {
     this._state = CoreState.NEW;
 
     this.eventManager = this.container.get(EventManager);
@@ -155,7 +151,7 @@ export class Core {
           if (message.includes('No matching bindings found')) {
             if (message.includes(CONFIG_TOKEN_IDENTIFIER)) {
               const packageName = message // Symbol(CONFIG_TOKEN_IDENTIFIER "PACKAGE_NAME")
-                .split(CONFIG_TOKEN_IDENTIFIER)[1]
+                .split(CONFIG_TOKEN_IDENTIFIER)[1] // "PACKAGE_NAME")
                 .slice(0, -1) // remove ")"
                 .trim() // remove the space
                 .split('_')
@@ -178,7 +174,6 @@ export class Core {
     }
 
     await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
-
     await this.eventManager.emitAsync(new CoreAfterInitialiseEvent());
   }
 }
