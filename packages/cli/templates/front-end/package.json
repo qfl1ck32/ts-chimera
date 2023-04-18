@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.0",
+    "@ts-phoenix/di": "^1.0.0-alpha.0",
+    "@ts-phoenix/event-manager": "^1.0.0-alpha.0",
+    "@ts-phoenix/logger": "^1.0.0-alpha.0",
     "@ts-phoenix/react-di": "^1.0.0-alpha.0",
     "@ts-phoenix/react-provider": "^1.0.0-alpha.0",
     "@ts-phoenix/react-i18n": "^1.0.0-alpha.0",
