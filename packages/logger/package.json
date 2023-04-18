@@ -36,6 +36,7 @@
     "tsc-alias": "^1.8.5"
   },
   "dependencies": {
+    "@ts-phoenix/core": "^1.0.0-alpha.1",
     "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/event-manager": "^1.0.0-alpha.0",
     "chalk": "^4.1.2"

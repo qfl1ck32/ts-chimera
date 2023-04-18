@@ -41,7 +41,7 @@ export class Logger {
     });
   }
 
-  private async _log(args: LogArgs) {
+  protected async _log(args: LogArgs) {
     const { message, level, color } = args;
 
     await this.eventManager.emitAsync(new BeforeLogEvent({ message, level }));
