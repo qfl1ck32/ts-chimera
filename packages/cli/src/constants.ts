@@ -1,1 +1,1 @@
-export const TEMPLATES_DIRECTORY = './src/templates/';
+export const TEMPLATES_DIRECTORY = './templates/';

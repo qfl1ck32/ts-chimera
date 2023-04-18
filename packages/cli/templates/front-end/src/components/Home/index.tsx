@@ -18,7 +18,6 @@ const Home: React.FC = () => {
           {t('welcome')}
         </Heading>
       </Container>
-
       <LanguageSwitcherContainer />
     </Center>
   );

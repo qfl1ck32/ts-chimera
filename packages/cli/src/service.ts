@@ -22,7 +22,8 @@ export class CLI {
         type: 'list',
         name: 'create',
         message: 'Select what do you want to create:',
-        choices: ['microservice', 'package'],
+        // choices: ['microservice', 'package'],
+        choices: ['microservice'],
       },
     ]);
 
@@ -77,10 +78,6 @@ export class CLI {
         await this.microserviceWriter.createFrontend({ name });
         break;
     }
-
-    this.logger.info(
-      `You have created a ${component} microservice with the name "${name}".`,
-    );
   }
 
   async createPackage(): Promise<void> {

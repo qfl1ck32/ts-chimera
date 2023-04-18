@@ -27,7 +27,7 @@ export class MicroserviceWriter extends Writer {
     this.copyTemplate(
       srcDir,
       destDir,
-      ['.next', 'node_modules'],
+      ['.next', 'node_modules', 'package-lock.json'],
       [
         {
           original: nameTemplate,
@@ -36,11 +36,11 @@ export class MicroserviceWriter extends Writer {
       ],
     );
 
-    this.logger.info('Done.');
-    this.logger.info(`Run the following commands:
+    this.logger.info(`Done. Run the following commands:
 cd ${args.name}
 npm i
-npm run dev`);
-    // runCommand('npm i', destDir);
+npm run dev
+
+Enjoy :D`);
   }
 }
