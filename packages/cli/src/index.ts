@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Core } from '@ts-phoenix/core';
 
 import { CLI } from './service';
