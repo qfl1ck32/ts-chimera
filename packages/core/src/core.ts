@@ -140,6 +140,10 @@ export class Core {
     }
 
     for (const pkg of packages) {
+      await pkg.initialise();
+    }
+
+    for (const pkg of packages) {
       const services = pkg.initialiseServices();
 
       for (const ServiceClass of services) {

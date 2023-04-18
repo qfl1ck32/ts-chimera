@@ -1,5 +1,5 @@
 import { Injectable } from '@ts-phoenix/di';
-import { Constructor, DeepPartial } from '@ts-phoenix/typings';
+import { Constructor, DeepPartial, MaybePromise } from '@ts-phoenix/typings';
 import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
@@ -41,6 +41,10 @@ export abstract class Package<
 
   public initialiseServices(): Constructor[] {
     return [];
+  }
+
+  public initialise(): MaybePromise<void> {
+    return;
   }
 
   get config() {
