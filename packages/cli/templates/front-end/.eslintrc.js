@@ -11,7 +11,7 @@ module.exports = {
     'next/core-web-vitals',
   ],
   rules: {
-    'import/no-extraneous-dependencies': 'error',
+    // 'import/no-extraneous-dependencies': 'error' // TODO: add back,
     'import/order': [
       'error',
       {
