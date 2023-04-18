@@ -15,22 +15,22 @@ export function useI18nForm<
   T extends ISchema<any>,
   TFieldValues extends FieldValues = FieldValues,
   TContext = any,
->(props: UseFormProps<TFieldValues, TContext> & { schema: T }) {
-  const { schema, ...rest } = props;
+>(props: UseFormProps<TFieldValues, TContext> & { getSchema: () => T }) {
+  const { getSchema, ...rest } = props;
 
   const i18n = use(I18n);
 
-  const form = baseUseForm<InferType<typeof schema>>({
+  const form = baseUseForm<InferType<T>>({
     ...rest,
 
-    resolver: yupResolver(schema as any),
+    resolver: yupResolver(getSchema() as any),
   });
 
   useEffect(() => {
     form.trigger(Object.keys(form.formState.errors) as any);
   }, [i18n.activePolyglot]);
 
-  const getErrorMessage = (field: keyof InferType<typeof schema>) =>
+  const getErrorMessage = (field: keyof InferType<T>) =>
     form.formState.errors[field]?.message as string | undefined;
 
   const hasErrors = Object.keys(form.formState.errors).length > 0;
