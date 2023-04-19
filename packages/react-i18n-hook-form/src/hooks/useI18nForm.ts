@@ -9,7 +9,6 @@ import {
 } from 'react-hook-form';
 // eslint-disable-next-line import/named
 import { ISchema, InferType } from 'yup';
-// eslint-disable-next-line import/named
 
 export function useI18nForm<
   T extends ISchema<any>,
