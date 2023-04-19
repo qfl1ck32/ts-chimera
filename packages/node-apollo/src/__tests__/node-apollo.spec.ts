@@ -8,7 +8,7 @@ import {
   AfterServerStartEvent,
   BeforeServerStopEvent,
 } from '@src/events';
-import { GraphQLPackage } from '@src/package';
+import { ApolloPackage } from '@src/package';
 
 describe('node-apollo', () => {
   it('should work', async () => {
@@ -37,7 +37,7 @@ describe('node-apollo', () => {
 
     const core = new Core({
       packages: [
-        new GraphQLPackage(),
+        new ApolloPackage(),
         new LoggerPackage(),
         new ExpressPackage(),
         new TestPackage(),

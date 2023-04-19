@@ -12,7 +12,7 @@ import { PackageConfigType } from './defs';
 import { Apollo } from './service';
 
 @Injectable()
-export class GraphQLPackage extends Package<PackageConfigType> {
+export class ApolloPackage extends Package<PackageConfigType> {
   async initialise() {
     const apollo = this.core.container.get(Apollo);
 
