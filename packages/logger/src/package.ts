@@ -5,11 +5,7 @@ import { CustomLogger } from './custom-logger';
 
 @Injectable()
 export class LoggerPackage extends Package {
-  getConfigToken() {
-    return null;
-  }
-
   async initialise() {
-    this.core.container.bind(CustomLogger).toSelf().inTransientScope();
+    this.core.container.rebind(CustomLogger).toSelf().inTransientScope();
   }
 }

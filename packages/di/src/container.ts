@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Container as BaseContainer } from 'inversify';
 
 import { Token } from './token';

@@ -2,12 +2,14 @@
 import { BindingScopeEnum, Injectable, Token } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 
-import { CONFIG_TOKEN_IDENTIFIER } from './constants';
 import { Container } from './container';
 import { CoreConfig, CoreState } from './defs';
-import { CircularDependencyError } from './errors';
-import { CoreAfterInitialiseEvent, CoreBeforeInitialiseEvent } from './events';
-import { Package } from './package';
+import { DependencyNotFoundError } from './errors';
+import {
+  CoreAfterInitialiseEvent,
+  CoreBeforeInitialiseEvent,
+  CoreBeforeShutdownEvent,
+} from './events';
 import { CONTAINER } from './tokens';
 
 @Injectable()
@@ -16,7 +18,7 @@ export class Core {
 
   private _container!: Container;
 
-  private eventManager: EventManager;
+  public eventManager: EventManager;
 
   constructor(private config: CoreConfig) {
     this._state = CoreState.NEW;
@@ -73,51 +75,21 @@ export class Core {
     this.container.bind(token.identifier).toConstantValue(value);
   }
 
-  private buildPackagesDependencyList(packages: Package[]): Package[] {
-    const result: Package[] = [];
-    const visited = new Set<Package>();
-    const visiting = new Set<Package>();
+  private checkPackagesDependencies() {
+    for (const pkg of this.config.packages) {
+      const dependencies = pkg.getDependencies();
 
-    const visit = (pkg: Package) => {
-      if (visited.has(pkg)) {
-        return;
-      }
-
-      if (visiting.has(pkg)) {
-        throw new CircularDependencyError({
-          dependencies: Array.from(visiting).map((p) => p.constructor.name),
-        });
-      }
-
-      visiting.add(pkg);
-
-      const dependencies = pkg.getDependencies().map((dependency) => {
-        const pkg = this.container.get(
-          dependency.PackageConstructor,
-        ) as Package;
-
-        if (dependency.config?.[0]) {
-          // @ts-ignore
-          pkg.__mergeConfig(dependency.config[0]);
+      for (const PackageDependency of dependencies) {
+        if (
+          !this.config.packages.some((pkg) => pkg instanceof PackageDependency)
+        ) {
+          throw new DependencyNotFoundError({
+            dependency: PackageDependency.name,
+            dependent: pkg.constructor.name,
+          });
         }
-
-        return pkg;
-      });
-
-      for (const dep of dependencies) {
-        visit(dep);
       }
-
-      visited.add(pkg);
-      visiting.delete(pkg);
-      result.push(pkg);
-    };
-
-    for (const pkg of packages) {
-      visit(pkg);
     }
-
-    return result;
   }
 
   public async initialise() {
@@ -125,9 +97,9 @@ export class Core {
       return;
     }
 
-    const packages = this.buildPackagesDependencyList(this.config.packages);
+    this.checkPackagesDependencies();
 
-    for (const pkg of packages) {
+    for (const pkg of this.config.packages) {
       // @ts-ignore
       pkg.__setCore(this);
 
@@ -139,45 +111,15 @@ export class Core {
       }
     }
 
-    for (const pkg of packages) {
+    for (const pkg of this.config.packages) {
       await pkg.initialise();
-    }
-
-    for (const pkg of packages) {
-      const services = pkg.initialiseServices();
-
-      for (const ServiceClass of services) {
-        try {
-          this.container.get(ServiceClass);
-        } catch (e: any) {
-          const message = e.message as string;
-
-          if (message.includes('No matching bindings found')) {
-            if (message.includes(CONFIG_TOKEN_IDENTIFIER)) {
-              const packageName = message // Symbol(CONFIG_TOKEN_IDENTIFIER "PACKAGE_NAME")
-                .split(CONFIG_TOKEN_IDENTIFIER)[1] // "PACKAGE_NAME")
-                .slice(0, -1) // remove ")"
-                .trim() // remove the space
-                .split('_')
-                .map(
-                  (word) => word[0].toUpperCase() + word.slice(1).toLowerCase(),
-                )
-                .join(' ');
-
-              throw new Error(
-                `Missing config for package "${packageName}". Perhaps you forgot to add it to the core?`,
-              );
-            }
-
-            throw e;
-          }
-
-          // already bound to the container
-        }
-      }
     }
 
     await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
     await this.eventManager.emitAsync(new CoreAfterInitialiseEvent());
+  }
+
+  async shutdown() {
+    await this.eventManager.emitAsync(new CoreBeforeShutdownEvent());
   }
 }

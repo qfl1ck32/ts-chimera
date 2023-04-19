@@ -1,9 +1,9 @@
 import { Injectable } from '@ts-phoenix/di';
-import { Constructor, DeepPartial, MaybePromise } from '@ts-phoenix/typings';
+import { DeepPartial, MaybePromise } from '@ts-phoenix/typings';
 import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
-import { PackageDependency, PartialConfig } from './defs';
+import { PackagesConstructors, PartialConfig } from './defs';
 import { PackageConfigToken } from './tokens';
 
 @Injectable()
@@ -13,34 +13,32 @@ export abstract class Package<
 > {
   protected core!: Core;
 
-  protected _config: ConfigType;
+  private _config: ConfigType;
 
   constructor(
     ...args: RequiredConfigType extends null
       ? [DeepPartial<ConfigType>?]
       : [RequiredConfigType & DeepPartial<ConfigType>]
   ) {
-    this._config = (this.getDefaultConfig() || {}) as ConfigType;
+    this._config = (this.getDefaultConfig() || {}) as unknown as ConfigType;
 
     if (args[0]) {
       this.__mergeConfig(args[0]);
     }
   }
 
-  abstract getConfigToken(): ConfigType extends null
+  public getConfigToken(): ConfigType extends null
     ? null
-    : PackageConfigToken<ConfigType>;
+    : PackageConfigToken<ConfigType> {
+    return null as any;
+  }
 
-  public getDependencies(): PackageDependency[] {
+  public getDependencies(): PackagesConstructors {
     return [];
   }
 
   public getDefaultConfig(): PartialConfig<ConfigType, RequiredConfigType> {
     return null as any;
-  }
-
-  public initialiseServices(): Constructor[] {
-    return [];
   }
 
   public initialise(): MaybePromise<void> {
@@ -51,11 +49,11 @@ export abstract class Package<
     return this._config;
   }
 
-  protected __setCore(core: Core) {
+  private __setCore(core: Core) {
     this.core = core;
   }
 
-  protected __mergeConfig(config: Partial<ConfigType>) {
+  private __mergeConfig(config: Partial<ConfigType>) {
     if (this.config == null) {
       this._config = { ...config } as ConfigType;
       return;
@@ -67,7 +65,7 @@ export abstract class Package<
     });
   }
 
-  protected __setConfigToken() {
+  private __setConfigToken() {
     const token = this.getConfigToken();
 
     if (!token) {

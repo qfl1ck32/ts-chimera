@@ -102,15 +102,7 @@ class MyPackage extends Package<Config, RequiredConfig> {
   }
 
   public getDependencies() {
-    return [
-      createPackageDependency(SomeOtherPackage, {
-        // you need to provide the required config & you can override the default one
-      }),
-    ];
-  }
-
-  public initialiseServices() {
-    return [MyService]; // This will ensure that MyService is constructed before emitting Core lifecycle events
+    return [SomeOtherPackage];
   }
 
   public getDefaultConfig() {

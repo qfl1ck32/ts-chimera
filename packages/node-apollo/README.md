@@ -1,4 +1,4 @@
-# @ts-phoenix/node-server
+# @ts-phoenix/node-apollo
 
 TODO
 
@@ -11,18 +11,18 @@ TODO
 Install the package using npm or yarn:
 
 ```
-npm i @ts-phoenix/node-server
+npm i @ts-phoenix/node-apollo
 ```
 
 or
 
 ```
-yarn @ts-phoenix/node-server
+yarn @ts-phoenix/node-apollo
 ```
 
 ## Usage
 
-Here's a basic example of how to use _@ts-phoenix/node-server_:
+Here's a basic example of how to use \_@ts-phoenix/node-apolo:
 
 ```ts
 TODO;

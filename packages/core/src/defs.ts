@@ -2,8 +2,12 @@ import { Constructor } from '@ts-phoenix/typings';
 
 import { Package } from './package';
 
+export type Packages = Array<Package | Package<any, null>>;
+export type PackagesConstructors = Array<
+  Constructor<Package | Package<any, null>>
+>;
 export interface CoreConfig {
-  packages: Array<Package | Package<any, null>>;
+  packages: Packages;
 }
 
 export enum CoreState {
@@ -12,16 +16,6 @@ export enum CoreState {
   INITIALIZED = 'INITIALIZED',
 }
 
-export interface PackageDependency<
-  ConfigType extends Record<string, any> | null = any,
-  RequiredConfig extends Partial<ConfigType> | null = any,
-> {
-  PackageConstructor: Constructor<Package<ConfigType, RequiredConfig>>;
-  config: Array<RequiredConfig extends null ? undefined : RequiredConfig>;
-}
-
-export type PartialConfig<Config, RequiredConfig> = {
-  [K in keyof Config]: K extends keyof RequiredConfig
-    ? Config[K] | undefined
-    : Config[K];
-};
+export type PartialConfig<Config, RequiredConfig> = RequiredConfig extends null
+  ? Partial<Config>
+  : Omit<Config, keyof RequiredConfig> & Partial<RequiredConfig>;

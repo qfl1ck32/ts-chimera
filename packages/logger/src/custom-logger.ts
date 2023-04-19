@@ -1,6 +1,9 @@
+import { Injectable } from '@ts-phoenix/di';
+
 import { LogArgs } from './defs';
 import { Logger } from './logger';
 
+@Injectable()
 export class CustomLogger extends Logger {
   prefix?: string;
 

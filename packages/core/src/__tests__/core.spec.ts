@@ -1,16 +1,13 @@
-import { Inject, Injectable, Token } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
+import { Injectable } from '@ts-phoenix/di';
 
-import { CircularDependencyError } from '@src/errors';
+import { DependencyNotFoundError } from '@src/errors';
 import {
   PackageConfigToken,
   Core,
   CoreBeforeInitialiseEvent,
   Package,
-  PackageDependency,
   PartialConfig,
 } from '@src/index';
-import { createPackageDependency } from '@src/utils';
 
 describe('core', () => {
   it('should work', async () => {
@@ -18,15 +15,8 @@ describe('core', () => {
     class MyService {
       public initialised: boolean;
 
-      constructor(
-        @Inject(EventManager) private readonly eventManager: EventManager,
-      ) {
+      constructor() {
         this.initialised = false;
-
-        this.eventManager.addListener({
-          event: CoreBeforeInitialiseEvent,
-          handler: this.initialise.bind(this),
-        });
       }
 
       public initialise() {
@@ -36,12 +26,13 @@ describe('core', () => {
 
     @Injectable()
     class MyPackage extends Package {
-      getConfigToken() {
-        return null;
-      }
+      async initialise() {
+        const myService = this.core.container.get(MyService);
 
-      public initialiseServices() {
-        return [MyService];
+        this.core.eventManager.addListener({
+          event: CoreBeforeInitialiseEvent,
+          handler: myService.initialise.bind(myService),
+        });
       }
     }
 
@@ -58,37 +49,6 @@ describe('core', () => {
     expect(myService.initialised).toBe(true);
   });
 
-  it('should throw when circular dependency', async () => {
-    class MyPackage extends Package {
-      getConfigToken() {
-        return null;
-      }
-
-      public getDependencies(): PackageDependency[] {
-        return [createPackageDependency(MyOtherPackage)];
-      }
-    }
-
-    @Injectable()
-    class MyOtherPackage extends Package {
-      getConfigToken() {
-        return null;
-      }
-
-      public getDependencies(): PackageDependency[] {
-        return [createPackageDependency(MyPackage)];
-      }
-    }
-
-    const core = new Core({
-      packages: [new MyOtherPackage()],
-    });
-
-    await expect(core.initialise()).rejects.toThrowError(
-      CircularDependencyError,
-    );
-  });
-
   it('should work with multiple packages', async () => {
     interface PackageConfig {
       name: string;
@@ -100,33 +60,40 @@ describe('core', () => {
 
     @Injectable()
     class MyPackage extends Package<PackageConfig> {
-      public getDependencies(): PackageDependency[] {
-        return [];
-      }
-
       public getConfigToken() {
         return MY_PACKAGE_CONFIG;
+      }
+
+      public getDefaultConfig(): Partial<PackageConfig> {
+        return {
+          name: 'hello',
+        };
       }
     }
 
     const newName = 'ModifiedByMyOtherPackage';
 
     class MyOtherPackage extends Package {
-      public getDependencies(): PackageDependency[] {
-        return [
-          createPackageDependency(MyPackage, {
-            name: newName,
-          }),
-        ];
-      }
-
-      getConfigToken() {
-        return null;
+      public getDependencies() {
+        return [MyPackage];
       }
     }
 
-    const core = new Core({
+    let core = new Core({
       packages: [new MyOtherPackage()],
+    });
+
+    await expect(core.initialise()).rejects.toThrowError(
+      DependencyNotFoundError,
+    );
+
+    core = new Core({
+      packages: [
+        new MyOtherPackage(),
+        new MyPackage({
+          name: newName,
+        }),
+      ],
     });
 
     await core.initialise();
@@ -163,28 +130,24 @@ describe('core', () => {
       > {
         return {
           name,
-          requiredStuff: undefined,
         };
       }
     }
 
     @Injectable()
     class MyOtherPackage extends Package {
-      getConfigToken() {
-        return null;
-      }
-
-      public getDependencies(): PackageDependency[] {
-        return [
-          createPackageDependency(MyPackage, {
-            requiredStuff,
-          }),
-        ];
+      public getDependencies() {
+        return [MyPackage];
       }
     }
 
     const core = new Core({
-      packages: [new MyOtherPackage()],
+      packages: [
+        new MyPackage({
+          requiredStuff,
+        }),
+        new MyOtherPackage(),
+      ],
     });
 
     await core.initialise();

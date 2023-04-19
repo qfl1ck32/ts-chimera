@@ -2,27 +2,25 @@ import { Core } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
 
 import {
-  ServerPackage,
-  Server,
+  ExpressPackage,
+  Express,
   AfterServerStartEvent,
   BeforeServerStartEvent,
   BeforeServerStopEvent,
 } from '@src/index';
 
-describe('node-server', () => {
+describe('node-express', () => {
   it('should start the server', async () => {
     const core = new Core({
       packages: [
-        new ServerPackage({
+        new ExpressPackage({
           port: 8001,
         }),
       ],
     });
 
-    await core.initialise();
-
     const eventManager = core.container.get(EventManager);
-    const server = core.container.get(Server);
+    const server = core.container.get(Express);
 
     const beforeServerStartListener = jest.fn();
     const afterServerStartListener = jest.fn();
@@ -43,12 +41,12 @@ describe('node-server', () => {
       handler: beforeServerStopListener,
     });
 
-    await server.start();
+    await core.initialise();
 
     expect(beforeServerStartListener).toHaveBeenCalled();
     expect(afterServerStartListener).toHaveBeenCalled();
 
-    await server.stop();
+    await core.shutdown();
 
     expect(beforeServerStopListener).toHaveBeenCalled();
   });

@@ -5,10 +5,10 @@ import GlobalError = globalThis.Error;
 export class Error<T = null> extends GlobalError {
   private _data?: T;
 
-  constructor(data?: T) {
+  constructor(...args: T extends null ? [] : [T]) {
     super();
 
-    this._data = data;
+    this._data = args?.[0];
 
     this.message = this.getMessage();
   }

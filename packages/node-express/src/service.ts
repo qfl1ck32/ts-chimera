@@ -3,11 +3,11 @@ import { AddressInfo } from 'net';
 
 import { Injectable, Inject, InjectToken } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { CustomLogger, Logger } from '@ts-phoenix/logger';
-import express, { Application } from 'express';
+import { CustomLogger } from '@ts-phoenix/logger';
+import express from 'express';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { PackageConfigType, Application } from './defs';
 import {
   BeforeServerStartEvent,
   AfterServerStartEvent,
@@ -15,7 +15,7 @@ import {
 } from './events';
 
 @Injectable()
-export class Server {
+export class Express {
   private app: Application;
   private server!: ServerType;
 
@@ -24,7 +24,7 @@ export class Server {
     @Inject(CustomLogger) private logger: CustomLogger,
     @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
   ) {
-    this.logger.setPrefix('node-server');
+    this.logger.setPrefix('Express');
 
     this.app = express();
     this.server = createServer(this.app);
@@ -49,7 +49,7 @@ export class Server {
 
     const { port } = this.server.address() as AddressInfo;
 
-    this.logger.info(`Started on port ${port}.`);
+    this.logger.info(`Listening on port ${port}.`);
   }
 
   async stop() {

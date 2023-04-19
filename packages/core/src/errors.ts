@@ -1,13 +1,22 @@
 import { Error } from '@ts-phoenix/error';
 
-export class CircularDependencyError extends Error<{
-  dependencies: string[];
+export class ConfigNotFoundError extends Error<{
+  packageName: string;
 }> {
   getMessage() {
-    const dependencies = this.data!.dependencies;
+    const packageName = this.data!.packageName;
 
-    const dependenciesString = dependencies.join(' -> ');
+    return `Missing config for package "${packageName}". Perhaps you forgot to add it to the core?`;
+  }
+}
 
-    return `Circular dependency detected: ${dependenciesString}`;
+export class DependencyNotFoundError extends Error<{
+  dependency: string;
+  dependent: string;
+}> {
+  getMessage() {
+    return `The package ${this.data!.dependent} depends on ${
+      this.data!.dependency
+    }, but it was not found in the core.`;
   }
 }
