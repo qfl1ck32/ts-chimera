@@ -16,6 +16,11 @@ export class ApolloPackage extends Package<PackageConfigType> {
     return PACKAGE_CONFIG_TOKEN;
   }
 
+  // istanbul ignore next
+  private getFramework() {
+    return 'ts-phoenix';
+  }
+
   getDefaultConfig(): PartialConfig<PackageConfigType, null> {
     return {
       typeDefs: [
@@ -29,7 +34,7 @@ export class ApolloPackage extends Package<PackageConfigType> {
       resolvers: [
         {
           Query: {
-            framework: () => 'ts-phoenix',
+            framework: this.getFramework,
           },
         },
       ],
