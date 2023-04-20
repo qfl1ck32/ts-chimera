@@ -24,10 +24,6 @@ export class User {
 
   @Field()
   @Column()
-  age!: number;
-
-  @Field()
-  @Column()
   email!: string;
 
   @Field(() => [Post])

@@ -15,13 +15,7 @@ class UserService {
     return repository.save(user);
   }
 
-  async get() {
-    return this.orm.source.getRepository(User).findOne({
-      where: {
-        age: 2,
-      },
-    });
-  }
+  async get() {}
 }
 
 export default UserService;
