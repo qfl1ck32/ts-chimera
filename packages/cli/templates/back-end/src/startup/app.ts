@@ -1,19 +1,39 @@
 import { Package } from '@ts-phoenix/core';
 import { Injectable } from '@ts-phoenix/di';
-import { BeforeServerStartEvent } from '@ts-phoenix/node-express';
+import { Apollo } from '@ts-phoenix/node-apollo';
+import {
+  Express,
+  AfterServerStartEvent as AfterExpressServerStartEvent,
+  BeforeServerStartEvent as BeforeExpressServerStartEvent,
+  BeforeServerStopEvent as BeforeExpressServerStopEvent,
+} from '@ts-phoenix/node-express';
+import { ORM } from '@ts-phoenix/node-orm';
 
 @Injectable()
 export class AppPackage extends Package {
   public async initialise() {
+    const express = this.core.container.get(Express);
+    const apollo = this.core.container.get(Apollo);
+    const orm = this.core.container.get(ORM);
+
     this.core.eventManager.addListener({
-      event: BeforeServerStartEvent,
+      event: BeforeExpressServerStartEvent,
       handler: async (e) => {
         const app = e.data!.app;
 
-        app.get('/', async (req, res) => {
-          res.send('Hello!');
-        });
+        await apollo.start(app);
+
+        await orm.initialise();
       },
     });
+
+    this.core.eventManager.addListener({
+      event: BeforeExpressServerStopEvent,
+      handler: async () => {
+        await apollo.stop();
+      },
+    });
+
+    await express.start();
   }
 }

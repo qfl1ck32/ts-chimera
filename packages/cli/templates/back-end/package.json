@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.0",
-    "@ts-phoenix/di": "^1.0.0-alpha.0"
+    "@ts-phoenix/di": "^1.0.0-alpha.0",
+    "@ts-phoenix/node-express": "^1.0.0-alpha.0",
+    "@ts-pheonix/node-apollo": "^1.0.0-alpha.0",
+    "@ts-phoenix/node-orm": "^1.0.0-alpha.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
