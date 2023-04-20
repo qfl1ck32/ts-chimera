@@ -3,7 +3,7 @@ import { AddressInfo } from 'net';
 
 import { Injectable, Inject, InjectToken } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { CustomLogger } from '@ts-phoenix/logger';
+import { Logger } from '@ts-phoenix/logger';
 import express from 'express';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
@@ -21,10 +21,10 @@ export class Express {
 
   constructor(
     @Inject(EventManager) private eventManager: EventManager,
-    @Inject(CustomLogger) private logger: CustomLogger,
+    @Inject(Logger) private logger: Logger,
     @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
   ) {
-    this.logger.setPrefix('Express');
+    this.logger = this.logger.getWithPrefix('Express');
 
     this.app = express();
     this.server = createServer(this.app);

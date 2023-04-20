@@ -3,7 +3,6 @@ import chalk from 'chalk';
 export interface LogArgs {
   message: string;
   level: LogLevel;
-  color: chalk.Chalk;
 }
 
 export enum LogLevel {
@@ -17,3 +16,9 @@ export interface LogEventData {
   message: string;
   level: LogLevel;
 }
+
+export type PackageConfigType = {
+  colors: {
+    [key in LogLevel]: chalk.Chalk;
+  };
+};

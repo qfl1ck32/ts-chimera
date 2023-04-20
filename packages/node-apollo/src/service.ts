@@ -2,7 +2,7 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { CustomLogger } from '@ts-phoenix/logger';
+import { Logger } from '@ts-phoenix/logger';
 import { Application } from 'express';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
@@ -18,11 +18,11 @@ export class Apollo {
   private server!: ApolloServer;
 
   constructor(
-    @Inject(CustomLogger) private logger: CustomLogger,
+    @Inject(Logger) private logger: Logger,
     @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
     @Inject(EventManager) private eventManager: EventManager,
   ) {
-    this.logger.setPrefix('Apollo');
+    this.logger = this.logger.getWithPrefix('Apollo');
 
     this.server = new ApolloServer(this.config);
   }

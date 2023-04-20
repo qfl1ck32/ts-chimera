@@ -1,15 +1,24 @@
 import { Package } from '@ts-phoenix/core';
 import { Injectable } from '@ts-phoenix/di';
+import chalk from 'chalk';
 
-import { CustomLogger } from './custom-logger';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType } from './defs';
 
 @Injectable()
-export class LoggerPackage extends Package {
-  async initialise() {
-    if (this.core.container.isBound(CustomLogger)) {
-      this.core.container.rebind(CustomLogger).toSelf().inTransientScope();
-    } else {
-      this.core.container.bind(CustomLogger).toSelf().inTransientScope();
-    }
+export class LoggerPackage extends Package<PackageConfigType> {
+  getConfigToken() {
+    return PACKAGE_CONFIG_TOKEN;
+  }
+
+  getDefaultConfig(): Partial<PackageConfigType> {
+    return {
+      colors: {
+        INFO: chalk.blueBright,
+        ERROR: chalk.red,
+        WARN: chalk.yellow,
+        DEBUG: chalk.gray,
+      },
+    };
   }
 }
