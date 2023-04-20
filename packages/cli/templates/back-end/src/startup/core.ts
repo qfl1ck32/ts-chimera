@@ -7,7 +7,6 @@ import { ORMPackage } from '@ts-phoenix/node-orm';
 import { AppPackage } from './app';
 import { GraphQLError, GraphQLPackage } from '@ts-phoenix/node-graphql';
 
-import * as resolvers from '@src/resolvers';
 import { Error } from '@ts-phoenix/error';
 
 const core = new Core({
@@ -32,7 +31,7 @@ const core = new Core({
       },
     }),
     new GraphQLPackage({
-      resolvers: Object.values(resolvers),
+      resolvers: ['src/resolvers/**/*.ts'],
     }),
     new LoggerPackage({
       colors: {
