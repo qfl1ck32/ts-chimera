@@ -45,8 +45,11 @@ export class AppPackage extends Package {
   })
   async beforeApolloServerStart(e: BeforeApolloServerStartEvent) {
     const graphql = this.core.container.get(GraphQL);
+    const apollo = this.core.container.get(Apollo);
 
-    await graphql.initialise();
+    const schema = await graphql.generateSchema();
+
+    await apollo.setSchema(schema);
   }
 
   public async initialise() {

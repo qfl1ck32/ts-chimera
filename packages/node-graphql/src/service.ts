@@ -1,7 +1,6 @@
 import { Container, InjectContainer } from '@ts-phoenix/core';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
-import { Apollo } from '@ts-phoenix/node-apollo';
 import { buildSchema } from 'type-graphql';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
@@ -15,10 +14,9 @@ export class GraphQL {
     @InjectContainer() private container: Container,
     @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
     @Inject(EventManager) private eventManager: EventManager,
-    @Inject(Apollo) private apollo: Apollo,
   ) {}
 
-  public async initialise() {
+  public async generateSchema() {
     const { resolvers: _, ...config } = this.config;
 
     const resolvers = this.config.resolvers || [];
@@ -41,6 +39,6 @@ export class GraphQL {
       },
     });
 
-    this.apollo.setSchema(schema);
+    return schema;
   }
 }

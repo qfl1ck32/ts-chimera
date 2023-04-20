@@ -39,7 +39,6 @@
     "@ts-phoenix/core": "^1.0.0-alpha.2",
     "@ts-phoenix/di": "^1.0.0-alpha.1",
     "@ts-phoenix/event-manager": "^1.0.0-alpha.2",
-    "@ts-phoenix/node-apollo": "^1.0.0-alpha.0",
     "graphql": "^16.6.0",
     "type-graphql": "^2.0.0-beta.1"
   }
