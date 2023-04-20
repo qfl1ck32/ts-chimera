@@ -55,7 +55,7 @@ export class EventManager {
     this.emitter.emit(event.constructor.name, event);
   }
 
-  public async emitAsync<T>(event: Event<T>) {
+  public async emitSync<T>(event: Event<T>) {
     const eventSymbol = this.events.get(
       event.constructor as Constructor<Event>,
     ) as symbol;

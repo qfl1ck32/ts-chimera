@@ -30,10 +30,10 @@ describe('event-manager', () => {
       filter,
     });
 
-    await eventManager.emitAsync(new MyEvent({ name: 'test-eeeh', onCall }));
+    await eventManager.emitSync(new MyEvent({ name: 'test-eeeh', onCall }));
     expect(called).toBe(false);
 
-    await eventManager.emitAsync(new MyEvent({ name: 'test', onCall }));
+    await eventManager.emitSync(new MyEvent({ name: 'test', onCall }));
     expect(called).toBe(true);
   });
 });

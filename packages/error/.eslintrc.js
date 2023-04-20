@@ -3,14 +3,26 @@
  */
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['import', '@typescript-eslint'],
+  plugins: ['import', '@typescript-eslint', 'unused-imports'],
   extends: [
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
-    // 'import/no-extraneous-dependencies': 'error' // TODO: add back,
+    'no-unused-vars': 'off',
+    'unused-imports/no-unused-imports': 'error',
+    'unused-imports/no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
+    ],
+
+    'import/no-extraneous-dependencies': 'error',
     'import/order': [
       'error',
       {

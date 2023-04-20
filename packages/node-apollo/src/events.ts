@@ -1,8 +1,8 @@
 import { Event } from '@ts-phoenix/event-manager';
 
-import { GraphQLEventData } from './defs';
+import { ApolloEventData } from './defs';
 
-export class BeforeServerStartEvent extends Event<GraphQLEventData> {}
-export class AfterServerStartEvent extends Event<GraphQLEventData> {}
+export class BeforeServerStartEvent extends Event<ApolloEventData> {}
+export class AfterServerStartEvent extends Event<ApolloEventData> {}
 
-export class BeforeServerStopEvent extends Event<GraphQLEventData> {}
+export class BeforeServerStopEvent extends Event<ApolloEventData> {}

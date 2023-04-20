@@ -115,11 +115,11 @@ export class Core {
       await pkg.initialise();
     }
 
-    await this.eventManager.emitAsync(new CoreBeforeInitialiseEvent());
-    await this.eventManager.emitAsync(new CoreAfterInitialiseEvent());
+    await this.eventManager.emitSync(new CoreBeforeInitialiseEvent());
+    await this.eventManager.emitSync(new CoreAfterInitialiseEvent());
   }
 
   async shutdown() {
-    await this.eventManager.emitAsync(new CoreBeforeShutdownEvent());
+    await this.eventManager.emitSync(new CoreBeforeShutdownEvent());
   }
 }

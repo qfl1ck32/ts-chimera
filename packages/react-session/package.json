@@ -29,6 +29,7 @@
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^29.5.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
@@ -38,10 +39,10 @@
     "react": "^18.0.0"
   },
   "dependencies": {
-    "@ts-phoenix/typings": "^1.0.0-alpha.0",
     "@ts-phoenix/core": "^1.0.0-alpha.0",
     "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/event-manager": "^1.0.0-alpha.0",
-    "@ts-phoenix/react-di": "^1.0.0-alpha.0"
+    "@ts-phoenix/react-di": "^1.0.0-alpha.0",
+    "@ts-phoenix/typings": "^1.0.0-alpha.0"
   }
 }

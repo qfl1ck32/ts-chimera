@@ -8,28 +8,28 @@ import { PackageConfigToken } from './tokens';
 
 @Injectable()
 export abstract class Package<
-  ConfigType extends Record<string, any> | null = null,
-  RequiredConfigType extends Partial<ConfigType> | null = null,
+  FullConfigType extends Record<string, any> | null = null,
+  RequiredConfigType extends Partial<FullConfigType> | null = null,
 > {
   protected core!: Core;
 
-  private _config: ConfigType;
+  private _config: FullConfigType;
 
   constructor(
     ...args: RequiredConfigType extends null
-      ? [DeepPartial<ConfigType>?]
-      : [RequiredConfigType & DeepPartial<ConfigType>]
+      ? [DeepPartial<FullConfigType>?]
+      : [RequiredConfigType & DeepPartial<FullConfigType>]
   ) {
-    this._config = (this.getDefaultConfig() || {}) as unknown as ConfigType;
+    this._config = (this.getDefaultConfig() || {}) as unknown as FullConfigType;
 
     if (args[0]) {
       this.__mergeConfig(args[0]);
     }
   }
 
-  public getConfigToken(): ConfigType extends null
+  public getConfigToken(): FullConfigType extends null
     ? null
-    : PackageConfigToken<ConfigType> {
+    : PackageConfigToken<FullConfigType> {
     return null as any;
   }
 
@@ -37,7 +37,7 @@ export abstract class Package<
     return [];
   }
 
-  public getDefaultConfig(): PartialConfig<ConfigType, RequiredConfigType> {
+  public getDefaultConfig(): PartialConfig<FullConfigType, RequiredConfigType> {
     return null as any;
   }
 
@@ -53,9 +53,9 @@ export abstract class Package<
     this.core = core;
   }
 
-  private __mergeConfig(config: Partial<ConfigType>) {
+  private __mergeConfig(config: Partial<FullConfigType>) {
     if (this.config == null) {
-      this._config = { ...config } as ConfigType;
+      this._config = { ...config } as FullConfigType;
       return;
     }
 

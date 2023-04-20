@@ -44,10 +44,10 @@ export class Logger {
   protected async _log(args: LogArgs) {
     const { message, level, color } = args;
 
-    await this.eventManager.emitAsync(new BeforeLogEvent({ message, level }));
+    await this.eventManager.emitSync(new BeforeLogEvent({ message, level }));
 
     console.log(color(`[${level}] ${message}`));
 
-    await this.eventManager.emitAsync(new AfterLogEvent({ message, level }));
+    await this.eventManager.emitSync(new AfterLogEvent({ message, level }));
   }
 }

@@ -44,7 +44,7 @@ export class I18n {
   public async onLocaleChange(locale: string) {
     this.activePolyglot = this.polyglots.get(locale) as Polyglot;
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new LocaleChangedEvent({
         locale,
       }),

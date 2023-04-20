@@ -56,7 +56,7 @@ export class Session {
   public async set<T extends keyof SessionData>(key: T, value: SessionData[T]) {
     this.storage.setItem(key, value);
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new SessionStorageUpdatedEvent({ key, value }),
     );
   }

@@ -33,7 +33,7 @@ export class Express {
   async start() {
     this.logger.info('Starting...');
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new BeforeServerStartEvent({ app: this.app, server: this.server }),
     );
 
@@ -43,7 +43,7 @@ export class Express {
       }),
     );
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new AfterServerStartEvent({ app: this.app, server: this.server }),
     );
 
@@ -55,7 +55,7 @@ export class Express {
   async stop() {
     this.logger.info('Stopping...');
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new BeforeServerStopEvent({ app: this.app, server: this.server }),
     );
 

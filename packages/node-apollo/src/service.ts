@@ -32,7 +32,7 @@ export class Apollo {
   async start(app: Application) {
     this.logger.info('Starting...');
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new BeforeServerStartEvent({
         server: this.server,
       }),
@@ -42,7 +42,7 @@ export class Apollo {
 
     app.use('/graphql', expressMiddleware(this.server));
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new AfterServerStartEvent({
         server: this.server,
       }),
@@ -54,7 +54,7 @@ export class Apollo {
   async stop() {
     this.logger.info('Stopping...');
 
-    await this.eventManager.emitAsync(
+    await this.eventManager.emitSync(
       new BeforeServerStopEvent({
         server: this.server,
       }),
