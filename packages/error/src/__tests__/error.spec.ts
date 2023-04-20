@@ -1,43 +1,35 @@
 import { Error } from '@src/index';
 
 describe('error', () => {
-  it('should work', async () => {
+  it('should work with base methods', async () => {
     interface IUsernameAlreadyExistsError {
       username: string;
     }
 
-    const code = 'USERNAME_ALREADY_EXISTS';
+    class UsernameAlreadyExistsError extends Error<IUsernameAlreadyExistsError> {}
 
-    class UsernameAlreadyExistsError extends Error<IUsernameAlreadyExistsError> {
-      getCode() {
-        return code;
-      }
+    const username = 'hi';
 
-      getContext() {
-        return {
-          username: this.data!.username,
-        };
-      }
+    const error = new UsernameAlreadyExistsError({
+      username,
+    });
 
-      getMessage() {
-        return `Username ${this.data!.username} already exists`;
-      }
-    }
+    expect(error.data).toStrictEqual({ username });
+    expect(error.getMessage()).toBe(
+      'Error UsernameAlreadyExists has occurred.',
+    );
+    expect(error.getContext()).toStrictEqual({});
+    expect(error.getCode()).toBe('USERNAME_ALREADY_EXISTS');
+    expect(error.data).toStrictEqual({
+      username,
+    });
+  });
 
-    try {
-      throw new UsernameAlreadyExistsError({
-        username: 'test',
-      });
-    } catch (err: unknown) {
-      const error = err as Error;
+  it('should have undefined for data if it has no interface', async () => {
+    class UsernameAlreadyExistsError extends Error {}
 
-      expect(error).toBeInstanceOf(Error);
-      expect(error).toBeInstanceOf(UsernameAlreadyExistsError);
-      expect(error.getCode()).toBe(code);
-      expect(error.getContext()).toEqual({
-        username: 'test',
-      });
-      expect(error.getMessage()).toBe('Username test already exists');
-    }
+    const error = new UsernameAlreadyExistsError();
+
+    expect(error.data).toBeUndefined();
   });
 });
