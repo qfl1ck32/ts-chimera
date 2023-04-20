@@ -10,6 +10,8 @@
 
     "jsx": "react",
 
+    "resolveJsonModule": true,
+
     "strict": true,
     "skipLibCheck": true,
 

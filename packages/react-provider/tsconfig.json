@@ -9,6 +9,7 @@
     "forceConsistentCasingInFileNames": true,
 
     "resolveJsonModule": true,
+
     "jsx": "react",
 
     "strict": true,
@@ -24,5 +25,5 @@
     }
   },
 
-  "include": ["src/**/*.ts", "src/__tests__/react-provider.spec.tsx"]
+  "include": ["src/**/*.ts"]
 }
