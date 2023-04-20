@@ -24,7 +24,7 @@ const config: Config = {
 
   coverageDirectory: './coverage',
   coverageReporters: ['text-summary', 'html'],
-  coveragePathIgnorePatterns: ['src/index.ts'],
+  coveragePathIgnorePatterns: ['src/(index|defs)\\.ts'],
 
   moduleNameMapper: {
     ...pathsToModuleNameMapper(compilerOptions.paths, {
