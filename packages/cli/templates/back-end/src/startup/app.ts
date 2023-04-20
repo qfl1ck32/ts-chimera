@@ -7,7 +7,6 @@ import {
 } from '@ts-phoenix/node-apollo';
 import {
   Express,
-  AfterServerStartEvent as AfterExpressServerStartEvent,
   BeforeServerStartEvent as BeforeExpressServerStartEvent,
   BeforeServerStopEvent as BeforeExpressServerStopEvent,
 } from '@ts-phoenix/node-express';
