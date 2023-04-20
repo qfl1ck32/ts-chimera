@@ -7,17 +7,12 @@ const config: Config = {
   verbose: true,
 
   preset: 'ts-jest',
+  testEnvironment: 'node',
 
-  moduleFileExtensions: ['js', 'json', 'ts', 'jsx', 'tsx'],
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  testRegex: 'src/__tests__/(.*).spec\\.(ts|tsx)',
 
-  testRegex: 'src/__tests__/(.*).spec.ts',
-
-  transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
-  },
-
-  collectCoverageFrom: ['src/**/*.ts'],
-
+  collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   coverageThreshold: {
     global: {
       branches: 80,
@@ -29,8 +24,7 @@ const config: Config = {
 
   coverageDirectory: './coverage',
   coverageReporters: ['text-summary', 'html'],
-
-  testEnvironment: 'node',
+  coveragePathIgnorePatterns: ['src/index.ts'],
 
   moduleNameMapper: {
     ...pathsToModuleNameMapper(compilerOptions.paths, {

@@ -31,4 +31,22 @@ describe('di', () => {
 
     expect(myClass.name).toBe(value);
   });
+
+  test('getToken', async () => {
+    const container = new Container({
+      autoBindInjectable: true,
+    });
+
+    const token = new Token<string>('token');
+
+    const value = 'di';
+
+    setToken({
+      token,
+      value,
+      container,
+    });
+
+    expect(container.getToken(token)).toBe(value);
+  });
 });
