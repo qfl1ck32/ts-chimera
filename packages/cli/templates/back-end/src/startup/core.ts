@@ -5,13 +5,35 @@ import { ExpressPackage } from '@ts-phoenix/node-express';
 import { ORMPackage } from '@ts-phoenix/node-orm';
 
 import { AppPackage } from './app';
+import { GraphQLError, GraphQLPackage } from '@ts-phoenix/node-graphql';
+
+import * as resolvers from '@src/resolvers';
+import { Error } from '@ts-phoenix/error';
 
 const core = new Core({
   packages: [
     new ExpressPackage({
       port: 8000,
     }),
-    new ApolloPackage(),
+    new ApolloPackage({
+      formatError: (
+        formattedError: GraphQLError,
+        error: { originalError: Error },
+      ) => {
+        const originalError = error.originalError;
+
+        if (originalError instanceof Error) {
+          Object.assign(formattedError, {
+            code: originalError.getCode(),
+            context: originalError.getContext(),
+          });
+        }
+        return formattedError;
+      },
+    }),
+    new GraphQLPackage({
+      resolvers: Object.values(resolvers),
+    }),
     new LoggerPackage({
       colors: {
         INFO: chalk.cyanBright,
@@ -25,6 +47,8 @@ const core = new Core({
       password: 'test',
 
       entities: ['src/entities/**'],
+
+      synchronize: true,
     }),
 
     new AppPackage(),

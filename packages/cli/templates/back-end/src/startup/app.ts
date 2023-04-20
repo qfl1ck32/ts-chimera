@@ -1,38 +1,57 @@
 import { Package } from '@ts-phoenix/core';
 import { Injectable } from '@ts-phoenix/di';
-import { Apollo } from '@ts-phoenix/node-apollo';
+import { Listener } from '@ts-phoenix/event-manager';
+import {
+  Apollo,
+  BeforeServerStartEvent as BeforeApolloServerStartEvent,
+} from '@ts-phoenix/node-apollo';
 import {
   Express,
   AfterServerStartEvent as AfterExpressServerStartEvent,
   BeforeServerStartEvent as BeforeExpressServerStartEvent,
   BeforeServerStopEvent as BeforeExpressServerStopEvent,
 } from '@ts-phoenix/node-express';
+import { GraphQL } from '@ts-phoenix/node-graphql';
 import { ORM } from '@ts-phoenix/node-orm';
 
 @Injectable()
 export class AppPackage extends Package {
-  public async initialise() {
-    const express = this.core.container.get(Express);
+  @Listener({
+    event: BeforeExpressServerStartEvent,
+  })
+  async beforeExpressServerStart(e: BeforeExpressServerStartEvent) {
     const apollo = this.core.container.get(Apollo);
     const orm = this.core.container.get(ORM);
 
-    this.core.eventManager.addListener({
-      event: BeforeExpressServerStartEvent,
-      handler: async (e) => {
-        const app = e.data!.app;
+    const app = e.data!.app;
 
-        await apollo.start(app);
+    await apollo.start(app);
 
-        await orm.initialise();
-      },
-    });
+    await orm.initialise();
+  }
 
-    this.core.eventManager.addListener({
-      event: BeforeExpressServerStopEvent,
-      handler: async () => {
-        await apollo.stop();
-      },
-    });
+  @Listener({
+    event: BeforeExpressServerStopEvent,
+  })
+  async beforeExpressServerStopEvent(e: BeforeExpressServerStopEvent) {
+    const apollo = this.core.container.get(Apollo);
+    const orm = this.core.container.get(ORM);
+
+    await apollo.stop();
+    await orm.destroy();
+  }
+
+  @Listener({
+    event: BeforeApolloServerStartEvent,
+  })
+  async beforeApolloServerStart(e: BeforeApolloServerStartEvent) {
+    const graphql = this.core.container.get(GraphQL);
+
+    await graphql.initialise();
+  }
+
+  public async initialise() {
+    const express = this.core.container.get(Express);
 
     await express.start();
   }

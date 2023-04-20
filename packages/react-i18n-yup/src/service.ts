@@ -1,4 +1,5 @@
 import { Injectable, InjectToken } from '@ts-phoenix/di';
+import { Listener } from '@ts-phoenix/event-manager';
 import { LocaleChangedEvent } from '@ts-phoenix/react-i18n';
 import * as yup from 'yup';
 
@@ -21,6 +22,9 @@ export class Yup {
       : translationsWithoutPaths;
   }
 
+  @Listener({
+    event: LocaleChangedEvent,
+  })
   public onLocaleChange = (event: LocaleChangedEvent) => {
     const locale = event.data!.locale;
 

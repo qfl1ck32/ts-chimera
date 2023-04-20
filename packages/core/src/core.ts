@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BindingScopeEnum, Injectable, Token } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
 
 import { Container } from './container';
 import { CoreConfig, CoreState } from './defs';
 import { DependencyNotFoundError } from './errors';
-import {
-  CoreAfterInitialiseEvent,
-  CoreBeforeInitialiseEvent,
-  CoreBeforeShutdownEvent,
-} from './events';
 import { CONTAINER } from './tokens';
 
 @Injectable()
@@ -18,26 +12,8 @@ export class Core {
 
   private _container!: Container;
 
-  public eventManager: EventManager;
-
   constructor(private config: CoreConfig) {
     this._state = CoreState.NEW;
-
-    this.eventManager = this.container.get(EventManager);
-
-    this.eventManager.addListener({
-      event: CoreBeforeInitialiseEvent,
-      handler: () => {
-        this._state = CoreState.INITIALIZING;
-      },
-    });
-
-    this.eventManager.addListener({
-      event: CoreAfterInitialiseEvent,
-      handler: () => {
-        this._state = CoreState.INITIALIZED;
-      },
-    });
 
     this.setToken(CONTAINER, this.container);
     this.container.bind(Core).toConstantValue(this);
@@ -111,15 +87,16 @@ export class Core {
       }
     }
 
+    this._state = CoreState.INITIALIZING;
+
     for (const pkg of this.config.packages) {
       await pkg.initialise();
     }
 
-    await this.eventManager.emitSync(new CoreBeforeInitialiseEvent());
-    await this.eventManager.emitSync(new CoreAfterInitialiseEvent());
+    this._state = CoreState.INITIALIZED;
   }
 
   async shutdown() {
-    await this.eventManager.emitSync(new CoreBeforeShutdownEvent());
+    // TODO
   }
 }

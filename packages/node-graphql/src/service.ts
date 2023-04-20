@@ -1,26 +1,29 @@
+import { Container, InjectContainer } from '@ts-phoenix/core';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
-import {
-  PACKAGE_CONFIG_TOKEN as APOLLO_PACKAGE_CONFIG_TOKEN,
-  PackageConfigType as ApolloPackageConfigType,
-} from '@ts-phoenix/node-apollo';
+import { Apollo } from '@ts-phoenix/node-apollo';
 import { buildSchema } from 'type-graphql';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
 import { PackageConfigType } from './defs';
 import { BeforeGraphQLInitialiseEvent } from './events';
+import FrameworkResolver from './resolvers/framework';
 
 @Injectable()
 export class GraphQL {
   constructor(
+    @InjectContainer() private container: Container,
     @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
     @Inject(EventManager) private eventManager: EventManager,
-    @InjectToken(APOLLO_PACKAGE_CONFIG_TOKEN)
-    private apolloConfig: ApolloPackageConfigType,
+    @Inject(Apollo) private apollo: Apollo,
   ) {}
 
   public async initialise() {
-    const resolvers = [] as any;
+    const { resolvers: _, ...config } = this.config;
+
+    const resolvers = this.config.resolvers || [];
+
+    resolvers.push(FrameworkResolver);
 
     await this.eventManager.emitSync(
       new BeforeGraphQLInitialiseEvent({
@@ -29,10 +32,15 @@ export class GraphQL {
     );
 
     const schema = await buildSchema({
-      ...this.config,
-      resolvers,
+      ...config,
+      resolvers: resolvers as any,
+      container: this.container,
+
+      validate: {
+        forbidUnknownValues: false,
+      },
     });
 
-    this.apolloConfig.schema = schema;
+    this.apollo.setSchema(schema);
   }
 }

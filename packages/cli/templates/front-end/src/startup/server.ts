@@ -1,5 +1,5 @@
 import { Core } from '@ts-phoenix/core';
-import { Logger } from '@ts-phoenix/logger';
+import { Logger, LoggerPackage } from '@ts-phoenix/logger';
 import {
   I18nGenerator,
   I18nGeneratorPackage,
@@ -20,6 +20,8 @@ const main = async () => {
         locales: Object.values(Locales),
         defaultLocale,
       }),
+
+      new LoggerPackage(),
     ],
   });
 

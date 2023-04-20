@@ -1,5 +1,6 @@
 import { Core } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
+import { LoggerPackage } from '@ts-phoenix/logger';
 
 import {
   AfterORMInitialiseEvent,
@@ -8,7 +9,6 @@ import {
   ORM,
   ORMPackage,
 } from '@src/index';
-import { LoggerPackage } from '@ts-phoenix/logger';
 
 describe('node-orm', () => {
   it('should work', async () => {

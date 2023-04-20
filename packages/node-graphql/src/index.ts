@@ -5,3 +5,5 @@ export * from './package';
 export * from './service';
 
 export * from 'type-graphql';
+
+export { GraphQLError } from 'graphql';

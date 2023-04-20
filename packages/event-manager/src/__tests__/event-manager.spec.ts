@@ -1,8 +1,20 @@
-import { Event, EventManager, Handler } from '@src/index';
+import {
+  Event,
+  EventManager,
+  EventManagerPackage,
+  HandlerType,
+  Listener,
+} from '@src/index';
+import { Core } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
 
 describe('event-manager', () => {
   it('should work with filters', async () => {
-    const eventManager = new EventManager();
+    const core = new Core({
+      packages: [new EventManagerPackage()],
+    });
+
+    await core.initialise();
 
     class MyEvent extends Event<{
       name: string;
@@ -16,13 +28,15 @@ describe('event-manager', () => {
       called = true;
     };
 
-    const handler: Handler<MyEvent> = async (e) => {
+    const handler: HandlerType<MyEvent> = async (e) => {
       e.data!.onCall();
     };
 
-    const filter: Handler<MyEvent> = (e) => {
+    const filter: HandlerType<MyEvent> = (e) => {
       return e.data!.name === 'test';
     };
+
+    const eventManager = core.container.get(EventManager);
 
     eventManager.addListener({
       event: MyEvent,
@@ -35,5 +49,38 @@ describe('event-manager', () => {
 
     await eventManager.emitSync(new MyEvent({ name: 'test', onCall }));
     expect(called).toBe(true);
+  });
+
+  it('should work with decorators', async () => {
+    const core = new Core({
+      packages: [new EventManagerPackage()],
+    });
+
+    class MyEvent extends Event {}
+
+    @Injectable()
+    class MyService {
+      public initialised: boolean;
+
+      constructor() {
+        this.initialised = false;
+      }
+
+      @Listener({
+        event: MyEvent,
+      })
+      async onMyEvent(e: MyEvent) {
+        this.initialised = true;
+      }
+    }
+
+    await core.initialise();
+
+    const eventManager = core.container.get(EventManager);
+    const myService = core.container.get(MyService);
+
+    await eventManager.emitSync(new MyEvent());
+
+    expect(myService.initialised).toBe(true);
   });
 });

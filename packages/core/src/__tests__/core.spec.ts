@@ -1,13 +1,7 @@
 import { Injectable } from '@ts-phoenix/di';
 
 import { DependencyNotFoundError } from '@src/errors';
-import {
-  PackageConfigToken,
-  Core,
-  CoreBeforeInitialiseEvent,
-  Package,
-  PartialConfig,
-} from '@src/index';
+import { PackageConfigToken, Core, Package, PartialConfig } from '@src/index';
 
 describe('core', () => {
   it('should work', async () => {
@@ -29,10 +23,11 @@ describe('core', () => {
       async initialise() {
         const myService = this.core.container.get(MyService);
 
-        this.core.eventManager.addListener({
-          event: CoreBeforeInitialiseEvent,
-          handler: myService.initialise.bind(myService),
-        });
+        myService.initialise();
+      }
+
+      registerServices() {
+        return [MyService];
       }
     }
 

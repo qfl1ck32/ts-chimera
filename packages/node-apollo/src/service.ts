@@ -25,6 +25,10 @@ export class Apollo {
     this.logger = this.logger.getWithPrefix('Apollo');
   }
 
+  public async setSchema(schema: PackageConfigType['schema']) {
+    this.config.schema = schema;
+  }
+
   async start(app: Application) {
     this.logger.info('Starting...');
 

@@ -1,9 +1,9 @@
 import { Logger } from '@ts-phoenix/logger';
 
-import core from './startup/core';
+import core from '@src/startup/core';
 
-core.initialise().then(() => {
+core.initialise().then(async () => {
   const logger = core.container.get(Logger).getWithPrefix('Application');
 
-  logger.info('The application has started.');
+  await logger.info('The application has started.');
 });

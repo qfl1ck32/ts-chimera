@@ -1,25 +1,48 @@
 import EventEmitter from 'events';
 
+import { Container, InjectContainer } from '@ts-phoenix/core';
 import { Injectable } from '@ts-phoenix/di';
 import { Constructor } from '@ts-phoenix/typings';
 
-import { Handler, Listener } from './defs';
+import { EVENT_MANAGER_LISTENER_DECORATOR_KEY } from './constants';
+import { HandlerType, ListenerType } from './defs';
 import { Event } from './event';
 
 @Injectable()
 export class EventManager {
   private emitter: EventEmitter;
-  private listeners: Map<Handler<any>, Handler<any>>;
+  private listeners: Map<HandlerType<any>, HandlerType<any>>;
   private events: Map<Constructor<Event<any>>, symbol>;
 
-  constructor() {
+  constructor(@InjectContainer() private container: Container) {
     this.emitter = new EventEmitter();
     this.listeners = new Map();
     this.events = new Map();
+
+    this.registerListeners();
   }
 
-  public addListener<T extends Event<any>>(args: Listener<T>) {
-    const wrappedHandler: Handler<T> = async (e) => {
+  private registerListeners() {
+    const listeners = Reflect.getMetadata(
+      EVENT_MANAGER_LISTENER_DECORATOR_KEY,
+      this.constructor,
+    );
+
+    if (listeners) {
+      for (const listenerData of listeners) {
+        const { ServiceClass, ...listener } = listenerData;
+
+        const service = this.container.get(ServiceClass);
+
+        listener.handler = listener.handler.bind(service);
+
+        this.addListener(listener);
+      }
+    }
+  }
+
+  public addListener<T extends Event<any>>(args: ListenerType<T>) {
+    const wrappedHandler: HandlerType<T> = async (e) => {
       if (args.filter) {
         if (!(await args.filter(e))) {
           return;
@@ -40,7 +63,7 @@ export class EventManager {
 
   public removeListener<EventType extends Event<any>>(args: {
     event: Constructor<EventType>;
-    handler: Handler<EventType>;
+    handler: HandlerType<EventType>;
   }) {
     const wrappedHandler = this.listeners.get(args.handler);
 

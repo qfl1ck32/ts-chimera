@@ -1,5 +1,5 @@
 import { Core } from '@ts-phoenix/core';
-import { EventManager, Handler } from '@ts-phoenix/event-manager';
+import { EventManager, HandlerType } from '@ts-phoenix/event-manager';
 import chalk from 'chalk';
 
 import { AfterLogEvent, BeforeLogEvent } from '@src/events';
@@ -23,11 +23,11 @@ describe('logger', () => {
     let calledBefore = false;
     let calledAfter = false;
 
-    const handlerBefore: Handler<BeforeLogEvent> = async (e) => {
+    const handlerBefore: HandlerType<BeforeLogEvent> = async (e) => {
       calledBefore = true;
     };
 
-    const handlerAfter: Handler<AfterLogEvent> = async (e) => {
+    const handlerAfter: HandlerType<AfterLogEvent> = async (e) => {
       calledAfter = true;
     };
 
