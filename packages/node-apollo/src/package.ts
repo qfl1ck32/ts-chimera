@@ -1,4 +1,4 @@
-import { Package, PartialConfig } from '@ts-phoenix/core';
+import { Package } from '@ts-phoenix/core';
 import { Injectable } from '@ts-phoenix/di';
 import { LoggerPackage } from '@ts-phoenix/logger';
 import { ExpressPackage } from '@ts-phoenix/node-express';
@@ -16,28 +16,9 @@ export class ApolloPackage extends Package<PackageConfigType> {
     return PACKAGE_CONFIG_TOKEN;
   }
 
-  // istanbul ignore next
-  private getFramework() {
-    return 'ts-phoenix';
-  }
-
-  getDefaultConfig(): PartialConfig<PackageConfigType, null> {
+  getDefaultConfig(): Partial<PackageConfigType> {
     return {
-      typeDefs: [
-        `
-        type Query {
-          framework: String
-        }
-        `,
-      ],
-
-      resolvers: [
-        {
-          Query: {
-            framework: this.getFramework,
-          },
-        },
-      ],
+      mountingPath: '/graphql',
     };
   }
 }

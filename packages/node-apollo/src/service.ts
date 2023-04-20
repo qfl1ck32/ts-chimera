@@ -3,7 +3,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
 import { EventManager } from '@ts-phoenix/event-manager';
 import { Logger } from '@ts-phoenix/logger';
-import { Application } from 'express';
+import { Application, json } from 'express';
 
 import { PACKAGE_CONFIG_TOKEN } from './config';
 import { PackageConfigType } from './defs';
@@ -23,22 +23,18 @@ export class Apollo {
     @Inject(EventManager) private eventManager: EventManager,
   ) {
     this.logger = this.logger.getWithPrefix('Apollo');
-
-    this.server = new ApolloServer(this.config);
   }
 
   async start(app: Application) {
     this.logger.info('Starting...');
 
-    await this.eventManager.emitSync(
-      new BeforeServerStartEvent({
-        server: this.server,
-      }),
-    );
+    await this.eventManager.emitSync(new BeforeServerStartEvent());
+
+    this.server = new ApolloServer(this.config as any);
 
     await this.server.start();
 
-    app.use('/graphql', expressMiddleware(this.server));
+    app.use(this.config.mountingPath, json(), expressMiddleware(this.server));
 
     await this.eventManager.emitSync(
       new AfterServerStartEvent({

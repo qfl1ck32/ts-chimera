@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: make this work on Ubuntu too, not just macos. Issue comes from "sed"
+
+# To fix it, we need to use the -i flag with an empty string as the extension
+
 # Usage: ./create-new-package.sh package_name
 
 # Set the locale to UTF-8
