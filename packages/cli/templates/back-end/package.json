@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "compile": "tsc && tsc-alias",
+    "coverage": "jest --coverage",
     "dev": "nodemon --watch \"src/**\" --ext \"ts\" --exec \"ts-node -r tsconfig-paths/register src/index.ts\"",
     "lint": "eslint . --ext .ts --fix",
     "prettier": "prettier --write .",
@@ -13,6 +14,7 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.0",
+    "@ts-phoenix/logger": "^1.0.0-alpha.0",
     "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/node-express": "^1.0.0-alpha.0",
     "@ts-pheonix/node-apollo": "^1.0.0-alpha.0",

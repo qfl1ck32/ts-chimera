@@ -14,6 +14,7 @@
   },
   "scripts": {
     "compile": "tsc && tsc-alias",
+    "coverage": "jest --coverage",
     "lint": "eslint . --ext .ts --fix",
     "prettier": "prettier --write .",
     "test": "jest",

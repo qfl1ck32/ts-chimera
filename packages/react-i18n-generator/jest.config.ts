@@ -10,17 +10,25 @@ const config: Config = {
 
   moduleFileExtensions: ['js', 'json', 'ts', 'jsx', 'tsx'],
 
-  testPathIgnorePatterns: ['src/__tests__/files/*'],
-
   testRegex: 'src/__tests__/(.*).spec.ts',
 
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
 
-  collectCoverageFrom: ['**/*.(t|j)s'],
+  collectCoverageFrom: ['src/**/*.ts'],
 
-  coverageDirectory: '../coverage',
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+  },
+
+  coverageDirectory: './coverage',
+  coverageReporters: ['text-summary', 'html'],
 
   testEnvironment: 'node',
 

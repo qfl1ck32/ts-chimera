@@ -8,6 +8,7 @@ import {
   ORM,
   ORMPackage,
 } from '@src/index';
+import { LoggerPackage } from '@ts-phoenix/logger';
 
 describe('node-orm', () => {
   it('should work', async () => {
@@ -20,6 +21,8 @@ describe('node-orm', () => {
           username: 'postgres',
           password: 'test',
         }),
+
+        new LoggerPackage(),
       ],
     });
 
