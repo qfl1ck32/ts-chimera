@@ -1,10 +1,8 @@
 import { Core, Package } from '@ts-phoenix/core';
-import { EventManager } from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
 import {
   ExpressPackage,
-  Express,
   AfterServerStartEvent,
   BeforeServerStartEvent,
   BeforeServerStopEvent,

@@ -1,4 +1,4 @@
-export abstract class Event<T = any> {
+export abstract class Event<T = null> {
   public readonly data: T | null;
 
   constructor(...args: T extends null ? [] : [T]) {

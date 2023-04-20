@@ -3,7 +3,7 @@ import { join } from 'path';
 import { Injectable } from '@ts-phoenix/di';
 
 import { TEMPLATES_DIRECTORY } from '@src/constants';
-import { findPackageRoot, runCommand } from '@src/utils';
+import { findPackageRoot } from '@src/utils';
 
 import { Writer } from './writer';
 

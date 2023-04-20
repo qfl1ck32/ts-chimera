@@ -5,8 +5,6 @@ import { EventManager } from '@ts-phoenix/event-manager';
 import { CustomLogger } from '@ts-phoenix/logger';
 import { Application } from 'express';
 
-import { BeforeServerStartEvent as BeforeNodeServerStartEvent } from '../../node-express/dist';
-
 import { PACKAGE_CONFIG_TOKEN } from './config';
 import { PackageConfigType } from './defs';
 import {

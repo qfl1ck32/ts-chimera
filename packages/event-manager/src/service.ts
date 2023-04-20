@@ -10,7 +10,7 @@ import { Event } from './event';
 export class EventManager {
   private emitter: EventEmitter;
   private listeners: Map<Handler<any>, Handler<any>>;
-  private events: Map<Constructor<Event>, symbol>;
+  private events: Map<Constructor<Event<any>>, symbol>;
 
   constructor() {
     this.emitter = new EventEmitter();
@@ -18,8 +18,8 @@ export class EventManager {
     this.events = new Map();
   }
 
-  public addListener<T>(args: Listener<T>) {
-    const wrappedHandler: Handler<Event<T>> = async (e) => {
+  public addListener<T extends Event<any>>(args: Listener<T>) {
+    const wrappedHandler: Handler<T> = async (e) => {
       if (args.filter) {
         if (!(await args.filter(e))) {
           return;
@@ -38,7 +38,7 @@ export class EventManager {
     this.emitter.addListener(eventSymbol, wrappedHandler);
   }
 
-  public removeListener<EventType extends Event>(args: {
+  public removeListener<EventType extends Event<any>>(args: {
     event: Constructor<EventType>;
     handler: Handler<EventType>;
   }) {

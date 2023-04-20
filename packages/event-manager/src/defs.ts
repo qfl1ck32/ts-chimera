@@ -2,14 +2,14 @@ import { Constructor, MaybePromise } from '@ts-phoenix/typings';
 
 import { Event } from './event';
 
-export type Handler<EventType extends Event, Return = any> = (
-  e: EventType,
+export type Handler<T extends Event<any>, Return = any> = (
+  e: T,
 ) => MaybePromise<Return>;
 
-export type Listener<T> = {
-  event: Constructor<Event<T>>;
+export type Listener<EventType extends Event<any>> = {
+  event: Constructor<EventType>;
 
-  handler: Handler<Event<T>, void>;
+  handler: Handler<EventType, void>;
 
-  filter?: Handler<Event<T>, boolean>;
+  filter?: Handler<EventType, boolean>;
 };
