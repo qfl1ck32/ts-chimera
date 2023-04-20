@@ -1,4 +1,5 @@
-import { Core, Package } from '@ts-phoenix/core';
+import { Core } from '@ts-phoenix/core';
+import { EventManager } from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
 import {
@@ -6,49 +7,51 @@ import {
   AfterServerStartEvent,
   BeforeServerStartEvent,
   BeforeServerStopEvent,
+  Express,
 } from '@src/index';
 
 describe('node-express', () => {
   it('should start the server', async () => {
-    const beforeServerStartListener = jest.fn();
-    const afterServerStartListener = jest.fn();
-    const beforeServerStopListener = jest.fn();
-
-    class TestPackage extends Package {
-      async initialise() {
-        this.core.eventManager.addListener({
-          event: BeforeServerStartEvent,
-          handler: beforeServerStartListener,
-        });
-
-        this.core.eventManager.addListener({
-          event: AfterServerStartEvent,
-          handler: afterServerStartListener,
-        });
-
-        this.core.eventManager.addListener({
-          event: BeforeServerStopEvent,
-          handler: beforeServerStopListener,
-        });
-      }
-    }
-
     const core = new Core({
       packages: [
         new ExpressPackage({
           port: 8001,
         }),
         new LoggerPackage(),
-        new TestPackage(),
       ],
+    });
+
+    const beforeServerStartListener = jest.fn();
+    const afterServerStartListener = jest.fn();
+    const beforeServerStopListener = jest.fn();
+
+    const eventManager = core.container.get(EventManager);
+
+    eventManager.addListener({
+      event: BeforeServerStartEvent,
+      handler: beforeServerStartListener,
+    });
+
+    eventManager.addListener({
+      event: AfterServerStartEvent,
+      handler: afterServerStartListener,
+    });
+
+    eventManager.addListener({
+      event: BeforeServerStopEvent,
+      handler: beforeServerStopListener,
     });
 
     await core.initialise();
 
+    const express = core.container.get(Express);
+
+    await express.start();
+
     expect(beforeServerStartListener).toHaveBeenCalled();
     expect(afterServerStartListener).toHaveBeenCalled();
 
-    await core.shutdown();
+    await express.stop();
 
     expect(beforeServerStopListener).toHaveBeenCalled();
   });
