@@ -1,17 +1,22 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
+import { InjectToken, Injectable } from '@ts-phoenix/di';
 import { mergeDeep } from '@ts-phoenix/utils';
 import { sync } from 'glob';
 
-import { Args } from './defs';
+import { PACKAGE_CONFIG_TOKEN } from './config';
+import { PackageConfigType } from './defs';
 
+@Injectable()
 export class I18nGenerator {
-  constructor(private readonly args: Args) {}
+  constructor(
+    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+  ) {}
 
   private get interpolationRegex() {
     return new RegExp(
-      `${this.args.interpolationStart}(.*?)${this.args.interpolationEnd}`,
+      `${this.config.interpolationStart}(.*?)${this.config.interpolationEnd}`,
       'g',
     );
   }
@@ -45,7 +50,7 @@ export class I18nGenerator {
   ) {
     Object.assign(target, {
       [key]:
-        target[key] && target[key] !== this.args.missingKey
+        target[key] && target[key] !== this.config.missingKey
           ? target[key]
           : source[key],
     });
@@ -59,7 +64,7 @@ export class I18nGenerator {
         continue;
       }
 
-      object[key] = this.args.missingKey;
+      object[key] = this.config.missingKey;
 
       const interpArgs = this.extractInterpolationArgs(value);
 
@@ -89,8 +94,8 @@ export class I18nGenerator {
   public run() {
     const translations = {} as Record<string, any>;
 
-    for (const language of this.args.locales) {
-      const filePath = resolve(this.args.outputPath, `${language}.json`);
+    for (const language of this.config.locales) {
+      const filePath = resolve(this.config.outputPath, `${language}.json`);
 
       let content = [];
 
@@ -101,7 +106,7 @@ export class I18nGenerator {
       translations[language] = content;
     }
 
-    const filePaths = sync(this.args.i18nFilesRegex);
+    const filePaths = sync(this.config.i18nFilesRegex);
 
     const fullTranslations = {} as Record<string, any>;
 
@@ -110,7 +115,7 @@ export class I18nGenerator {
 
       const path = filePath.split('/');
 
-      const srcIndex = path.findIndex((dir) => dir === this.args.srcDir) + 1;
+      const srcIndex = path.findIndex((dir) => dir === this.config.srcDir) + 1;
 
       let dirNames = path.splice(srcIndex);
 
@@ -147,8 +152,8 @@ export class I18nGenerator {
 
     const results = {} as Record<string, any>;
 
-    for (const language of this.args.locales) {
-      const isDefaultLanguage = language === this.args.defaultLocale;
+    for (const language of this.config.locales) {
+      const isDefaultLanguage = language === this.config.defaultLocale;
 
       const currentFullTranslations = isDefaultLanguage
         ? fullTranslations
@@ -175,30 +180,30 @@ export class I18nGenerator {
       }
     }
 
-    if (!existsSync(this.args.outputPath)) {
-      mkdirSync(this.args.outputPath, { recursive: true });
+    if (!existsSync(this.config.outputPath)) {
+      mkdirSync(this.config.outputPath, { recursive: true });
     }
 
-    for (const language of this.args.locales) {
+    for (const language of this.config.locales) {
       writeFileSync(
-        join(this.args.outputPath, `${language}.json`),
+        join(this.config.outputPath, `${language}.json`),
         JSON.stringify(results[language], null, 2),
       );
     }
 
     const types = `export type Translations = ${JSON.stringify(
-      results[this.args.defaultLocale],
+      results[this.config.defaultLocale],
       null,
       2,
     )}`;
 
-    writeFileSync(join(this.args.outputPath, `defs.ts`), types);
+    writeFileSync(join(this.config.outputPath, `defs.ts`), types);
 
-    const index = this.args.locales
+    const index = this.config.locales
       .map((language) => `import * as ${language} from "./${language}.json";`)
       .join('\n')
-      .concat(`\n\nexport { ${this.args.locales.join(', ')} };`);
+      .concat(`\n\nexport { ${this.config.locales.join(', ')} };`);
 
-    writeFileSync(join(this.args.outputPath, `index.ts`), index);
+    writeFileSync(join(this.config.outputPath, `index.ts`), index);
   }
 }

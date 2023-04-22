@@ -3,7 +3,9 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
+import { I18nGeneratorPackage } from '@src/package';
 import { I18nGenerator } from '@src/service';
+import { Core } from '@ts-phoenix/core';
 
 describe('i18n-generator', () => {
   it('should work', async () => {
@@ -13,17 +15,25 @@ describe('i18n-generator', () => {
     const filesPath = join(__dirname, 'files');
     const outputPath = join(filesPath, 'translations');
 
-    const generator = new I18nGenerator({
-      defaultLocale: 'en',
-      i18nFilesRegex: '**/i18n.json',
-      interpolationStart: '{{ ',
-      interpolationEnd: ' }}',
+    const core = new Core({
+      packages: [
+        new I18nGeneratorPackage({
+          defaultLocale: 'en',
+          i18nFilesRegex: '**/i18n.json',
+          interpolationStart: '{{ ',
+          interpolationEnd: ' }}',
 
-      locales,
-      missingKey,
-      srcDir: 'files',
-      outputPath: 'src/__tests__/files/translations',
+          locales,
+          missingKey,
+          srcDir: 'files',
+          outputPath: 'src/__tests__/files/translations',
+        }),
+      ],
     });
+
+    await core.initialise();
+
+    const generator = core.container.get(I18nGenerator);
 
     generator.run();
 

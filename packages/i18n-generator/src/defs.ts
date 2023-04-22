@@ -1,4 +1,4 @@
-export interface Args {
+export interface PackageConfigType {
   missingKey: string;
 
   defaultLocale: string;
