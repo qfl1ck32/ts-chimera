@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/di",
   "description": "Dependency injection package for TypeScript projects, built on top of Inversify.",
   "private": false,
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {

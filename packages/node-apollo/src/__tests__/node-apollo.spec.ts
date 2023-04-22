@@ -1,10 +1,3 @@
-import {
-  BeforeServerStartEvent,
-  AfterServerStartEvent,
-  BeforeServerStopEvent,
-} from '@src/events';
-import { ApolloPackage } from '@src/package';
-import { Apollo } from '@src/service';
 import { Core } from '@ts-phoenix/core';
 import { EventManager } from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
@@ -14,6 +7,14 @@ import {
   BeforeServerStartEvent as BeforeExpressServerStartEvent,
   BeforeServerStopEvent as BeforeExpressServerStopEvent,
 } from '@ts-phoenix/node-express';
+
+import {
+  BeforeServerStartEvent,
+  AfterServerStartEvent,
+  BeforeServerStopEvent,
+} from '@src/events';
+import { ApolloPackage } from '@src/package';
+import { Apollo } from '@src/service';
 
 describe('node-apollo', () => {
   it('should work', async () => {

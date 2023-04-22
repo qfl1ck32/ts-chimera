@@ -1,3 +1,6 @@
+import { Core } from '@ts-phoenix/core';
+import { Injectable } from '@ts-phoenix/di';
+
 import {
   Event,
   EventManager,
@@ -5,8 +8,6 @@ import {
   HandlerType,
   Listener,
 } from '@src/index';
-import { Core } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 
 describe('event-manager', () => {
   it('should work with filters', async () => {

@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/event-manager",
   "description": "@ts-phoenix/event-manager is a powerful, type-safe event management library built with TypeScript.",
   "private": false,
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
