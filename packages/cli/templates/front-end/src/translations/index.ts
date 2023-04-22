@@ -1,4 +1,4 @@
-import * as en from "./en.json";
 import * as ro from "./ro.json";
+import * as en from "./en.json";
 
-export { en, ro };
+export { ro, en };

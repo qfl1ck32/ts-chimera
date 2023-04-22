@@ -1,23 +1,17 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { InjectToken, Injectable } from '@ts-phoenix/di';
 import { mergeDeep } from '@ts-phoenix/utils';
 import { sync } from 'glob';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { Args } from './defs';
 
-@Injectable()
 export class I18nGenerator {
-  constructor(
-    @InjectToken(PACKAGE_CONFIG_TOKEN)
-    private config: PackageConfigType,
-  ) {}
+  constructor(private readonly args: Args) {}
 
   private get interpolationRegex() {
     return new RegExp(
-      `${this.config.interpolation.start}(.*?)${this.config.interpolation.end}`,
+      `${this.args.interpolationStart}(.*?)${this.args.interpolationEnd}`,
       'g',
     );
   }
@@ -51,7 +45,7 @@ export class I18nGenerator {
   ) {
     Object.assign(target, {
       [key]:
-        target[key] && target[key] !== this.config.missingKey
+        target[key] && target[key] !== this.args.missingKey
           ? target[key]
           : source[key],
     });
@@ -65,7 +59,7 @@ export class I18nGenerator {
         continue;
       }
 
-      object[key] = this.config.missingKey;
+      object[key] = this.args.missingKey;
 
       const interpArgs = this.extractInterpolationArgs(value);
 
@@ -95,8 +89,8 @@ export class I18nGenerator {
   public run() {
     const translations = {} as Record<string, any>;
 
-    for (const language of this.config.locales) {
-      const filePath = resolve(this.config.outputPath, `${language}.json`);
+    for (const language of this.args.locales) {
+      const filePath = resolve(this.args.outputPath, `${language}.json`);
 
       let content = [];
 
@@ -107,7 +101,7 @@ export class I18nGenerator {
       translations[language] = content;
     }
 
-    const filePaths = sync(this.config.i18nFilesRegex);
+    const filePaths = sync(this.args.i18nFilesRegex);
 
     const fullTranslations = {} as Record<string, any>;
 
@@ -116,7 +110,7 @@ export class I18nGenerator {
 
       const path = filePath.split('/');
 
-      const srcIndex = path.findIndex((dir) => dir === this.config.srcDir) + 1;
+      const srcIndex = path.findIndex((dir) => dir === this.args.srcDir) + 1;
 
       let dirNames = path.splice(srcIndex);
 
@@ -153,8 +147,8 @@ export class I18nGenerator {
 
     const results = {} as Record<string, any>;
 
-    for (const language of this.config.locales) {
-      const isDefaultLanguage = language === this.config.defaultLocale;
+    for (const language of this.args.locales) {
+      const isDefaultLanguage = language === this.args.defaultLocale;
 
       const currentFullTranslations = isDefaultLanguage
         ? fullTranslations
@@ -181,30 +175,30 @@ export class I18nGenerator {
       }
     }
 
-    if (!existsSync(this.config.outputPath)) {
-      mkdirSync(this.config.outputPath, { recursive: true });
+    if (!existsSync(this.args.outputPath)) {
+      mkdirSync(this.args.outputPath, { recursive: true });
     }
 
-    for (const language of this.config.locales) {
+    for (const language of this.args.locales) {
       writeFileSync(
-        join(this.config.outputPath, `${language}.json`),
+        join(this.args.outputPath, `${language}.json`),
         JSON.stringify(results[language], null, 2),
       );
     }
 
     const types = `export type Translations = ${JSON.stringify(
-      results[this.config.defaultLocale],
+      results[this.args.defaultLocale],
       null,
       2,
     )}`;
 
-    writeFileSync(join(this.config.outputPath, `defs.ts`), types);
+    writeFileSync(join(this.args.outputPath, `defs.ts`), types);
 
-    const index = this.config.locales
+    const index = this.args.locales
       .map((language) => `import * as ${language} from "./${language}.json";`)
       .join('\n')
-      .concat(`\n\nexport { ${this.config.locales.join(', ')} };`);
+      .concat(`\n\nexport { ${this.args.locales.join(', ')} };`);
 
-    writeFileSync(join(this.config.outputPath, `index.ts`), index);
+    writeFileSync(join(this.args.outputPath, `index.ts`), index);
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@ts-phoenix/react-i18n-generator",
+  "name": "@ts-phoenix/i18n-generator",
   "description": "",
   "private": false,
   "version": "1.0.0-alpha.3",
@@ -8,6 +8,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/qfl1ck32/ts-phoenix"
+  },
+  "bin": {
+    "i18n-generator": "dist/index.js"
   },
   "scripts": {
     "compile": "tsc && tsc-alias",
@@ -40,6 +43,7 @@
     "@ts-phoenix/core": "^1.0.0-alpha.0",
     "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/utils": "^1.0.0-alpha.0",
-    "glob": "^10.1.0"
+    "glob": "^10.1.0",
+    "yargs": "^17.7.1"
   }
 }

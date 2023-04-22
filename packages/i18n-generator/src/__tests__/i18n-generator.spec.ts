@@ -3,12 +3,9 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
-import { Core } from '@ts-phoenix/core';
-
-import { I18nGeneratorPackage } from '@src/package';
 import { I18nGenerator } from '@src/service';
 
-describe('react-i18n-generator', () => {
+describe('i18n-generator', () => {
   it('should work', async () => {
     const locales = ['en', 'ro'];
     const missingKey = 'MISSING_KEY';
@@ -16,20 +13,17 @@ describe('react-i18n-generator', () => {
     const filesPath = join(__dirname, 'files');
     const outputPath = join(filesPath, 'translations');
 
-    const core = new Core({
-      packages: [
-        new I18nGeneratorPackage({
-          outputPath: 'src/__tests__/files/translations',
-          srcDir: 'files',
-          locales,
-          missingKey,
-        }),
-      ],
+    const generator = new I18nGenerator({
+      defaultLocale: 'en',
+      i18nFilesRegex: '**/i18n.json',
+      interpolationStart: '{{ ',
+      interpolationEnd: ' }}',
+
+      locales,
+      missingKey,
+      srcDir: 'files',
+      outputPath: 'src/__tests__/files/translations',
     });
-
-    await core.initialise();
-
-    const generator = core.container.get(I18nGenerator);
 
     generator.run();
 
