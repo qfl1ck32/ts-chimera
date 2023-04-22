@@ -19,10 +19,11 @@ export class EventManager {
     this.listeners = new Map();
     this.events = new Map();
 
-    this.registerListeners();
+    this.registerListenersFromDecorators();
   }
 
-  private registerListeners() {
+  // TODO: type safety
+  private registerListenersFromDecorators() {
     const listeners = Reflect.getMetadata(
       EVENT_MANAGER_LISTENER_DECORATOR_KEY,
       this.constructor,

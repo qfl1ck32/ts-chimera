@@ -22,7 +22,7 @@ export class AppPackage extends Package {
     const apollo = this.core.container.get(Apollo);
     const orm = this.core.container.get(ORM);
 
-    const app = e.data!.app;
+    const app = e.data.app;
 
     await apollo.start(app);
 

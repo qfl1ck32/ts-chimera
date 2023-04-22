@@ -1,8 +1,7 @@
-import { User } from '@src/entities/User';
-import { UserAlreadyExistsError } from '@src/errors/UserAlreadyExists';
-import { UserRegisterInput } from '@src/inputs/UserRegister';
+import { UserRegisterInput } from '@src/graphql/inputs/UserRegister';
 import UserService from '@src/services/User';
 import { Arg, Mutation, Query, Resolver } from '@ts-phoenix/node-graphql';
+import { User } from '@src/graphql/entities/User';
 
 @Resolver(User)
 export class UserResolver {
@@ -10,14 +9,7 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async register(@Arg('input') input: UserRegisterInput) {
-    throw new UserAlreadyExistsError({
-      username: 'hi',
-    });
-
-    console.log(input);
-    return;
-
-    // return this.service.register(input);
+    return this.service.register(input);
   }
 
   @Query((returns) => User)

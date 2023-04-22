@@ -1,5 +1,5 @@
 {
-  "name": "@ts-phoenix/node-orm",
+  "name": "@ts-phoenix/node-orm-i18n",
   "description": "",
   "private": false,
   "version": "1.0.0-alpha.0",
@@ -39,10 +39,7 @@
     "@ts-phoenix/core": "^1.0.0-alpha.2",
     "@ts-phoenix/di": "^1.0.0-alpha.1",
     "@ts-phoenix/event-manager": "^1.0.0-alpha.2",
-    "@ts-phoenix/logger": "^1.0.0-alpha.2",
-    "@ts-phoenix/typings": "^1.0.0-alpha.0",
-    "@ts-phoenix/utils": "^1.0.0-alpha.1",
-    "pg": "^8.10.0",
-    "typeorm": "^0.3.15"
+    "@ts-phoenix/node-orm": "^1.0.0-alpha.0",
+    "@ts-phoenix/typings": "^1.0.0-alpha.0"
   }
 }

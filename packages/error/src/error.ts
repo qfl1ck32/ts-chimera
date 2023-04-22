@@ -32,8 +32,8 @@ export abstract class Error<T = null> extends GlobalError {
     return `Error ${nameOfError} has occurred.`;
   }
 
-  get data(): T | undefined {
-    return this._data;
+  get data(): T extends null ? undefined : T {
+    return this._data as any;
   }
 
   private getNameOfError(): string {

@@ -12,10 +12,8 @@ export const Listener = <T extends Event<any>>(
     propertyDescriptor: PropertyDescriptor,
   ) => {
     const listeners =
-      Reflect.getMetadata(
-        EVENT_MANAGER_LISTENER_DECORATOR_KEY,
-        EventManager.prototype.constructor,
-      ) || [];
+      Reflect.getMetadata(EVENT_MANAGER_LISTENER_DECORATOR_KEY, EventManager) ||
+      [];
 
     listeners.push({
       ServiceClass: target.constructor,
@@ -26,7 +24,7 @@ export const Listener = <T extends Event<any>>(
     Reflect.defineMetadata(
       EVENT_MANAGER_LISTENER_DECORATOR_KEY,
       listeners,
-      EventManager.prototype.constructor,
+      EventManager,
     );
   };
 };

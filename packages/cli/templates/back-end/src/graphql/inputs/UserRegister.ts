@@ -3,7 +3,7 @@ import { Field, InputType } from '@ts-phoenix/node-graphql';
 @InputType()
 export class UserRegisterInput {
   @Field()
-  name!: string;
+  username!: string;
 
   @Field()
   email!: string;

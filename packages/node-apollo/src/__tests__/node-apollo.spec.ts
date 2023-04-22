@@ -54,7 +54,7 @@ describe('node-apollo', () => {
     eventManager.addListener({
       event: BeforeExpressServerStartEvent,
       handler: async (e) => {
-        await apollo.start(e.data!.app);
+        await apollo.start(e.data.app);
       },
     });
 

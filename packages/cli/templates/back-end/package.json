@@ -20,7 +20,8 @@
     "@ts-phoenix/node-express": "^1.0.0-alpha.0",
     "@ts-phoxnix/node-apollo": "^1.0.0-alpha.0",
     "@ts-phoenix/node-graphql": "^1.0.0-alpha.0",
-    "@ts-phoenix/node-orm": "^1.0.0-alpha.0"
+    "@ts-phoenix/node-orm": "^1.0.0-alpha.0",
+    "@ts-phoenix/node-orm-i18n": "^1.0.0-alpha.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",

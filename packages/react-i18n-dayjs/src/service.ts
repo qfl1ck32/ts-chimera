@@ -9,7 +9,7 @@ export class Dayjs {
     event: LocaleChangedEvent,
   })
   public onLocaleChange = (event: LocaleChangedEvent) => {
-    const locale = event.data!.locale;
+    const locale = event.data.locale;
 
     dayjs.locale(locale);
   };

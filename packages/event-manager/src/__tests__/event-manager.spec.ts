@@ -29,11 +29,11 @@ describe('event-manager', () => {
     };
 
     const handler: HandlerType<MyEvent> = async (e) => {
-      e.data!.onCall();
+      e.data.onCall();
     };
 
     const filter: HandlerType<MyEvent> = (e) => {
-      return e.data!.name === 'test';
+      return e.data.name === 'test';
     };
 
     const eventManager = core.container.get(EventManager);

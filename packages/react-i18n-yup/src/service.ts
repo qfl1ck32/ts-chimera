@@ -26,7 +26,7 @@ export class Yup {
     event: LocaleChangedEvent,
   })
   public onLocaleChange = (event: LocaleChangedEvent) => {
-    const locale = event.data!.locale;
+    const locale = event.data.locale;
 
     yup.setLocale(this.translationPaths[locale as never]);
   };

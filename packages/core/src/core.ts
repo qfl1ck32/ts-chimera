@@ -16,6 +16,7 @@ export class Core {
     this._state = CoreState.NEW;
 
     this.setToken(CONTAINER, this.container);
+
     this.container.bind(Core).toConstantValue(this);
   }
 
@@ -48,7 +49,7 @@ export class Core {
   }
 
   public setToken<T>(token: Token<T>, value: T) {
-    this.container.bind(token.identifier).toConstantValue(value);
+    this.container.bindToken(token).toConstantValue(value);
   }
 
   private checkPackagesDependencies() {

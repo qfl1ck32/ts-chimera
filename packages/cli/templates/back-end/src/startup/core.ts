@@ -8,6 +8,7 @@ import { AppPackage } from './app';
 import { GraphQLError, GraphQLPackage } from '@ts-phoenix/node-graphql';
 
 import { Error } from '@ts-phoenix/error';
+import { ORMI18nPackage } from '@ts-phoenix/node-orm-i18n';
 
 const core = new Core({
   packages: [
@@ -31,7 +32,7 @@ const core = new Core({
       },
     }),
     new GraphQLPackage({
-      resolvers: ['src/resolvers/**/*.ts'],
+      resolvers: ['src/graphql/resolvers/**/*.ts'],
     }),
     new LoggerPackage({
       colors: {
@@ -45,10 +46,12 @@ const core = new Core({
       username: 'postgres',
       password: 'test',
 
-      entities: ['src/entities/**'],
+      entities: ['src/orm/entities/**'],
 
       synchronize: true,
     }),
+
+    new ORMI18nPackage(),
 
     new AppPackage(),
   ],
