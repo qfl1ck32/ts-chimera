@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/i18n-generator",
   "description": "",
   "private": false,
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.0",
+    "@ts-phoenix/event-manager": "^1.0.0-alpha.5",
     "@ts-phoenix/logger": "^1.0.0-alpha.3",
     "@ts-phoenix/utils": "^1.0.0-alpha.0",
     "glob": "^10.1.0",

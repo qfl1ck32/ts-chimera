@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Core } from '@ts-phoenix/core';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 import { LoggerServiceToken, LoggerPackage } from '@ts-phoenix/logger';
 import yargs from 'yargs';
 
@@ -57,6 +58,8 @@ const main = async () => {
   const core = new Core({
     packages: [
       new LoggerPackage(),
+
+      new EventManagerPackage(),
 
       new I18nGeneratorPackage(argv as unknown as II18nGeneratorPackageConfig),
     ],
