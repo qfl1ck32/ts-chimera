@@ -1,17 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Injectable, Inject } from '@ts-phoenix/di';
-import { Logger } from '@ts-phoenix/logger';
+import { Inject, Service } from '@ts-phoenix/core';
+import { ILoggerService, LoggerServiceToken } from '@ts-phoenix/logger';
 
 interface Replacement {
   original: string;
   new: string;
 }
 
-@Injectable()
+@Service()
 export class Writer {
-  constructor(@Inject(Logger) protected readonly logger: Logger) {}
+  constructor(
+    @Inject(LoggerServiceToken) protected readonly logger: ILoggerService,
+  ) {}
 
   public copyTemplate(
     srcDir: string,

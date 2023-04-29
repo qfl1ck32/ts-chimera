@@ -1,6 +1,10 @@
-import { PackageConfigToken } from '@ts-phoenix/core';
+import { PackageConfigToken, ServiceToken } from '@ts-phoenix/core';
 
-import { PackageConfigType } from './defs';
+import { II18nGeneratorPackageConfig, II18nGeneratorService } from './defs';
 
 export const I18nGeneratorPackageConfigToken =
-  PackageConfigToken<PackageConfigType>('I18nGenerator');
+  PackageConfigToken<II18nGeneratorPackageConfig>('I18nGenerator');
+
+export const I18nGeneratorServiceToken = ServiceToken<II18nGeneratorService>(
+  'I18nGeneratorService',
+);

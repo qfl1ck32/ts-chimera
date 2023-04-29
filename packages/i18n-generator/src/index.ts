@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import { Core } from '@ts-phoenix/core';
-import { Logger, LoggerPackage } from '@ts-phoenix/logger';
+import { LoggerServiceToken, LoggerPackage } from '@ts-phoenix/logger';
 import yargs from 'yargs';
 
-import { PackageConfigType } from './defs';
+import { I18nGeneratorServiceToken } from './config';
+import { II18nGeneratorPackageConfig } from './defs';
 import { I18nGeneratorPackage } from './package';
-import { I18nGenerator } from './service';
 
 const main = async () => {
   const argv = yargs
@@ -58,18 +58,18 @@ const main = async () => {
     packages: [
       new LoggerPackage(),
 
-      new I18nGeneratorPackage(argv as unknown as PackageConfigType),
+      new I18nGeneratorPackage(argv as unknown as II18nGeneratorPackageConfig),
     ],
   });
 
   await core.initialise();
 
-  const generator = core.container.get(I18nGenerator);
-  const logger = core.container.get(Logger);
+  const generatorService = core.container.get(I18nGeneratorServiceToken);
+  const loggerService = core.container.get(LoggerServiceToken);
 
-  generator.run();
+  generatorService.run();
 
-  logger.info('i18n-generator: done');
+  loggerService.info('i18n-generator: done');
 };
 
 main();

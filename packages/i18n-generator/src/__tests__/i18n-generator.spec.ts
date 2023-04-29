@@ -4,7 +4,7 @@ import { readdirSync } from 'fs';
 import { join } from 'path';
 
 import { I18nGeneratorPackage } from '@src/package';
-import { I18nGenerator } from '@src/service';
+import { I18nGeneratorService } from '@src/service';
 import { Core } from '@ts-phoenix/core';
 
 describe('i18n-generator', () => {
@@ -33,7 +33,7 @@ describe('i18n-generator', () => {
 
     await core.initialise();
 
-    const generator = core.container.get(I18nGenerator);
+    const generator = core.container.get(I18nGeneratorService);
 
     generator.run();
 

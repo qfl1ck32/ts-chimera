@@ -1,18 +1,18 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 
-import { InjectToken, Injectable } from '@ts-phoenix/di';
+import { Inject, Service } from '@ts-phoenix/core';
 import { mergeDeep } from '@ts-phoenix/utils';
 import { sync } from 'glob';
 
 import { I18nGeneratorPackageConfigToken } from './config';
-import { PackageConfigType } from './defs';
+import { II18nGeneratorPackageConfig, II18nGeneratorService } from './defs';
 
-@Injectable()
-export class I18nGenerator {
+@Service()
+export class I18nGeneratorService implements II18nGeneratorService {
   constructor(
-    @InjectToken(I18nGeneratorPackageConfigToken)
-    private config: PackageConfigType,
+    @Inject(I18nGeneratorPackageConfigToken)
+    private config: II18nGeneratorPackageConfig,
   ) {}
 
   private get interpolationRegex() {

@@ -1,4 +1,4 @@
-export interface PackageConfigType {
+export interface II18nGeneratorPackageConfig {
   missingKey: string;
 
   defaultLocale: string;
@@ -11,4 +11,8 @@ export interface PackageConfigType {
   srcDir: string;
 
   outputPath: string;
+}
+
+export interface II18nGeneratorService {
+  run(): void;
 }
