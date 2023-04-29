@@ -7,12 +7,12 @@ import LanguageSwitcher, { ILocale } from '@src/components/LanguageSwitcher';
 import { locales } from './constants';
 
 const LanguageSwitcherContainer: React.FC = () => {
-  const i18n = use(I18nServiceToken);
+  const i18nService = use(I18nServiceToken);
 
   const router = useRouter();
 
   const onLocaleChange = async (locale: string) => {
-    await i18n.onLocaleChange(locale);
+    await i18nService.onLocaleChange(locale);
 
     router.push(router.pathname, router.pathname, {
       locale,
