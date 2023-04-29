@@ -1,21 +1,30 @@
-import { Injectable, Inject, InjectToken } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
+import { Inject, Service } from '@ts-phoenix/core';
+import {
+  EventManagerServiceToken,
+  IEventManagerService,
+} from '@ts-phoenix/event-manager';
 import Polyglot from 'node-polyglot';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { AllPhrases, ITranslations, PackageConfigType } from './defs';
+import { I18nPackageConfigToken } from './constants';
+import {
+  AllPhrases,
+  ITranslations,
+  I18nPackageConfigType,
+  II18nService,
+} from './defs';
 import { LocaleChangedEvent } from './events';
 
-@Injectable()
-export class I18n {
+@Service()
+export class I18nService implements II18nService {
   private polyglots!: Map<string, Polyglot>;
 
   public activePolyglot!: Polyglot;
 
   constructor(
-    @InjectToken(PACKAGE_CONFIG_TOKEN)
-    private config: PackageConfigType,
-    @Inject(EventManager) private eventManager: EventManager,
+    @Inject(I18nPackageConfigToken)
+    private config: I18nPackageConfigType,
+    @Inject(EventManagerServiceToken)
+    private eventManager: IEventManagerService,
   ) {
     this.polyglots = new Map();
 

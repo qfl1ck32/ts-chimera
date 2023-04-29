@@ -6,11 +6,23 @@ import {
   NestedPathsObjectUntilLeaf,
   NestedPathsObjectsJustLeaf,
 } from '@ts-phoenix/typings';
+import Polyglot from 'node-polyglot';
 
 export type ITranslations = Record<string, any>;
 export type IInterpolationStrings = Record<'start' | 'end', string>;
 
-export interface PackageConfigType {
+export interface II18nService {
+  t<Translations extends ITranslations>(
+    phrase: AllPhrases<Translations>,
+    options?: number | Polyglot.InterpolationOptions | undefined,
+  ): string;
+
+  activePolyglot: Polyglot;
+
+  onLocaleChange(locale: string): Promise<void>;
+}
+
+export interface I18nPackageConfigType {
   defaultLocale: string;
   translations: ITranslations;
   interpolationStrings: IInterpolationStrings;

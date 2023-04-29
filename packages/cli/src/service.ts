@@ -1,5 +1,5 @@
-import { Injectable, Inject } from '@ts-phoenix/di';
-import { Logger } from '@ts-phoenix/logger';
+import { Inject, Service } from '@ts-phoenix/core';
+import { ILoggerService, LoggerServiceToken } from '@ts-phoenix/logger';
 import inquirer from 'inquirer';
 import inquirer_autocomplete from 'inquirer-autocomplete-prompt';
 
@@ -8,10 +8,10 @@ import { MicroserviceWriter } from './writers';
 
 inquirer.registerPrompt('autocomplete', inquirer_autocomplete);
 
-@Injectable()
-export class CLI {
+@Service()
+export class CLIService {
   constructor(
-    @Inject(Logger) private readonly logger: Logger,
+    @Inject(LoggerServiceToken) private readonly logger: ILoggerService,
     @Inject(MicroserviceWriter)
     private readonly microserviceWriter: MicroserviceWriter,
   ) {}

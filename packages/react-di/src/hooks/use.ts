@@ -1,9 +1,12 @@
-import { Constructor } from '@ts-phoenix/typings';
+import { ServiceIdentifier } from '@ts-phoenix/core';
 import { useMemo } from 'react';
 
 import { useContainer } from './useContainer';
 
-export function use<T>(identifier: Constructor<T>, transient?: boolean): T {
+export function use<T>(
+  identifier: ServiceIdentifier<T>,
+  transient?: boolean,
+): T {
   const container = useContainer();
 
   if (transient) {

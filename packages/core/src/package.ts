@@ -1,12 +1,9 @@
-import { Injectable } from '@ts-phoenix/di';
 import { DeepPartial, MaybePromise } from '@ts-phoenix/typings';
 import { mergeDeep } from '@ts-phoenix/utils';
 
 import { Core } from './core';
-import { PackagesConstructors, PartialConfig } from './defs';
-import { PackageConfigToken } from './tokens';
+import { PackagesConstructors, PartialConfig, ServiceIdentifier } from './defs';
 
-@Injectable()
 export abstract class Package<
   FullConfigType extends Record<string, any> | null = null,
   RequiredConfigType extends Partial<FullConfigType> | null = null,
@@ -27,12 +24,6 @@ export abstract class Package<
     }
   }
 
-  public getConfigToken(): FullConfigType extends null
-    ? null
-    : PackageConfigToken<FullConfigType> {
-    return null as any;
-  }
-
   public getDependencies(): PackagesConstructors {
     return [];
   }
@@ -42,6 +33,10 @@ export abstract class Package<
   }
 
   public initialise(): MaybePromise<void> {
+    return;
+  }
+
+  public bind(): MaybePromise<void> {
     return;
   }
 
@@ -65,13 +60,7 @@ export abstract class Package<
     });
   }
 
-  private __setConfigToken() {
-    const token = this.getConfigToken();
-
-    if (!token) {
-      return;
-    }
-
-    this.core.setToken(token, this.config!);
+  protected bindConfig(token: ServiceIdentifier<FullConfigType>) {
+    this.core.container.bind(token).toConstantValue(this.config!);
   }
 }

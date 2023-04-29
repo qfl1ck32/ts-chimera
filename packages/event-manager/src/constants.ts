@@ -1,1 +1,6 @@
-export const EVENT_MANAGER_LISTENER_DECORATOR_KEY = 'event_manager:listeners';
+import { ServiceToken } from '@ts-phoenix/core';
+
+import { IEventManagerService } from './defs';
+
+export const EventManagerServiceToken =
+  ServiceToken<IEventManagerService>('EventManager');

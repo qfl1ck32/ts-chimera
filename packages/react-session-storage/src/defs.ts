@@ -1,3 +1,3 @@
-export interface PackageConfigType {
+export interface ISessionStoragePackageConfig {
   localStorageKey: string;
 }

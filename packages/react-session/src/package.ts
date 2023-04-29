@@ -1,21 +1,13 @@
-import { Package, PartialConfig } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
+import { Package } from '@ts-phoenix/core';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType, PackageRequiredConfig } from './defs';
+import { SessionServiceToken } from './constants';
+import { SessionService } from './service';
 
-@Injectable()
-export class SessionPackage extends Package<
-  PackageConfigType,
-  PackageRequiredConfig
-> {
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
-  }
-
-  getDefaultConfig(): PartialConfig<PackageConfigType, PackageRequiredConfig> {
-    return {
-      storage: undefined,
-    };
+export class SessionPackage extends Package {
+  bind() {
+    this.core.container
+      .bind(SessionServiceToken)
+      .to(SessionService)
+      .inSingletonScope();
   }
 }

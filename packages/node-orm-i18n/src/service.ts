@@ -1,16 +1,13 @@
-import { Injectable } from '@ts-phoenix/di';
+import { Injectable } from '@ts-phoenix/core';
 import { DataSource as BaseDataSource } from '@ts-phoenix/node-orm';
-import { Constructor } from '@ts-phoenix/typings';
+
+import { CreateI18nQueryBuilderArgs, II18nDataSource } from './defs';
 
 @Injectable()
-export class DataSource extends BaseDataSource {
-  public createI18nQueryBuilder<TEntity, TTranslationEntity>(args: {
-    entity: Constructor<TEntity>;
-    translationEntity: Constructor<TTranslationEntity>;
-    alias: string;
-    fields: Array<Exclude<keyof TTranslationEntity, 'id' | 'locale'>>;
-    locale?: string;
-  }) {
+export class I18nDataSource extends BaseDataSource implements II18nDataSource {
+  public createI18nQueryBuilder<TEntity, TTranslationEntity>(
+    args: CreateI18nQueryBuilderArgs<TEntity, TTranslationEntity>,
+  ) {
     const translations = 'translations';
 
     let builder = this.getRepository(args.entity)

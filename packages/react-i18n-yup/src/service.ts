@@ -1,19 +1,18 @@
-import { Injectable, InjectToken } from '@ts-phoenix/di';
-import { Listener } from '@ts-phoenix/event-manager';
+import { Inject, Service } from '@ts-phoenix/core';
 import { LocaleChangedEvent } from '@ts-phoenix/react-i18n';
 import * as yup from 'yup';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { I18nYupPackageConfigToken } from './constants';
+import { II18nYupPackageConfig, II18nYupService } from './defs';
 import {
   translationsWithPaths,
   translationsWithoutPaths,
 } from './translations';
 
-@Injectable()
-export class Yup {
+@Service()
+export class I18nYupService implements II18nYupService {
   constructor(
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+    @Inject(I18nYupPackageConfigToken) private config: II18nYupPackageConfig,
   ) {}
 
   private get translationPaths() {
@@ -22,9 +21,6 @@ export class Yup {
       : translationsWithoutPaths;
   }
 
-  @Listener({
-    event: LocaleChangedEvent,
-  })
   public onLocaleChange = (event: LocaleChangedEvent) => {
     const locale = event.data.locale;
 

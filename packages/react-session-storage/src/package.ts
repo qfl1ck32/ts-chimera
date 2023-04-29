@@ -1,22 +1,28 @@
 import { Package, PartialConfig } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
-import { SessionPackage } from '@ts-phoenix/react-session';
+import {
+  SessionPackage,
+  SessionStorageServiceToken,
+} from '@ts-phoenix/react-session';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { SessionStoragePackageConfigToken } from './constants';
+import { ISessionStoragePackageConfig } from './defs';
+import { SessionStorageService } from './service';
 
-@Injectable()
-export class SessionStoragePackage extends Package<PackageConfigType> {
-  // theoretically, it doesn't "depend" on it, but it doesn't make sense as standalone
+export class SessionStoragePackage extends Package<ISessionStoragePackageConfig> {
   getDependencies() {
     return [SessionPackage];
   }
 
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+  bind() {
+    this.bindConfig(SessionStoragePackageConfigToken);
+
+    this.core.container
+      .bind(SessionStorageServiceToken)
+      .to(SessionStorageService)
+      .inSingletonScope();
   }
 
-  getDefaultConfig(): PartialConfig<PackageConfigType, null> {
+  getDefaultConfig(): PartialConfig<ISessionStoragePackageConfig, null> {
     return {
       localStorageKey: 'session-storage',
     };

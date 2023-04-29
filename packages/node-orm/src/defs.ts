@@ -12,3 +12,17 @@ export type RequiredPackageConfigType = Pick<DataSourceOptions, 'type'>;
 export interface ORMEventData {
   source: DataSource;
 }
+
+export interface IORMService<TDataSource = DataSource> {
+  source: TDataSource;
+
+  addEntity(
+    entity: DataSourceOptionsEntity | DataSourceOptionsEntity[],
+  ): Promise<void>;
+
+  cleanDatabase(): Promise<void>;
+
+  initialise(): Promise<void>;
+
+  destroy(): Promise<void>;
+}

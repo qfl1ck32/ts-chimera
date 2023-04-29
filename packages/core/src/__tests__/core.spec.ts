@@ -1,12 +1,30 @@
-import { Injectable } from '@ts-phoenix/di';
-
-import { DependencyNotFoundError } from '@src/errors';
-import { PackageConfigToken, Core, Package, PartialConfig } from '@src/index';
+import {
+  ConfigNotFoundError,
+  DependencyNotFoundError,
+  ServiceNotFoundError,
+} from '@src/errors';
+import {
+  PackageConfigToken,
+  Core,
+  Package,
+  PartialConfig,
+  ServiceToken,
+  Service,
+  Inject,
+} from '@src/index';
 
 describe('core', () => {
   it('should work', async () => {
-    @Injectable()
-    class MyService {
+    interface IMyService {
+      initialised: boolean;
+
+      initialise: () => void;
+    }
+
+    const MyServiceToken = ServiceToken<IMyService>('MyService');
+
+    @Service()
+    class MyService implements IMyService {
       public initialised: boolean;
 
       constructor() {
@@ -18,16 +36,18 @@ describe('core', () => {
       }
     }
 
-    @Injectable()
     class MyPackage extends Package {
       async initialise() {
-        const myService = this.core.container.get(MyService);
+        const myService = this.core.container.get(MyServiceToken);
 
         myService.initialise();
       }
 
-      registerServices() {
-        return [MyService];
+      public async bind() {
+        this.core.container
+          .bind(MyServiceToken)
+          .to(MyService)
+          .inSingletonScope();
       }
     }
 
@@ -37,7 +57,7 @@ describe('core', () => {
 
     await core.initialise();
 
-    const myService = core.container.get(MyService);
+    const myService = core.container.get(MyServiceToken);
 
     expect(myService).toBeInstanceOf(MyService);
 
@@ -49,11 +69,8 @@ describe('core', () => {
       name: string;
     }
 
-    const MY_PACKAGE_CONFIG = new PackageConfigToken<PackageConfig>(
-      'MY_PACKAGE',
-    );
+    const MY_PACKAGE_CONFIG = PackageConfigToken<PackageConfig>('MY_PACKAGE');
 
-    @Injectable()
     class MyPackage extends Package<PackageConfig> {
       public getConfigToken() {
         return MY_PACKAGE_CONFIG;
@@ -93,7 +110,7 @@ describe('core', () => {
 
     await core.initialise();
 
-    const config = core.container.getPackageConfigToken(MY_PACKAGE_CONFIG);
+    const config = core.container.get(MY_PACKAGE_CONFIG);
 
     expect(config.name).toBe(newName);
   });
@@ -109,11 +126,8 @@ describe('core', () => {
     const name = 'Hi';
     const requiredStuff = 'hi';
 
-    const MY_PACKAGE_CONFIG = new PackageConfigToken<PackageConfig>(
-      'MY_PACKAGE',
-    );
+    const MY_PACKAGE_CONFIG = PackageConfigToken<PackageConfig>('MY_PACKAGE');
 
-    @Injectable()
     class MyPackage extends Package<PackageConfig, RequiredPackageConfig> {
       getConfigToken() {
         return MY_PACKAGE_CONFIG;
@@ -129,7 +143,6 @@ describe('core', () => {
       }
     }
 
-    @Injectable()
     class MyOtherPackage extends Package {
       public getDependencies() {
         return [MyPackage];
@@ -147,11 +160,61 @@ describe('core', () => {
 
     await core.initialise();
 
-    const config = core.container.getToken(MY_PACKAGE_CONFIG);
+    const config = core.container.get(MY_PACKAGE_CONFIG);
 
     expect(config).toStrictEqual({
       name,
       requiredStuff,
     });
+  });
+
+  it('should throw error when service not found', async () => {
+    const MyServiceToken = ServiceToken('MyService');
+
+    const core = new Core({
+      packages: [],
+    });
+
+    await core.initialise();
+
+    expect(() => core.container.get(MyServiceToken)).toThrowError(
+      ServiceNotFoundError,
+    );
+  });
+
+  it('should throw error when config not found', async () => {
+    interface IMyPackageConfig {
+      name: string;
+    }
+
+    const MyServiceToken = ServiceToken('MyService');
+    const MyPackageConfigToken =
+      PackageConfigToken<IMyPackageConfig>('MyPackage');
+
+    @Service()
+    class MyService {
+      constructor(@Inject(MyPackageConfigToken) configToken: IMyPackageConfig) {
+        console.log(configToken);
+      }
+    }
+
+    class MyPackage extends Package {
+      async initialise() {
+        const service = this.core.container.get(MyServiceToken);
+      }
+
+      bind() {
+        this.core.container
+          .bind(MyServiceToken)
+          .to(MyService)
+          .inSingletonScope();
+      }
+    }
+
+    const core = new Core({
+      packages: [new MyPackage()],
+    });
+
+    await expect(core.initialise()).rejects.toThrow(ConfigNotFoundError);
   });
 });

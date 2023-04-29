@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { use } from '@ts-phoenix/react-di';
-import { I18n } from '@ts-phoenix/react-i18n';
+import { I18nServiceToken } from '@ts-phoenix/react-i18n';
 import { useEffect } from 'react';
 import {
   FieldValues,
@@ -17,7 +17,7 @@ export function useI18nForm<
 >(props: UseFormProps<TFieldValues, TContext> & { getSchema: () => T }) {
   const { getSchema, ...rest } = props;
 
-  const i18n = use(I18n);
+  const i18n = use(I18nServiceToken);
 
   const form = baseUseForm<InferType<T>>({
     ...rest,

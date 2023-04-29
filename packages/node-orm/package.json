@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.2",
-    "@ts-phoenix/di": "^1.0.0-alpha.1",
     "@ts-phoenix/event-manager": "^1.0.0-alpha.2",
     "@ts-phoenix/logger": "^1.0.0-alpha.2",
     "@ts-phoenix/typings": "^1.0.0-alpha.0",

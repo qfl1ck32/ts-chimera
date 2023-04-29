@@ -1,3 +1,4 @@
+import { GraphQLSchema } from 'graphql';
 import { BuildSchemaOptions } from 'type-graphql';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -8,6 +9,11 @@ export interface GraphQLEventData {
   resolvers: Resolvers;
 }
 
-export type PackageConfigType = Omit<BuildSchemaOptions, 'resolvers'> & {
+export interface INodeGraphQLPackageConfig
+  extends Omit<BuildSchemaOptions, 'resolvers'> {
   resolvers?: Resolvers;
-};
+}
+
+export interface IGraphQLService {
+  generateSchema(): Promise<GraphQLSchema>;
+}

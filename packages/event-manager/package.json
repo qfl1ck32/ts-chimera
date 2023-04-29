@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.2",
-    "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/typings": "^1.0.0-alpha.0",
     "@ts-phoenix/utils": "^1.0.0-alpha.0"
   }

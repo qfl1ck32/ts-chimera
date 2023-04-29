@@ -1,31 +1,43 @@
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
-import { Logger } from '@ts-phoenix/logger';
+import { Inject, Service } from '@ts-phoenix/core';
+import {
+  EventManagerServiceToken,
+  IEventManagerService,
+} from '@ts-phoenix/event-manager';
+import {
+  CustomLoggerServiceToken,
+  ICustomLoggerService,
+} from '@ts-phoenix/logger';
 import { Constructor } from '@ts-phoenix/typings';
 import { makeArray } from '@ts-phoenix/utils';
 import { DataSource, MixedList } from 'typeorm';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { DataSourceOptionsEntity, PackageConfigType } from './defs';
+import { NodeORMackageConfigToken, ORMDataSourceToken } from './constants';
+import {
+  DataSourceOptionsEntity,
+  IORMService,
+  PackageConfigType,
+} from './defs';
 import {
   AfterORMInitialiseEvent,
   BeforeORMDestroyEvent,
   BeforeORMInitialiseEvent,
 } from './events';
-import { DATA_SOURCE_CLASS_TOKEN } from './tokens';
 
-@Injectable()
-export class ORM<TDataSource extends DataSource = DataSource> {
+@Service()
+export class ORMService<TDataSource extends DataSource = DataSource>
+  implements IORMService<TDataSource>
+{
   public source!: TDataSource;
 
   constructor(
-    @Inject(EventManager) private eventManager: EventManager,
-    @Inject(Logger) private logger: Logger,
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
-    @InjectToken(DATA_SOURCE_CLASS_TOKEN)
-    DataSourceClass: Constructor<TDataSource>,
+    @Inject(EventManagerServiceToken)
+    private eventManagerService: IEventManagerService,
+    @Inject(CustomLoggerServiceToken)
+    private loggerService: ICustomLoggerService,
+    @Inject(NodeORMackageConfigToken) private config: PackageConfigType,
+    @Inject(ORMDataSourceToken) DataSourceClass: Constructor<TDataSource>,
   ) {
-    this.logger = this.logger.getWithPrefix('ORM');
+    this.loggerService.setPrefix('ORMService');
 
     this.source = new DataSourceClass(this.config);
   }
@@ -53,25 +65,25 @@ export class ORM<TDataSource extends DataSource = DataSource> {
   }
 
   async initialise() {
-    await this.logger.info('Initialising...');
+    await this.loggerService.info('Initialising...');
 
-    await this.eventManager.emitSync(new BeforeORMInitialiseEvent());
+    await this.eventManagerService.emitSync(new BeforeORMInitialiseEvent());
 
     await this.source.initialize();
 
-    await this.eventManager.emitSync(
+    await this.eventManagerService.emitSync(
       new AfterORMInitialiseEvent({
         source: this.source,
       }),
     );
 
-    await this.logger.info('Initialised.');
+    await this.loggerService.info('Initialised.');
   }
 
   async destroy() {
-    await this.logger.info('Destroying...');
+    await this.loggerService.info('Destroying...');
 
-    await this.eventManager.emitSync(
+    await this.eventManagerService.emitSync(
       new BeforeORMDestroyEvent({
         source: this.source,
       }),
@@ -79,6 +91,6 @@ export class ORM<TDataSource extends DataSource = DataSource> {
 
     await this.source.destroy();
 
-    await this.logger.info('Destroyed.');
+    await this.loggerService.info('Destroyed.');
   }
 }

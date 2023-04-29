@@ -1,5 +1,8 @@
 import { Core } from '@ts-phoenix/core';
-import { EventManager } from '@ts-phoenix/event-manager';
+import {
+  EventManagerPackage,
+  EventManagerServiceToken,
+} from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
 import {
@@ -7,7 +10,7 @@ import {
   AfterServerStartEvent,
   BeforeServerStartEvent,
   BeforeServerStopEvent,
-  Express,
+  ExpressServiceToken,
 } from '@src/index';
 
 describe('node-express', () => {
@@ -18,33 +21,34 @@ describe('node-express', () => {
           port: 8001,
         }),
         new LoggerPackage(),
+        new EventManagerPackage(),
       ],
     });
+
+    await core.initialise();
 
     const beforeServerStartListener = jest.fn();
     const afterServerStartListener = jest.fn();
     const beforeServerStopListener = jest.fn();
 
-    const eventManager = core.container.get(EventManager);
+    const eventManagerService = core.container.get(EventManagerServiceToken);
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeServerStartEvent,
       handler: beforeServerStartListener,
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: AfterServerStartEvent,
       handler: afterServerStartListener,
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeServerStopEvent,
       handler: beforeServerStopListener,
     });
 
-    await core.initialise();
-
-    const express = core.container.get(Express);
+    const express = core.container.get(ExpressServiceToken);
 
     await express.start();
 

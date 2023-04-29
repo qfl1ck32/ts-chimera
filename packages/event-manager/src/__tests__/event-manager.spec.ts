@@ -1,13 +1,7 @@
 import { Core } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 
-import {
-  Event,
-  EventManager,
-  EventManagerPackage,
-  HandlerType,
-  Listener,
-} from '@src/index';
+import { EventManagerServiceToken } from '@src/constants';
+import { Event, EventManagerPackage, HandlerType } from '@src/index';
 
 describe('event-manager', () => {
   it('should work with filters', async () => {
@@ -37,7 +31,7 @@ describe('event-manager', () => {
       return e.data.name === 'test';
     };
 
-    const eventManager = core.container.get(EventManager);
+    const eventManager = core.container.get(EventManagerServiceToken);
 
     eventManager.addListener({
       event: MyEvent,
@@ -50,38 +44,5 @@ describe('event-manager', () => {
 
     await eventManager.emitSync(new MyEvent({ name: 'test', onCall }));
     expect(called).toBe(true);
-  });
-
-  it('should work with decorators', async () => {
-    const core = new Core({
-      packages: [new EventManagerPackage()],
-    });
-
-    class MyEvent extends Event {}
-
-    @Injectable()
-    class MyService {
-      public initialised: boolean;
-
-      constructor() {
-        this.initialised = false;
-      }
-
-      @Listener({
-        event: MyEvent,
-      })
-      async onMyEvent(e: MyEvent) {
-        this.initialised = true;
-      }
-    }
-
-    await core.initialise();
-
-    const eventManager = core.container.get(EventManager);
-    const myService = core.container.get(MyService);
-
-    await eventManager.emitSync(new MyEvent());
-
-    expect(myService.initialised).toBe(true);
   });
 });

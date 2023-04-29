@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { Injectable } from '@ts-phoenix/di';
+import { Service } from '@ts-phoenix/core';
 
 import { TEMPLATES_DIRECTORY } from '@src/constants';
 import { findPackageRoot } from '@src/utils';
@@ -11,7 +11,7 @@ export interface CreateFrontendMicroserviceArgs {
   name: string;
 }
 
-@Injectable()
+@Service()
 export class MicroserviceWriter extends Writer {
   async createFrontend(args: CreateFrontendMicroserviceArgs) {
     const nameTemplate = 'my-frontend-app';
@@ -39,8 +39,6 @@ export class MicroserviceWriter extends Writer {
     this.logger.info(`Done. Run the following commands:
 cd ${args.name}
 npm i
-npm run dev
-
-Enjoy :D`);
+npm run dev`);
   }
 }

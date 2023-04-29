@@ -1,17 +1,31 @@
 import { Package } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 import chalk from 'chalk';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import {
+  CustomLoggerServiceToken,
+  LoggerPackageConfigToken,
+  LoggerServiceToken,
+} from './constants';
+import { CustomLoggerService } from './custom-logger-service';
+import { ILoggerPackageConfig } from './defs';
+import { LoggerService } from './logger-service';
 
-@Injectable()
-export class LoggerPackage extends Package<PackageConfigType> {
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+export class LoggerPackage extends Package<ILoggerPackageConfig> {
+  bind() {
+    this.bindConfig(LoggerPackageConfigToken);
+
+    this.core.container
+      .bind(LoggerServiceToken)
+      .to(LoggerService)
+      .inSingletonScope();
+
+    this.core.container
+      .bind(CustomLoggerServiceToken)
+      .to(CustomLoggerService)
+      .inTransientScope();
   }
 
-  getDefaultConfig(): Partial<PackageConfigType> {
+  getDefaultConfig(): Partial<ILoggerPackageConfig> {
     return {
       colors: {
         INFO: chalk.blueBright,

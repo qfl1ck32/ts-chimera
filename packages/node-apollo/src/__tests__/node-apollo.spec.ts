@@ -1,11 +1,14 @@
 import { Core } from '@ts-phoenix/core';
-import { EventManager } from '@ts-phoenix/event-manager';
+import {
+  EventManagerPackage,
+  EventManagerServiceToken,
+} from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 import {
-  Express,
   ExpressPackage,
   BeforeServerStartEvent as BeforeExpressServerStartEvent,
   BeforeServerStopEvent as BeforeExpressServerStopEvent,
+  ExpressServiceToken,
 } from '@ts-phoenix/node-express';
 
 import {
@@ -14,7 +17,8 @@ import {
   BeforeServerStopEvent,
 } from '@src/events';
 import { ApolloPackage } from '@src/package';
-import { Apollo } from '@src/service';
+
+import { ApolloServiceToken } from '..';
 
 describe('node-apollo', () => {
   it('should work', async () => {
@@ -23,55 +27,56 @@ describe('node-apollo', () => {
         new ApolloPackage(),
         new LoggerPackage(),
         new ExpressPackage(),
+        new EventManagerPackage(),
       ],
     });
+
+    await core.initialise();
 
     const beforeServerStartListener = jest.fn();
     const afterServerStartListener = jest.fn();
     const beforeServerStopListener = jest.fn();
 
-    const eventManager = core.container.get(EventManager);
+    const eventManagerService = core.container.get(EventManagerServiceToken);
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeServerStartEvent,
       handler: beforeServerStartListener,
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: AfterServerStartEvent,
       handler: afterServerStartListener,
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeServerStopEvent,
       handler: beforeServerStopListener,
     });
 
-    await core.initialise();
+    const expressService = core.container.get(ExpressServiceToken);
+    const apolloService = core.container.get(ApolloServiceToken);
 
-    const express = core.container.get(Express);
-    const apollo = core.container.get(Apollo);
-
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeExpressServerStartEvent,
       handler: async (e) => {
-        await apollo.start(e.data.app);
+        await apolloService.start(e.data.app);
       },
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeExpressServerStopEvent,
       handler: async () => {
-        await apollo.stop();
+        await apolloService.stop();
       },
     });
 
-    await express.start();
+    await expressService.start();
 
     expect(beforeServerStartListener).toHaveBeenCalled();
     expect(afterServerStartListener).toHaveBeenCalled();
 
-    await express.stop();
+    await expressService.stop();
 
     expect(beforeServerStopListener).toHaveBeenCalled();
   });

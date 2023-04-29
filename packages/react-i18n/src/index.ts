@@ -4,4 +4,4 @@ export * from './service';
 export * from './hooks';
 export * from './package';
 export * from './provider';
-export * from './config';
+export * from './constants';

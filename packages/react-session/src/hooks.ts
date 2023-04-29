@@ -1,7 +1,7 @@
 import { use } from '@ts-phoenix/react-di';
 
-import { Session } from './service';
+import { SessionService } from './service';
 
 export const useSession = () => {
-  return use(Session);
+  return use(SessionService);
 };

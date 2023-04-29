@@ -18,3 +18,16 @@ export type ListenerDecoratorType<EventType extends Event<any>> = Omit<
   ListenerType<EventType>,
   'handler'
 >;
+
+export interface IEventManagerService {
+  addListener<T extends Event<any>>(args: ListenerType<T>): void;
+
+  removeListener<T extends Event<any>>(args: {
+    event: Constructor<T>;
+    handler: HandlerType<T>;
+  }): void;
+
+  emit<T>(event: Event<T>): void;
+
+  emitSync<T>(event: Event<T>): Promise<void>;
+}

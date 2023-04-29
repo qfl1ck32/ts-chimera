@@ -1,19 +1,22 @@
-import { Container, InjectContainer } from '@ts-phoenix/core';
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
+import { Inject, Service } from '@ts-phoenix/core';
+import {
+  EventManagerServiceToken,
+  IEventManagerService,
+} from '@ts-phoenix/event-manager';
 import { buildSchema } from 'type-graphql';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { NodeGraphQLPackageConfigToken } from './constants';
+import { IGraphQLService, INodeGraphQLPackageConfig } from './defs';
 import { BeforeGraphQLInitialiseEvent } from './events';
 import FrameworkResolver from './resolvers/framework';
 
-@Injectable()
-export class GraphQL {
+@Service()
+export class GraphQLService implements IGraphQLService {
   constructor(
-    @InjectContainer() private container: Container,
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
-    @Inject(EventManager) private eventManager: EventManager,
+    @Inject(NodeGraphQLPackageConfigToken)
+    private config: INodeGraphQLPackageConfig,
+    @Inject(EventManagerServiceToken)
+    private eventManagerService: IEventManagerService,
   ) {}
 
   public async generateSchema() {
@@ -23,7 +26,7 @@ export class GraphQL {
 
     resolvers.push(FrameworkResolver);
 
-    await this.eventManager.emitSync(
+    await this.eventManagerService.emitSync(
       new BeforeGraphQLInitialiseEvent({
         resolvers,
       }),
@@ -32,7 +35,9 @@ export class GraphQL {
     const schema = await buildSchema({
       ...config,
       resolvers: resolvers as any,
-      container: this.container,
+
+      // TODO
+      // container: this.container,
 
       validate: {
         forbidUnknownValues: false,

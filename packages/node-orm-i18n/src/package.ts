@@ -1,18 +1,14 @@
 import { Package } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
-import { DATA_SOURCE_CLASS_TOKEN, ORMPackage } from '@ts-phoenix/node-orm';
+import { ORMPackage, ORMDataSourceToken } from '@ts-phoenix/node-orm';
 
-import { DataSource } from './service';
+import { I18nDataSource } from './service';
 
-@Injectable()
 export class ORMI18nPackage extends Package {
-  async initialise() {
-    this.core.container
-      .rebindToken(DATA_SOURCE_CLASS_TOKEN)
-      .toConstructor(DataSource);
-  }
-
   getDependencies() {
     return [ORMPackage];
+  }
+
+  bind() {
+    this.core.container.rebind(ORMDataSourceToken).to(I18nDataSource);
   }
 }

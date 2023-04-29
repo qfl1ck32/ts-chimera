@@ -1,6 +1,7 @@
 import { Core } from '@ts-phoenix/core';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 
-import { I18n } from '@src/index';
+import { I18nServiceToken } from '@src/index';
 import { I18nPackage } from '@src/package';
 
 declare module '@src/defs' {
@@ -22,6 +23,8 @@ describe('react-i18n', () => {
 
     const core = new Core({
       packages: [
+        new EventManagerPackage(),
+
         new I18nPackage({
           defaultLocale: 'en',
           translations,
@@ -31,7 +34,7 @@ describe('react-i18n', () => {
 
     await core.initialise();
 
-    const i18n = core.container.get(I18n);
+    const i18n = core.container.get(I18nServiceToken);
 
     expect(i18n.t('hi')).toBe(translations.en.hi);
 

@@ -1,9 +1,12 @@
-import { Core } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
+import { Core, Package, Service } from '@ts-phoenix/core';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 
-import { ISessionStorage, SessionData } from '@src/defs';
+import {
+  SessionServiceToken,
+  SessionStorageServiceToken,
+} from '@src/constants';
+import { ISessionStorageService, SessionData } from '@src/defs';
 import { SessionPackage } from '@src/package';
-import { Session } from '@src/service';
 
 declare module '@src/defs' {
   interface SessionData {
@@ -17,8 +20,8 @@ describe('react-session', () => {
       test: 'hi',
     } as SessionData;
 
-    @Injectable()
-    class Storage implements ISessionStorage {
+    @Service()
+    class SessionStorageService implements ISessionStorageService {
       state: SessionData;
 
       constructor() {
@@ -34,17 +37,25 @@ describe('react-session', () => {
       }
     }
 
+    class StoragePackage extends Package {
+      bind() {
+        this.core.container
+          .bind(SessionStorageServiceToken)
+          .to(SessionStorageService);
+      }
+    }
+
     const core = new Core({
       packages: [
-        new SessionPackage({
-          storage: Storage,
-        }),
+        new SessionPackage(),
+        new StoragePackage(),
+        new EventManagerPackage(),
       ],
     });
 
     await core.initialise();
 
-    const session = core.container.get(Session);
+    const session = core.container.get(SessionServiceToken);
 
     expect(session.state).toStrictEqual(initialState);
 

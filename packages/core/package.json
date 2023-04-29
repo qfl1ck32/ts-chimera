@@ -38,9 +38,9 @@
     "tsc-alias": "^1.8.5"
   },
   "dependencies": {
-    "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/error": "^1.0.0-alpha.0",
     "@ts-phoenix/utils": "^1.0.0-alpha.0",
-    "inversify": "^6.0.1"
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13"
   }
 }

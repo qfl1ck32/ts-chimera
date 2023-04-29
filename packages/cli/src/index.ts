@@ -3,7 +3,7 @@
 import { Core } from '@ts-phoenix/core';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
-import { CLI } from './service';
+import { CLIService } from './service';
 
 const main = async () => {
   const core = new Core({
@@ -12,7 +12,7 @@ const main = async () => {
 
   await core.initialise();
 
-  const cli = core.container.get(CLI);
+  const cli = core.container.get(CLIService);
 
   await cli.run();
 };

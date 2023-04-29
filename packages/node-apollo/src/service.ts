@@ -1,38 +1,47 @@
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
-import { Logger } from '@ts-phoenix/logger';
+import { Inject, Service } from '@ts-phoenix/core';
+import {
+  EventManagerServiceToken,
+  IEventManagerService,
+} from '@ts-phoenix/event-manager';
+import {
+  CustomLoggerServiceToken,
+  ICustomLoggerService,
+} from '@ts-phoenix/logger';
 import { Application, json } from 'express';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { ApolloPackageConfigToken } from './constants';
+import { IApolloService, INodeApolloPackageConfig } from './defs';
 import {
   AfterServerStartEvent,
   BeforeServerStartEvent,
   BeforeServerStopEvent,
 } from './events';
 
-@Injectable()
-export class Apollo {
-  private server!: ApolloServer;
+@Service()
+export class ApolloService implements IApolloService {
+  public server!: ApolloServer;
 
   constructor(
-    @Inject(Logger) private logger: Logger,
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
-    @Inject(EventManager) private eventManager: EventManager,
+    @Inject(CustomLoggerServiceToken)
+    private loggerService: ICustomLoggerService,
+    @Inject(ApolloPackageConfigToken)
+    private config: INodeApolloPackageConfig,
+    @Inject(EventManagerServiceToken)
+    private eventManagerService: IEventManagerService,
   ) {
-    this.logger = this.logger.getWithPrefix('Apollo');
+    this.loggerService.setPrefix('ApolloService');
   }
 
-  public async setSchema(schema: PackageConfigType['schema']) {
+  public async setSchema(schema: INodeApolloPackageConfig['schema']) {
     this.config.schema = schema;
   }
 
   async start(app: Application) {
-    this.logger.info('Starting...');
+    this.loggerService.info('Starting...');
 
-    await this.eventManager.emitSync(new BeforeServerStartEvent());
+    await this.eventManagerService.emitSync(new BeforeServerStartEvent());
 
     this.server = new ApolloServer(this.config as any);
 
@@ -40,19 +49,19 @@ export class Apollo {
 
     app.use(this.config.mountingPath, json(), expressMiddleware(this.server));
 
-    await this.eventManager.emitSync(
+    await this.eventManagerService.emitSync(
       new AfterServerStartEvent({
         server: this.server,
       }),
     );
 
-    this.logger.info('Started.');
+    this.loggerService.info('Started.');
   }
 
   async stop() {
-    this.logger.info('Stopping...');
+    this.loggerService.info('Stopping...');
 
-    await this.eventManager.emitSync(
+    await this.eventManagerService.emitSync(
       new BeforeServerStopEvent({
         server: this.server,
       }),
@@ -60,6 +69,6 @@ export class Apollo {
 
     await this.server.stop();
 
-    this.logger.info('Stopped.');
+    this.loggerService.info('Stopped.');
   }
 }

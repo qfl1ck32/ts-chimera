@@ -1,4 +1,5 @@
 import { Constructor } from '@ts-phoenix/typings';
+import { interfaces } from 'inversify';
 
 import { Package } from './package';
 
@@ -19,3 +20,5 @@ export enum CoreState {
 export type PartialConfig<Config, RequiredConfig> = RequiredConfig extends null
   ? Partial<Config>
   : Omit<Config, keyof RequiredConfig> & Partial<RequiredConfig>;
+
+export type ServiceIdentifier<T> = interfaces.ServiceIdentifier<T>;

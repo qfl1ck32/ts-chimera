@@ -1,45 +1,21 @@
 import EventEmitter from 'events';
 
-import { Container, InjectContainer } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
+import { Service } from '@ts-phoenix/core';
 import { Constructor } from '@ts-phoenix/typings';
 
-import { EVENT_MANAGER_LISTENER_DECORATOR_KEY } from './constants';
-import { HandlerType, ListenerType } from './defs';
+import { HandlerType, IEventManagerService, ListenerType } from './defs';
 import { Event } from './event';
 
-@Injectable()
-export class EventManager {
+@Service()
+export class EventManagerService implements IEventManagerService {
   private emitter: EventEmitter;
   private listeners: Map<HandlerType<any>, HandlerType<any>>;
   private events: Map<Constructor<Event<any>>, symbol>;
 
-  constructor(@InjectContainer() private container: Container) {
+  constructor() {
     this.emitter = new EventEmitter();
     this.listeners = new Map();
     this.events = new Map();
-
-    this.registerListenersFromDecorators();
-  }
-
-  // TODO: type safety
-  private registerListenersFromDecorators() {
-    const listeners = Reflect.getMetadata(
-      EVENT_MANAGER_LISTENER_DECORATOR_KEY,
-      this.constructor,
-    );
-
-    if (listeners) {
-      for (const listenerData of listeners) {
-        const { ServiceClass, ...listener } = listenerData;
-
-        const service = this.container.get(ServiceClass);
-
-        listener.handler = listener.handler.bind(service);
-
-        this.addListener(listener);
-      }
-    }
   }
 
   public addListener<T extends Event<any>>(args: ListenerType<T>) {
@@ -86,12 +62,10 @@ export class EventManager {
 
     const listeners = this.emitter.listeners(eventSymbol);
 
-    if (!listeners.length) return false;
+    if (!listeners.length) return;
 
     const promises = listeners.map((listener) => listener(event));
 
     await Promise.all(promises);
-
-    return true;
   }
 }

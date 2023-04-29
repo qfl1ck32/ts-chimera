@@ -1,22 +1,29 @@
 import { Core } from '@ts-phoenix/core';
-import { EventManager, HandlerType } from '@ts-phoenix/event-manager';
-import chalk from 'chalk';
+import {
+  EventManagerPackage,
+  EventManagerServiceToken,
+  HandlerType,
+} from '@ts-phoenix/event-manager';
 
+import { CustomLoggerServiceToken, LoggerServiceToken } from '@src/constants';
 import { AfterLogEvent, BeforeLogEvent } from '@src/events';
-import { Logger } from '@src/logger';
 import { LoggerPackage } from '@src/package';
 
 describe('logger', () => {
-  test('logger', async () => {
-    const core = new Core({
-      packages: [new LoggerPackage()],
+  let core: Core;
+
+  beforeEach(async () => {
+    core = new Core({
+      packages: [new EventManagerPackage(), new LoggerPackage()],
     });
 
     await core.initialise();
+  });
 
-    const eventManager = core.container.get(EventManager);
+  test('logger', async () => {
+    const eventManager = core.container.get(EventManagerServiceToken);
 
-    const logger = core.container.get(Logger);
+    const logger = core.container.get(LoggerServiceToken);
 
     const message = 'hi';
 
@@ -47,27 +54,12 @@ describe('logger', () => {
     expect(calledAfter).toBe(true);
   });
 
-  it('should work with custom prefix', async () => {
-    const core = new Core({
-      packages: [
-        new LoggerPackage({
-          colors: {
-            INFO: chalk.cyanBright,
-          },
-        }),
-      ],
-    });
+  it('custom logger', async () => {
+    const logger1 = core.container.get(CustomLoggerServiceToken);
+    logger1.setPrefix('hello');
 
-    await core.initialise();
+    const logger2 = core.container.get(CustomLoggerServiceToken);
 
-    const mainLogger = core.container.get(Logger);
-
-    mainLogger.info = jest.fn();
-
-    let logger = core.container.get(Logger);
-
-    logger = logger.getWithPrefix('hello');
-
-    expect(mainLogger.info).toBeCalledTimes(0);
+    expect(logger2.prefix).not.toBe('hello');
   });
 });

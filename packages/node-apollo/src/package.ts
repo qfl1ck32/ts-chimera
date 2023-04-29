@@ -1,22 +1,26 @@
 import { Package } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 import { LoggerPackage } from '@ts-phoenix/logger';
 import { ExpressPackage } from '@ts-phoenix/node-express';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { ApolloPackageConfigToken, ApolloServiceToken } from './constants';
+import { INodeApolloPackageConfig } from './defs';
+import { ApolloService } from './service';
 
-@Injectable()
-export class ApolloPackage extends Package<PackageConfigType> {
+export class ApolloPackage extends Package<INodeApolloPackageConfig> {
   getDependencies() {
     return [LoggerPackage, ExpressPackage];
   }
 
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+  bind() {
+    this.bindConfig(ApolloPackageConfigToken);
+
+    this.core.container
+      .bind(ApolloServiceToken)
+      .to(ApolloService)
+      .inSingletonScope();
   }
 
-  getDefaultConfig(): Partial<PackageConfigType> {
+  getDefaultConfig(): Partial<INodeApolloPackageConfig> {
     return {
       mountingPath: '/graphql',
     };

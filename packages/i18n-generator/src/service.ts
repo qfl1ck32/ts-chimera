@@ -5,13 +5,14 @@ import { InjectToken, Injectable } from '@ts-phoenix/di';
 import { mergeDeep } from '@ts-phoenix/utils';
 import { sync } from 'glob';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
+import { I18nGeneratorPackageConfigToken } from './config';
 import { PackageConfigType } from './defs';
 
 @Injectable()
 export class I18nGenerator {
   constructor(
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+    @InjectToken(I18nGeneratorPackageConfigToken)
+    private config: PackageConfigType,
   ) {}
 
   private get interpolationRegex() {

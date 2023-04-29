@@ -1,28 +1,23 @@
 import { Package } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 import { DataSource } from 'typeorm';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
+import {
+  NodeORMackageConfigToken,
+  ORMDataSourceToken,
+  ORMServiceToken,
+} from './constants';
 import { PackageConfigType, RequiredPackageConfigType } from './defs';
-import { ORM } from './service';
-import { DATA_SOURCE_CLASS_TOKEN, DATA_SOURCE_INSTANCE_TOKEN } from './tokens';
+import { ORMService } from './service';
 
-@Injectable()
 export class ORMPackage extends Package<
   PackageConfigType,
   RequiredPackageConfigType
 > {
-  async initialise() {
-    this.core.container
-      .bindToken(DATA_SOURCE_INSTANCE_TOKEN)
-      .toDynamicValue((ctx) => ctx.container.get(ORM).source);
+  bind() {
+    this.bindConfig(NodeORMackageConfigToken);
 
-    this.core.container
-      .bindToken(DATA_SOURCE_CLASS_TOKEN)
-      .toConstructor(DataSource);
-  }
+    this.core.container.bind(ORMServiceToken).to(ORMService).inSingletonScope();
 
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+    this.core.container.bind(ORMDataSourceToken).toConstantValue(DataSource);
   }
 }

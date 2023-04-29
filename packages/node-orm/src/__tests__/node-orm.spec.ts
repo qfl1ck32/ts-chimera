@@ -1,13 +1,16 @@
 import { Core } from '@ts-phoenix/core';
-import { EventManager } from '@ts-phoenix/event-manager';
+import {
+  EventManagerPackage,
+  EventManagerServiceToken,
+} from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
 import {
   AfterORMInitialiseEvent,
   BeforeORMDestroyEvent,
   BeforeORMInitialiseEvent,
-  ORM,
   ORMPackage,
+  ORMServiceToken,
 } from '@src/index';
 
 describe('node-orm', () => {
@@ -21,41 +24,41 @@ describe('node-orm', () => {
           username: 'postgres',
           password: 'test',
         }),
-
         new LoggerPackage(),
+        new EventManagerPackage(),
       ],
     });
 
     await core.initialise();
 
-    const orm = core.container.get(ORM);
-    const eventManager = core.container.get(EventManager);
+    const ormService = core.container.get(ORMServiceToken);
+    const eventManagerService = core.container.get(EventManagerServiceToken);
 
     const beforeORMInitialiseEventHandler = jest.fn();
     const afterORMInitialiseEventHandler = jest.fn();
     const beforeORMDestroyEventHandler = jest.fn();
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeORMInitialiseEvent,
       handler: beforeORMInitialiseEventHandler,
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: AfterORMInitialiseEvent,
       handler: afterORMInitialiseEventHandler,
     });
 
-    eventManager.addListener({
+    eventManagerService.addListener({
       event: BeforeORMDestroyEvent,
       handler: beforeORMDestroyEventHandler,
     });
 
-    await orm.initialise();
+    await ormService.initialise();
 
     expect(beforeORMInitialiseEventHandler).toBeCalledTimes(1);
     expect(afterORMInitialiseEventHandler).toBeCalledTimes(1);
 
-    await orm.destroy();
+    await ormService.destroy();
 
     expect(beforeORMDestroyEventHandler).toBeCalledTimes(1);
   });

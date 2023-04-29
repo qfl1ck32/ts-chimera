@@ -1,27 +1,25 @@
-import { Inject, InjectToken, Injectable } from '@ts-phoenix/di';
-import { EventManager } from '@ts-phoenix/event-manager';
+import { Inject, Service } from '@ts-phoenix/core';
+import {
+  EventManagerServiceToken,
+  IEventManagerService,
+} from '@ts-phoenix/event-manager';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { LogArgs, LogLevel, PackageConfigType } from './defs';
+import { LoggerPackageConfigToken } from './constants';
+import {
+  LogArgs,
+  LogLevel,
+  ILoggerPackageConfig,
+  ILoggerService,
+} from './defs';
 import { AfterLogEvent, BeforeLogEvent } from './events';
 
-@Injectable()
-export class Logger {
-  private prefix?: string;
-
+@Service()
+export class LoggerService implements ILoggerService {
   constructor(
-    @Inject(EventManager)
-    private eventManager: EventManager,
-    @InjectToken(PACKAGE_CONFIG_TOKEN) private config: PackageConfigType,
+    @Inject(EventManagerServiceToken)
+    private eventManager: IEventManagerService,
+    @Inject(LoggerPackageConfigToken) private config: ILoggerPackageConfig,
   ) {}
-
-  public getWithPrefix(prefix: string) {
-    const logger = new Logger(this.eventManager, this.config);
-
-    logger.prefix = prefix;
-
-    return logger;
-  }
 
   public async info(message: string) {
     return this._log({
@@ -56,11 +54,7 @@ export class Logger {
 
     await this.eventManager.emitSync(new BeforeLogEvent({ message, level }));
 
-    console.log(
-      this.config.colors[level](
-        `${this.prefix ? `(${this.prefix}) ` : ''}[${level}] ${message}`,
-      ),
-    );
+    console.log(this.config.colors[level](`[${level}] ${message}`));
 
     await this.eventManager.emitSync(new AfterLogEvent({ message, level }));
   }

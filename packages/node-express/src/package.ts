@@ -1,21 +1,25 @@
 import { Package, PartialConfig } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { ExpressPackageConfigToken, ExpressServiceToken } from './constants';
+import { IExpressPackageConfig } from './defs';
+import { ExpressService } from './service';
 
-@Injectable()
-export class ExpressPackage extends Package<PackageConfigType> {
+export class ExpressPackage extends Package<IExpressPackageConfig> {
   getDependencies() {
     return [LoggerPackage];
   }
 
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+  bind() {
+    this.bindConfig(ExpressPackageConfigToken);
+
+    this.core.container
+      .bind(ExpressServiceToken)
+      .to(ExpressService)
+      .inSingletonScope();
   }
 
-  getDefaultConfig(): PartialConfig<PackageConfigType, null> {
+  getDefaultConfig(): PartialConfig<IExpressPackageConfig, null> {
     return {
       port: 3000,
     };

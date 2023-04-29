@@ -1,16 +1,20 @@
 import { Package, PartialConfig } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import { I18nPackageConfigToken, I18nServiceToken } from './constants';
+import { I18nPackageConfigType } from './defs';
+import { I18nService } from './service';
 
-@Injectable()
-export class I18nPackage extends Package<PackageConfigType> {
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+export class I18nPackage extends Package<I18nPackageConfigType> {
+  bind() {
+    this.bindConfig(I18nPackageConfigToken);
+
+    this.core.container
+      .bind(I18nServiceToken)
+      .to(I18nService)
+      .inSingletonScope();
   }
 
-  getDefaultConfig(): PartialConfig<PackageConfigType, null> {
+  getDefaultConfig(): PartialConfig<I18nPackageConfigType, null> {
     return {
       defaultLocale: 'en',
       translations: {},

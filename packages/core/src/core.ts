@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { BindingScopeEnum, Injectable, Token } from '@ts-phoenix/di';
-
 import { Container } from './container';
 import { CoreConfig, CoreState } from './defs';
 import { DependencyNotFoundError } from './errors';
-import { CONTAINER } from './tokens';
 
-@Injectable()
 export class Core {
   private _state: CoreState;
 
@@ -14,10 +10,6 @@ export class Core {
 
   constructor(private config: CoreConfig) {
     this._state = CoreState.NEW;
-
-    this.setToken(CONTAINER, this.container);
-
-    this.container.bind(Core).toConstantValue(this);
   }
 
   get state() {
@@ -39,17 +31,11 @@ export class Core {
   get container() {
     if (this._container == null) {
       this._container = new Container({
-        autoBindInjectable: true,
         skipBaseClassChecks: true,
-        defaultScope: BindingScopeEnum.Singleton,
       });
     }
 
     return this._container;
-  }
-
-  public setToken<T>(token: Token<T>, value: T) {
-    this.container.bindToken(token).toConstantValue(value);
   }
 
   private checkPackagesDependencies() {
@@ -79,16 +65,13 @@ export class Core {
     for (const pkg of this.config.packages) {
       // @ts-ignore
       pkg.__setCore(this);
-
-      // @ts-ignore
-      pkg.__setConfigToken();
-
-      if (!this.container.isBound(pkg.constructor)) {
-        this.container.bind(pkg.constructor).toConstantValue(pkg);
-      }
     }
 
     this._state = CoreState.INITIALIZING;
+
+    for (const pkg of this.config.packages) {
+      await pkg.bind();
+    }
 
     for (const pkg of this.config.packages) {
       await pkg.initialise();

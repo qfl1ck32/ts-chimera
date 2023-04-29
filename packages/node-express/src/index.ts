@@ -1,4 +1,4 @@
-export * from './config';
+export * from './constants';
 export * from './defs';
 export * from './package';
 export * from './service';

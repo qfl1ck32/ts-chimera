@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@ts-phoenix/core": "^1.0.0-alpha.0",
-    "@ts-phoenix/di": "^1.0.0-alpha.0",
     "@ts-phoenix/logger": "^1.0.0-alpha.0",
     "inquirer": "^7.3.3",
     "inquirer-autocomplete-prompt": "^1.4.0"

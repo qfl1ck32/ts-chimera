@@ -1,12 +1,19 @@
 import { Package } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
 
-import { PACKAGE_CONFIG_TOKEN } from './config';
-import { PackageConfigType } from './defs';
+import {
+  GraphQLServiceToken,
+  NodeGraphQLPackageConfigToken,
+} from './constants';
+import { INodeGraphQLPackageConfig } from './defs';
+import { GraphQLService } from './service';
 
-@Injectable()
-export class GraphQLPackage extends Package<PackageConfigType> {
-  getConfigToken() {
-    return PACKAGE_CONFIG_TOKEN;
+export class GraphQLPackage extends Package<INodeGraphQLPackageConfig> {
+  bind() {
+    this.bindConfig(NodeGraphQLPackageConfigToken);
+
+    this.core.container
+      .bind(GraphQLServiceToken)
+      .to(GraphQLService)
+      .inSingletonScope();
   }
 }
