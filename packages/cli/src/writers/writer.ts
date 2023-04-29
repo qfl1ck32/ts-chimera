@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Inject, Service } from '@ts-phoenix/core';
+import { Inject } from '@ts-phoenix/core';
 import { ILoggerService, LoggerServiceToken } from '@ts-phoenix/logger';
 
 interface Replacement {
@@ -9,7 +9,6 @@ interface Replacement {
   new: string;
 }
 
-@Service()
 export class Writer {
   constructor(
     @Inject(LoggerServiceToken) protected readonly logger: ILoggerService,

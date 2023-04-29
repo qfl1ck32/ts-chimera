@@ -3,13 +3,13 @@ import { ILoggerService, LoggerServiceToken } from '@ts-phoenix/logger';
 import inquirer from 'inquirer';
 import inquirer_autocomplete from 'inquirer-autocomplete-prompt';
 
-import { MicroserviceType } from './defs';
+import { ICLIService, MicroserviceType } from './defs';
 import { MicroserviceWriter } from './writers';
 
 inquirer.registerPrompt('autocomplete', inquirer_autocomplete);
 
 @Service()
-export class CLIService {
+export class CLIService implements ICLIService {
   constructor(
     @Inject(LoggerServiceToken) private readonly logger: ILoggerService,
     @Inject(MicroserviceWriter)
