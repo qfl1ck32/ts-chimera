@@ -10,7 +10,7 @@ export class I18nDayjsPackage extends Package {
     return [I18nPackage];
   }
 
-  bindServices() {
+  bind() {
     this.core.container
       .bind(I18nDayjsServiceToken)
       .to(I18nDayjsService)
