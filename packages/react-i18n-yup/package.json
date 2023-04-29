@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/react-i18n-yup",
   "description": "",
   "private": false,
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
