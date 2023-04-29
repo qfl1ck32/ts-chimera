@@ -3,7 +3,9 @@ import { Arg, Mutation, Query, Resolver } from '@ts-phoenix/node-graphql';
 import { Todo } from '@src/graphql/entities/Todo';
 import { CreateTodoInput } from '@src/graphql/inputs/CreateTodo';
 import { GetTodoInput } from '@src/graphql/inputs/GetTodo';
+import { Injectable } from '@ts-phoenix/core';
 
+@Injectable()
 @Resolver()
 export class TodoResolver {
   constructor(private service: TodoService) {}

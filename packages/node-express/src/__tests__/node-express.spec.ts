@@ -7,9 +7,9 @@ import { LoggerPackage } from '@ts-phoenix/logger';
 
 import {
   ExpressPackage,
-  AfterServerStartEvent,
-  BeforeServerStartEvent,
-  BeforeServerStopEvent,
+  AfterExpressServerStartEvent,
+  BeforeExpressServerStartEvent,
+  BeforeExpressServerStopEvent,
   ExpressServiceToken,
 } from '@src/index';
 
@@ -34,17 +34,17 @@ describe('node-express', () => {
     const eventManagerService = core.container.get(EventManagerServiceToken);
 
     eventManagerService.addListener({
-      event: BeforeServerStartEvent,
+      event: BeforeExpressServerStartEvent,
       handler: beforeServerStartListener,
     });
 
     eventManagerService.addListener({
-      event: AfterServerStartEvent,
+      event: AfterExpressServerStartEvent,
       handler: afterServerStartListener,
     });
 
     eventManagerService.addListener({
-      event: BeforeServerStopEvent,
+      event: BeforeExpressServerStopEvent,
       handler: beforeServerStopListener,
     });
 

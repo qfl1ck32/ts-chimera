@@ -4,7 +4,7 @@ import { Query, Resolver } from 'type-graphql';
 class FrameworkResolver {
   @Query(() => String)
   framework() {
-    return 'ts-framework';
+    return 'ts-phoenix';
   }
 }
 

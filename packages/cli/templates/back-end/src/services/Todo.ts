@@ -2,13 +2,12 @@ import { CreateTodoInput } from '@src/graphql/inputs/CreateTodo';
 import { GetTodoInput } from '@src/graphql/inputs/GetTodo';
 import { Todo } from '@src/orm/entities/Todo';
 import { TodoTranslation } from '@src/orm/entities/TodoTranslation';
-import { Injectable } from '@ts-phoenix/di';
-import { InjectDataSource } from '@ts-phoenix/node-orm';
-import { DataSource } from '@ts-phoenix/node-orm-i18n';
+import { Inject, Service } from '@ts-phoenix/core';
+import { ORMDataSourceToken, DataSource } from '@ts-phoenix/node-orm';
 
-@Injectable()
+@Service()
 export class TodoService {
-  constructor(@InjectDataSource() private dataSource: DataSource) {}
+  constructor(@Inject(ORMDataSourceToken) private dataSource: DataSource) {}
 
   // TODO: should separate the input too
   async createTodo(input: CreateTodoInput) {
@@ -35,19 +34,17 @@ export class TodoService {
   }
 
   async getTodo(input: GetTodoInput) {
-    const result = await this.dataSource
-      .createI18nQueryBuilder({
-        entity: Todo,
-        translationEntity: TodoTranslation,
-        fields: ['title'],
-        alias: 'todo',
-      })
-      .andWhere('todo.id = :id', { id: input.id })
-      .addSelect('todo.finished', 'finished')
-      .getRawOne();
-
-    console.log(result);
-
-    return result;
+    // const result = await this.dataSource
+    //   .createI18nQueryBuilder({
+    //     entity: Todo,
+    //     translationEntity: TodoTranslation,
+    //     fields: ['title'],
+    //     alias: 'todo',
+    //   })
+    //   .andWhere('todo.id = :id', { id: input.id })
+    //   .addSelect('todo.finished', 'finished')
+    //   .getRawOne();
+    // console.log(result);
+    // return result;
   }
 }

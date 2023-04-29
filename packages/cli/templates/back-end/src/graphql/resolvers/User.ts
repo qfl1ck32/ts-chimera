@@ -2,10 +2,12 @@ import { UserRegisterInput } from '@src/graphql/inputs/UserRegister';
 import UserService from '@src/services/User';
 import { Arg, Mutation, Query, Resolver } from '@ts-phoenix/node-graphql';
 import { User } from '@src/graphql/entities/User';
+import { Inject, Injectable } from '@ts-phoenix/core';
 
+@Injectable()
 @Resolver(User)
 export class UserResolver {
-  constructor(private service: UserService) {}
+  constructor(@Inject(UserService) private service: UserService) {}
 
   @Mutation(() => Boolean)
   async register(@Arg('input') input: UserRegisterInput) {
@@ -13,7 +15,7 @@ export class UserResolver {
   }
 
   @Query((returns) => User)
-  async user() {
+  async getUser() {
     return this.service.get();
   }
 }

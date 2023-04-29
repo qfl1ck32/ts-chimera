@@ -15,9 +15,9 @@ import express from 'express';
 import { ExpressPackageConfigToken } from './constants';
 import { IExpressPackageConfig, Application, IExpressService } from './defs';
 import {
-  BeforeServerStartEvent,
-  AfterServerStartEvent,
-  BeforeServerStopEvent,
+  BeforeExpressServerStartEvent,
+  AfterExpressServerStartEvent,
+  BeforeExpressServerStopEvent,
 } from './events';
 
 @Service()
@@ -43,7 +43,7 @@ export class ExpressService implements IExpressService {
     this.loggerService.info('Starting...');
 
     await this.eventManagerService.emitSync(
-      new BeforeServerStartEvent({ app: this.app, server: this.server }),
+      new BeforeExpressServerStartEvent({ app: this.app, server: this.server }),
     );
 
     await new Promise((resolve) =>
@@ -53,7 +53,7 @@ export class ExpressService implements IExpressService {
     );
 
     await this.eventManagerService.emitSync(
-      new AfterServerStartEvent({ app: this.app, server: this.server }),
+      new AfterExpressServerStartEvent({ app: this.app, server: this.server }),
     );
 
     const { port } = this.server.address() as AddressInfo;
@@ -65,7 +65,7 @@ export class ExpressService implements IExpressService {
     this.loggerService.info('Stopping...');
 
     await this.eventManagerService.emitSync(
-      new BeforeServerStopEvent({ app: this.app, server: this.server }),
+      new BeforeExpressServerStopEvent({ app: this.app, server: this.server }),
     );
 
     await new Promise((resolve) => this.server.close(resolve));

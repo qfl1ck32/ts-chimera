@@ -6,6 +6,8 @@ export interface INodeApolloPackageConfig
   mountingPath: string;
 }
 
+export type Schema = INodeApolloPackageConfig['schema'];
+
 export interface ApolloEventData {
   server: ApolloServer;
 }
@@ -16,4 +18,6 @@ export interface IApolloService {
   start(app: Application): Promise<void>;
 
   stop(): Promise<void>;
+
+  setSchema(schema: Schema): void;
 }

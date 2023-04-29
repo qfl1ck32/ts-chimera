@@ -1,12 +1,12 @@
 import { UserAlreadyExistsError } from '@src/errors/UserAlreadyExists';
 import { User } from '@src/orm/entities/User';
 import { UserRegisterInput } from '@src/graphql/inputs/UserRegister';
-import { Injectable } from '@ts-phoenix/di';
-import { DataSource, InjectDataSource } from '@ts-phoenix/node-orm';
+import { Inject, Service } from '@ts-phoenix/core';
+import { DataSource, ORMDataSourceToken } from '@ts-phoenix/node-orm';
 
-@Injectable()
+@Service()
 class UserService {
-  constructor(@InjectDataSource() private source: DataSource) {}
+  constructor(@Inject(ORMDataSourceToken) private source: DataSource) {}
 
   async register(input: UserRegisterInput) {
     const repository = this.source.getRepository(User);

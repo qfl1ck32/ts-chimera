@@ -1,26 +1,22 @@
+import UserService from '@src/services/User';
 import { Package } from '@ts-phoenix/core';
-import { Injectable } from '@ts-phoenix/di';
-import { Listener } from '@ts-phoenix/event-manager';
+import { EventManagerServiceToken } from '@ts-phoenix/event-manager';
 import {
-  Apollo,
-  BeforeServerStartEvent as BeforeApolloServerStartEvent,
+  ApolloServiceToken,
+  BeforeApolloServerStartEvent,
 } from '@ts-phoenix/node-apollo';
 import {
-  Express,
-  BeforeServerStartEvent as BeforeExpressServerStartEvent,
-  BeforeServerStopEvent as BeforeExpressServerStopEvent,
+  BeforeExpressServerStartEvent,
+  BeforeExpressServerStopEvent,
+  ExpressServiceToken,
 } from '@ts-phoenix/node-express';
-import { GraphQL } from '@ts-phoenix/node-graphql';
-import { ORM } from '@ts-phoenix/node-orm';
+import { GraphQLServiceToken } from '@ts-phoenix/node-graphql';
+import { ORMServiceToken } from '@ts-phoenix/node-orm';
 
-@Injectable()
 export class AppPackage extends Package {
-  @Listener({
-    event: BeforeExpressServerStartEvent,
-  })
   async beforeExpressServerStart(e: BeforeExpressServerStartEvent) {
-    const apollo = this.core.container.get(Apollo);
-    const orm = this.core.container.get(ORM);
+    const apollo = this.core.container.get(ApolloServiceToken);
+    const orm = this.core.container.get(ORMServiceToken);
 
     const app = e.data.app;
 
@@ -29,32 +25,49 @@ export class AppPackage extends Package {
     await orm.initialise();
   }
 
-  @Listener({
-    event: BeforeExpressServerStopEvent,
-  })
   async beforeExpressServerStopEvent(e: BeforeExpressServerStopEvent) {
-    const apollo = this.core.container.get(Apollo);
-    const orm = this.core.container.get(ORM);
+    const apolloService = this.core.container.get(ApolloServiceToken);
+    const ormService = this.core.container.get(ORMServiceToken);
 
-    await apollo.stop();
-    await orm.destroy();
+    await apolloService.stop();
+    await ormService.destroy();
   }
 
-  @Listener({
-    event: BeforeApolloServerStartEvent,
-  })
   async beforeApolloServerStart(e: BeforeApolloServerStartEvent) {
-    const graphql = this.core.container.get(GraphQL);
-    const apollo = this.core.container.get(Apollo);
+    const graphqlService = this.core.container.get(GraphQLServiceToken);
+    const apolloService = this.core.container.get(ApolloServiceToken);
 
-    const schema = await graphql.generateSchema();
+    const schema = await graphqlService.generateSchema();
 
-    await apollo.setSchema(schema);
+    apolloService.setSchema(schema);
+  }
+
+  public bind() {
+    // TODO: tokens
+    this.core.container.bind(UserService).to(UserService).inSingletonScope();
   }
 
   public async initialise() {
-    const express = this.core.container.get(Express);
+    const expressService = this.core.container.get(ExpressServiceToken);
+    const eventManagerService = this.core.container.get(
+      EventManagerServiceToken,
+    );
 
-    await express.start();
+    eventManagerService.addListener({
+      event: BeforeExpressServerStartEvent,
+      handler: this.beforeExpressServerStart.bind(this),
+    });
+
+    eventManagerService.addListener({
+      event: BeforeExpressServerStopEvent,
+      handler: this.beforeExpressServerStopEvent.bind(this),
+    });
+
+    eventManagerService.addListener({
+      event: BeforeApolloServerStartEvent,
+      handler: this.beforeApolloServerStart.bind(this),
+    });
+
+    await expressService.start();
   }
 }

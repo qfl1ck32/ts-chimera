@@ -9,12 +9,16 @@ import { GraphQLError, GraphQLPackage } from '@ts-phoenix/node-graphql';
 
 import { Error } from '@ts-phoenix/error';
 import { ORMI18nPackage } from '@ts-phoenix/node-orm-i18n';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 
 const core = new Core({
   packages: [
     new ExpressPackage({
       port: 8000,
     }),
+    new EventManagerPackage(),
+
+    // TODO: formatError should be moved
     new ApolloPackage({
       formatError: (
         formattedError: GraphQLError,
@@ -51,7 +55,7 @@ const core = new Core({
       synchronize: true,
     }),
 
-    new ORMI18nPackage(),
+    // new ORMI18nPackage(),
 
     new AppPackage(),
   ],

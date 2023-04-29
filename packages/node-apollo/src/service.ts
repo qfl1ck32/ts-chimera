@@ -12,11 +12,11 @@ import {
 import { Application, json } from 'express';
 
 import { ApolloPackageConfigToken } from './constants';
-import { IApolloService, INodeApolloPackageConfig } from './defs';
+import { IApolloService, INodeApolloPackageConfig, Schema } from './defs';
 import {
-  AfterServerStartEvent,
-  BeforeServerStartEvent,
-  BeforeServerStopEvent,
+  AfterApolloServerStartEvent,
+  BeforeApolloServerStartEvent,
+  BeforeApolloServerStopEvent,
 } from './events';
 
 @Service()
@@ -34,14 +34,14 @@ export class ApolloService implements IApolloService {
     this.loggerService.setPrefix('ApolloService');
   }
 
-  public async setSchema(schema: INodeApolloPackageConfig['schema']) {
+  public setSchema(schema: Schema) {
     this.config.schema = schema;
   }
 
   async start(app: Application) {
     this.loggerService.info('Starting...');
 
-    await this.eventManagerService.emitSync(new BeforeServerStartEvent());
+    await this.eventManagerService.emitSync(new BeforeApolloServerStartEvent());
 
     this.server = new ApolloServer(this.config as any);
 
@@ -50,7 +50,7 @@ export class ApolloService implements IApolloService {
     app.use(this.config.mountingPath, json(), expressMiddleware(this.server));
 
     await this.eventManagerService.emitSync(
-      new AfterServerStartEvent({
+      new AfterApolloServerStartEvent({
         server: this.server,
       }),
     );
@@ -62,7 +62,7 @@ export class ApolloService implements IApolloService {
     this.loggerService.info('Stopping...');
 
     await this.eventManagerService.emitSync(
-      new BeforeServerStopEvent({
+      new BeforeApolloServerStopEvent({
         server: this.server,
       }),
     );

@@ -6,15 +6,15 @@ import {
 import { LoggerPackage } from '@ts-phoenix/logger';
 import {
   ExpressPackage,
-  BeforeServerStartEvent as BeforeExpressServerStartEvent,
-  BeforeServerStopEvent as BeforeExpressServerStopEvent,
+  BeforeExpressServerStartEvent,
+  BeforeExpressServerStopEvent,
   ExpressServiceToken,
 } from '@ts-phoenix/node-express';
 
 import {
-  BeforeServerStartEvent,
-  AfterServerStartEvent,
-  BeforeServerStopEvent,
+  BeforeApolloServerStartEvent,
+  AfterApolloServerStartEvent,
+  BeforeApolloServerStopEvent,
 } from '@src/events';
 import { ApolloPackage } from '@src/package';
 
@@ -40,17 +40,17 @@ describe('node-apollo', () => {
     const eventManagerService = core.container.get(EventManagerServiceToken);
 
     eventManagerService.addListener({
-      event: BeforeServerStartEvent,
+      event: BeforeApolloServerStartEvent,
       handler: beforeServerStartListener,
     });
 
     eventManagerService.addListener({
-      event: AfterServerStartEvent,
+      event: AfterApolloServerStartEvent,
       handler: afterServerStartListener,
     });
 
     eventManagerService.addListener({
-      event: BeforeServerStopEvent,
+      event: BeforeApolloServerStopEvent,
       handler: beforeServerStopListener,
     });
 
