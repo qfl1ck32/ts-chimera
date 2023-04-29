@@ -1,6 +1,7 @@
 import { use } from '@ts-phoenix/react-di';
 import Polyglot from 'node-polyglot';
 
+import { I18nServiceToken } from '..';
 import {
   AllPhrases,
   AllPhrasesPrefixes,
@@ -9,7 +10,6 @@ import {
   InterpolationKeys,
   Phrase,
 } from '../defs';
-import { I18nService } from '../service';
 
 export const createUseTranslation = <
   Translations extends ITranslations,
@@ -20,7 +20,7 @@ export const createUseTranslation = <
   >(
     prefix?: T,
   ) => {
-    const service = use(I18nService);
+    const service = use(I18nServiceToken);
 
     const t = <P extends Phrase<Translations, T>>(
       phrase: P,

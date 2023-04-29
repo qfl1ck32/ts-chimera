@@ -1,7 +1,7 @@
 import { use } from '@ts-phoenix/react-di';
 import React, { useState, useEffect, Fragment } from 'react';
 
-import { I18nService } from './service';
+import { I18nServiceToken } from './constants';
 
 export interface Props {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export const I18nProvider: React.FC<Props> = (props) => {
-  const i18n = use(I18nService);
+  const i18n = use(I18nServiceToken);
 
   const [loading, setLoading] = useState(true);
 
