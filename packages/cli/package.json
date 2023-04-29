@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/cli",
   "description": "",
   "private": false,
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "update-translations": "i18n-generator --defaultLocale en --srcDir src --i18nFilesRegex **/i18n.json --interpolationStart '{{ ' --interpolationEnd ' }}' --missingKey MISSING_KEY --outputPath src/translations --locales ro en"
+    "translations:generate": "i18n-generator --defaultLocale en --srcDir src --i18nFilesRegex **/i18n.json --interpolationStart '{{ ' --interpolationEnd ' }}' --missingKey MISSING_KEY --outputPath src/translations --locales ro en"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
