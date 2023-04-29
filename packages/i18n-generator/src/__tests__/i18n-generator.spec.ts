@@ -3,9 +3,10 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
-import { I18nGeneratorPackage } from '@src/package';
-import { I18nGeneratorService } from '@src/service';
 import { Core } from '@ts-phoenix/core';
+
+import { I18nGeneratorServiceToken } from '@src/config';
+import { I18nGeneratorPackage } from '@src/package';
 
 describe('i18n-generator', () => {
   it('should work', async () => {
@@ -33,7 +34,7 @@ describe('i18n-generator', () => {
 
     await core.initialise();
 
-    const generator = core.container.get(I18nGeneratorService);
+    const generator = core.container.get(I18nGeneratorServiceToken);
 
     generator.run();
 
