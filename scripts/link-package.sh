@@ -3,7 +3,7 @@
 # Usage: ./link-package.sh source_package
 
 SOURCE_PACKAGE=$1
-PACKAGES_PATH=/home/rusu/Desktop/me/ts-phoenix/packages
+PACKAGES_PATH=/Users/qfl1ck32/Desktop/me/ts-phoenix/packages
 
 if [ -z "$SOURCE_PACKAGE" ]; then
   echo "Usage: $0 source_package"
@@ -21,4 +21,4 @@ NODE_MODULES_DIRECTORY="$TARGET_DIRECTORY/node_modules/$(dirname $SOURCE_PACKAGE
 mkdir -p "$NODE_MODULES_DIRECTORY"
 
 # Create the symlink
-ln -s "$SOURCE_PACKAGE_PATH" "$NODE_MODULES_DIRECTORY"
+ln -sf "$SOURCE_PACKAGE_PATH" "$NODE_MODULES_DIRECTORY"

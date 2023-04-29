@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/react-session-storage",
   "description": "",
   "private": false,
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
@@ -10,6 +10,7 @@
     "url": "https://github.com/qfl1ck32/ts-phoenix"
   },
   "scripts": {
+    "clear:build": "rm -rf dist/",
     "compile": "tsc && tsc-alias",
     "coverage": "jest --coverage",
     "lint": "eslint . --ext .ts --fix",

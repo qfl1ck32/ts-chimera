@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/i18n-generator",
   "description": "",
   "private": false,
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
@@ -13,6 +13,7 @@
     "i18n-generator": "dist/index.js"
   },
   "scripts": {
+    "compile:clear": "rm -rf dist/",
     "compile": "tsc && tsc-alias",
     "coverage": "jest --coverage",
     "lint": "eslint . --ext .ts --fix",

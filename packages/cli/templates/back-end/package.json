@@ -2,6 +2,7 @@
   "name": "@ts-phoenix/my-backend-app",
   "private": true,
   "scripts": {
+    "compile:clear": "rm -rf dist/",
     "compile": "tsc && tsc-alias",
     "coverage": "jest --coverage",
     "dev": "nodemon --watch \"src/**\" --ext \"ts\" --exec \"ts-node -r tsconfig-paths/register src/index.ts\"",

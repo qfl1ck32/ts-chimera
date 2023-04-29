@@ -2,7 +2,7 @@
   "name": "@ts-phoenix/react-i18n",
   "description": "",
   "private": false,
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "repository": {
@@ -10,6 +10,7 @@
     "url": "https://github.com/qfl1ck32/ts-phoenix"
   },
   "scripts": {
+    "compile:clear": "rm -rf dist/",
     "compile": "tsc && tsc-alias",
     "coverage": "jest --coverage",
     "lint": "eslint . --ext .ts --fix",
