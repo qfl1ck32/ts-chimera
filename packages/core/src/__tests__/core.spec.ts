@@ -69,11 +69,12 @@ describe('core', () => {
       name: string;
     }
 
-    const MY_PACKAGE_CONFIG = PackageConfigToken<PackageConfig>('MY_PACKAGE');
+    const MyPackageConfigToken =
+      PackageConfigToken<PackageConfig>('MY_PACKAGE');
 
     class MyPackage extends Package<PackageConfig> {
-      public getConfigToken() {
-        return MY_PACKAGE_CONFIG;
+      public bind() {
+        this.bindConfig(MyPackageConfigToken);
       }
 
       public getDefaultConfig(): Partial<PackageConfig> {
@@ -110,7 +111,7 @@ describe('core', () => {
 
     await core.initialise();
 
-    const config = core.container.get(MY_PACKAGE_CONFIG);
+    const config = core.container.get(MyPackageConfigToken);
 
     expect(config.name).toBe(newName);
   });
@@ -126,11 +127,12 @@ describe('core', () => {
     const name = 'Hi';
     const requiredStuff = 'hi';
 
-    const MY_PACKAGE_CONFIG = PackageConfigToken<PackageConfig>('MY_PACKAGE');
+    const MyPackageConfigToken =
+      PackageConfigToken<PackageConfig>('MY_PACKAGE');
 
     class MyPackage extends Package<PackageConfig, RequiredPackageConfig> {
-      getConfigToken() {
-        return MY_PACKAGE_CONFIG;
+      bind() {
+        this.bindConfig(MyPackageConfigToken);
       }
 
       public getDefaultConfig(): PartialConfig<
@@ -160,7 +162,7 @@ describe('core', () => {
 
     await core.initialise();
 
-    const config = core.container.get(MY_PACKAGE_CONFIG);
+    const config = core.container.get(MyPackageConfigToken);
 
     expect(config).toStrictEqual({
       name,
