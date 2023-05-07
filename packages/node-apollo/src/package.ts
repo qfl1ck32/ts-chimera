@@ -1,4 +1,5 @@
 import { Package } from '@ts-phoenix/core';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 import { ExpressPackage } from '@ts-phoenix/node-express';
 
@@ -8,7 +9,7 @@ import { ApolloService } from './service';
 
 export class ApolloPackage extends Package<INodeApolloPackageConfig> {
   getDependencies() {
-    return [LoggerPackage, ExpressPackage];
+    return [LoggerPackage, EventManagerPackage, ExpressPackage];
   }
 
   bind() {

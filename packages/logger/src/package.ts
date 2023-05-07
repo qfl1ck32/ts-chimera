@@ -1,4 +1,5 @@
 import { Package } from '@ts-phoenix/core';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 import chalk from 'chalk';
 
 import {
@@ -11,6 +12,10 @@ import { ILoggerPackageConfig } from './defs';
 import { LoggerService } from './logger-service';
 
 export class LoggerPackage extends Package<ILoggerPackageConfig> {
+  getDependencies() {
+    return [EventManagerPackage]
+  }
+
   bind() {
     this.bindConfig(LoggerPackageConfigToken);
 

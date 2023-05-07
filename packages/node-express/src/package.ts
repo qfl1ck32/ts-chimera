@@ -1,4 +1,5 @@
 import { Package, PartialConfig } from '@ts-phoenix/core';
+import { EventManagerPackage } from '@ts-phoenix/event-manager';
 import { LoggerPackage } from '@ts-phoenix/logger';
 
 import { ExpressPackageConfigToken, ExpressServiceToken } from './constants';
@@ -7,7 +8,7 @@ import { ExpressService } from './service';
 
 export class ExpressPackage extends Package<IExpressPackageConfig> {
   getDependencies() {
-    return [LoggerPackage];
+    return [LoggerPackage, EventManagerPackage];
   }
 
   bind() {

@@ -1,4 +1,4 @@
-import { CustomLoggerServiceToken } from '@ts-phoenix/logger';
+import { CustomLoggerServiceToken, LoggerPackage } from '@ts-phoenix/logger';
 
 import core from '@src/startup/core';
 

@@ -1,5 +1,4 @@
 import { Field, ObjectType } from '@ts-phoenix/node-graphql';
-import { Todo } from './Todo';
 
 @ObjectType()
 export class User {
@@ -11,7 +10,4 @@ export class User {
 
   @Field()
   email!: string;
-
-  @Field(() => [Todo])
-  todos!: Todo[];
 }
