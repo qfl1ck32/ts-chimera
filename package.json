@@ -1,5 +1,11 @@
 {
   "name": "ts-phoenix",
+  "scripts": {
+    "compile": "lerna run compile",
+    "compile:clear": "lerna run compile:clear",
+    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap"
+  },
   "dependencies": {
     "lerna": "^6.6.1"
   },
