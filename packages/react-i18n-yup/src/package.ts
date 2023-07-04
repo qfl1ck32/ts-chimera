@@ -1,5 +1,6 @@
 import { Package, PartialConfig } from '@ts-phoenix/core';
-import { I18nPackage } from '@ts-phoenix/react-i18n';
+import { EventManagerServiceToken } from '@ts-phoenix/event-manager';
+import { I18nPackage, LocaleChangedEvent } from '@ts-phoenix/react-i18n';
 
 import { I18nYupPackageConfigToken, I18nYupServiceToken } from './constants';
 import { II18nYupPackageConfig } from './defs';
@@ -23,5 +24,17 @@ export class I18nYupPackage extends Package<II18nYupPackageConfig> {
     return {
       usePathsInTranslations: true,
     };
+  }
+
+  async initialise() {
+    const i18nYupService = this.core.container.get(I18nYupServiceToken);
+    const eventManagerService = this.core.container.get(
+      EventManagerServiceToken,
+    );
+
+    eventManagerService.addListener({
+      event: LocaleChangedEvent,
+      handler: i18nYupService.onLocaleChange,
+    });
   }
 }
